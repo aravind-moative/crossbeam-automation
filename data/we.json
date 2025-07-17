@@ -1,0 +1,35 @@
+{
+  "company": "Moative",
+  "Ariharasudhan": {
+    "webhook_url": "https://hooks.slack.com/services/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",
+    "channel_id": "D094NDK6K2A",
+    "name": "Ariharasudhan",
+    "designation": "Account Executive",
+    "hierarchy": 1,
+    "max_message": 3
+  },
+  "Thejas Eldhos Kurian": {
+    "webhook_url": "https://hooks.slack.com/services/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",
+    "channel_id": "D094NDKG5F0",
+    "name": "Thejas Eldhos Kurian",
+    "designation": "Sales Manager",
+    "hierarchy": 2,
+    "max_message": 2
+  },
+  "Moative Raj": {
+    "webhook_url": "https://hooks.slack.com/services/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",
+    "channel_id": "C094NHGUCCW",
+    "name": "Moative Raj",
+    "designation": "Executive Staff",
+    "hierarchy": 3,
+    "max_message": 1
+  },
+  "Moative Kumar": {
+    "webhook_url": "https://hooks.slack.com/services/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",
+    "channel_id": "C0955LSEWJD",
+    "name": "Moative Kumar",
+    "designation": "Executive Staff",
+    "hierarchy": 3,
+    "max_message": 1
+  }
+}
