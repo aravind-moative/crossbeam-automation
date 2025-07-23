@@ -41,5 +41,3 @@ cursor.execute("""
 
 conn.commit()
 conn.close()
-
-print("✅ First row updated with minimum scores and logo_potential = true.")
