@@ -232,7 +232,13 @@ def send_messages_with_gap(record_id: str, context: Dict):
     record_name = record.get("opportunity_name", "Unknown") if record else "Unknown"
     partner_record_name = record.get("partner_name", "Unknown") if record else "Unknown"
     partner_company_type = record.get("partner_size_label", "Unknown") if record else "Unknown"
-    ae_name = record.get("ae_name", "Unknown") if record else "Unknown"
+    
+    # Retrieve ae_name based on hierarchy (e.g., lowest hierarchy level)
+    internal_members = sorted(
+        [member for member in INTERNAL_TEAM.values() if isinstance(member.get("hierarchy"), (int, float))],
+        key=lambda x: x["hierarchy"]
+    )
+    ae_name = internal_members[0]["name"] if internal_members else "Unknown"
 
     # Log message plan
     logger.info(f"Message plan for overlap {record_id}:")
@@ -261,6 +267,7 @@ def send_messages_with_gap(record_id: str, context: Dict):
                 webhook_url = member.get("webhook_url")
                 channel_id = member.get("channel_id")
                 member_name = member.get("name")
+                print(member_name, "MEMBER NAME")
                 if not webhook_url or not channel_id:
                     logger.warning(f"No webhook_url or channel_id for {member_name}, skipping")
                     continue
@@ -271,21 +278,21 @@ def send_messages_with_gap(record_id: str, context: Dict):
                             logger.info(f"Overlap resolved for {record_id} at Hierarchy {hierarchy_level}")
                             current_overlap_id = None
                             return
-
+                    message = f"ACCOUNT: {record_name} | PARTNER: {partner_record_name} | AE: {ae_name} | Hierarchy {hierarchy_level} | {message_type.capitalize()}"
+                    """
                     message = gemini_generator.generate_overlap_message(
-                                            record_name=record_name,
-                                            overlap_type="overlap",
-                                            internal_name=member_name,
-                                            partner_record_name=partner_record_name,
-                                            partner_company_type=partner_company_type,
-                                            count=idx + 1,
-                                            hierarchy_level=hierarchy_level,
-                                            overlap_context=context,
-                                            hierarchy_designations=designations,
-                                            ae_name=ae_name
-                                        )
-                                            
-                    #message = f"ACCOUNT: {record_name} | PARTNER: {partner_record_name} | Hierarchy {hierarchy_level} | {message_type.capitalize()}"
+                        record_name=record_name,
+                        overlap_type="overlap",
+                        internal_name=member_name,
+                        partner_record_name=partner_record_name,
+                        partner_company_type=partner_company_type,
+                        count=idx + 1,
+                        hierarchy_level=hierarchy_level,
+                        overlap_context=context,
+                        hierarchy_designations=designations,
+                        ae_name=ae_name  # Pass ae_name to the message generator if needed
+                    )
+                    """
                     success = send_slack_message_with_button(webhook_url, channel_id, message, RESOLVE_ACTION_URL, record_id)
                     if not success:
                         logger.error(f"Failed to send message to {member_name} at hierarchy {hierarchy_level}")
@@ -320,7 +327,7 @@ async def resolve_overlap(request: Request):
             current_overlap_id = None
     return {"message": f"Overlap {record_id} resolved"}
 
-@app.get("/api/crossbeam-records")
+@app.get("http://127.0.0.1:8000/api/crossbeam-records")
 async def get_crossbeam_records():
     """Retrieve all crossbeam records from the database."""
     logger.info("Received GET request for /api/crossbeam-records")

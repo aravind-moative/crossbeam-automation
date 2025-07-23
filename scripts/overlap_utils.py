@@ -19,15 +19,6 @@ class ScoringWeight(Base):
     section = Column(String, primary_key=True)  # 'opportunity' or 'partner'
     weight = Column(Float)  # as decimal, e.g., 0.25
 
-class InternalTeam(Base):
-    __tablename__ = 'internal_team'
-    name = Column(String, primary_key=True)
-    designation = Column(String)
-    hierarchy = Column(Float)
-    channel_id = Column(String)
-    webhook_url = Column(String)
-    max_message = Column(Float)
-
 class OverlapStatus(Base):
     __tablename__ = 'overlap_status'
     record_id = Column(String, primary_key=True)
@@ -85,10 +76,8 @@ def load_crossbeam_data() -> List[Dict]:
         with Session(engine) as session:
             result = session.execute(select(CrossbeamRecord)).all()
             records = [dict(row[0].__dict__) for row in result]
-            print(f"Loaded {len(records)} crossbeam records from database.")
             return records
     except Exception as e:
-        print(f"Error loading crossbeam records from database: {e}")
         return []
 
 def opportunity_score(record: Dict) -> float:
@@ -121,63 +110,6 @@ def get_partner_champion_flag(record: Dict) -> bool:
     """Check if the partner has a champion flag."""
     return record.get('partner_champion_flagged', False)
 
-def get_overlap_status_db(record_id: str) -> Optional[Dict]:
-    """Retrieve overlap status from the database."""
-    with Session(engine) as session:
-        row = session.query(OverlapStatus).filter_by(record_id=record_id).first()
-        return dict(row.__dict__) if row else None
-
-def set_overlap_status_db(record_id: str, resolved: bool, resolved_by: Optional[str] = None):
-    """Update overlap status in the database."""
-    with Session(engine) as session:
-        row = session.query(OverlapStatus).filter_by(record_id=record_id).first()
-        now = datetime.datetime.utcnow()
-        if row:
-            row.resolved = resolved
-            row.resolved_by = resolved_by
-            row.resolved_at = now if resolved else None
-        else:
-            row = OverlapStatus(
-                record_id=record_id,
-                resolved=resolved,
-                resolved_by=resolved_by,
-                created_at=now,
-                resolved_at=now if resolved else None
-            )
-            session.add(row)
-        session.commit()
-
-def ensure_overlap_status_exists(record_id: str):
-    """Ensure an overlap status record exists."""
-    with Session(engine) as session:
-        row = session.query(OverlapStatus).filter_by(record_id=record_id).first()
-        if not row:
-            now = datetime.datetime.utcnow()
-            row = OverlapStatus(record_id=record_id, resolved=False, resolved_by=None, created_at=now, resolved_at=None)
-            session.add(row)
-            session.commit()
-
-def migrate_prospect_to_opportunity_in_weights(db_path: str = 'scoring_weights.db'):
-    """Update scoring_weights from 'prospect' to 'opportunity'."""
-    engine = create_engine(f'sqlite:///{db_path}')
-    with engine.connect() as conn:
-        print("Updating scoring_weights: setting section='opportunity' where section='prospect'...")
-        conn.execute(text("UPDATE scoring_weights SET section = 'opportunity' WHERE section = 'prospect';"))
-        conn.commit()
-        print("Migration complete.")
-
-def migrate_add_completed_to_overlap_status(db_path: str = 'scoring_weights.db'):
-    """Add 'completed' column to overlap_status if it does not exist."""
-    engine = create_engine(f'sqlite:///{db_path}')
-    with engine.connect() as conn:
-        result = conn.execute(text("PRAGMA table_info(overlap_status);"))
-        columns = [row[1] for row in result]
-        if 'completed' not in columns:
-            print("Adding 'completed' column to overlap_status table...")
-            conn.execute(text("ALTER TABLE overlap_status ADD COLUMN completed BOOLEAN DEFAULT 0;"))
-            print("Migration complete: 'completed' column added.")
-        else:
-            print("'completed' column already exists in overlap_status table.")
 
 class OverlapQualifier:
     def __init__(self):
