@@ -258,7 +258,8 @@ def send_messages_with_gap(record_id: str, context: Dict):
 
                             current_overlap_id = None
                             return
-                    #message = f"ACCOUNT: {record_name} | PARTNER: {partner_record_name} | AE: {ae_name} | Hierarchy {hierarchy_level} | {message_type.capitalize()}"
+                    message = f"ACCOUNT: {record_name} | PARTNER: {partner_record_name} | AE: {ae_name} | Hierarchy {hierarchy_level} | {message_type.capitalize()}"
+                    """
                     message = gemini_generator.generate_overlap_message(
                         record_name=record_name,
                         overlap_type="overlap",
@@ -271,6 +272,7 @@ def send_messages_with_gap(record_id: str, context: Dict):
                         hierarchy_designations=designations,
                         ae_name=ae_name  # Pass ae_name to the message generator if needed
                     )
+                    """
                     success = send_slack_message_with_button(webhook_url, channel_id, message, RESOLVE_ACTION_URL, record_id)
                     if not success:
                         logger.error(f"Failed to send message to {member_name} in channel {channel_id}")
