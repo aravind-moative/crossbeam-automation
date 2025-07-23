@@ -23,6 +23,7 @@ class GeminiMessageGenerator:
         hierarchy_level: int = 1,
         overlap_context: dict = None,
         hierarchy_designations: dict = None,
+        ae_name: str = None
     ) -> str:
         # --- Filter and order context by weights ---
         opportunity_weights = get_weights('opportunity')
