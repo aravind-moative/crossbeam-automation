@@ -307,7 +307,7 @@ async def resolve_overlap(request: Request):
             current_overlap_id = None
     return {"message": f"Overlap {record_id} resolved"}
 
-@app.get("http://127.0.0.1:8000/api/crossbeam-records")
+@app.get("/api/crossbeam-records")
 async def get_crossbeam_records():
     """Retrieve all crossbeam records from the database."""
 
