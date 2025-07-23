@@ -1,67 +1,103 @@
-import requests
+import os
 import json
 import time
 import threading
-from fastapi import FastAPI, Request, Form
-from typing import Dict
+from typing import Dict, List, Optional
+from fastapi import FastAPI, Request, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
+from pydantic import BaseModel
+import requests
+from sqlalchemy import create_engine, text
+import sqlite3
 from contextlib import asynccontextmanager
 from scripts.llm_utils import GeminiMessageGenerator
 from scripts.overlap_utils import (
     load_crossbeam_data,
-    prospect_score,
+    opportunity_score,
     partner_score,
     get_logo_potential,
     get_partner_champion_flag,
     OverlapQualifier
 )
-from fastapi.responses import JSONResponse
-import os
+from dotenv import load_dotenv
+import logging
 
+# Configure logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
+
+# Load environment variables
+load_dotenv()
+
+# Constants
+DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///scoring_weights.db")
 SLACK_BOT_TOKEN = os.getenv("SLACK_BOT_TOKEN")
+FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:5173")
+RESOLVE_ACTION_URL = os.getenv("RESOLVE_ACTION_URL", "http://localhost:8000/api/resolve-overlap")
+MESSAGE_DELAY_SECONDS = int(os.getenv("MESSAGE_DELAY_SECONDS", 2))
+DEFAULT_COMPANY_NAME = os.getenv("DEFAULT_COMPANY_NAME", "Moative")
+SLACK_USERNAME = os.getenv("SLACK_USERNAME", "Moat")
+SLACK_ICON_EMOJI = os.getenv("SLACK_ICON_EMOJI", ":ghost:")
 
-app = FastAPI()
-
-# Load internal team config
-with open("data/we.json", "r") as f:
-    INTERNAL_TEAM = json.load(f)
-
-# Initialize overlap tracking by record_id
+# Initialize global state
 resolved_state: Dict[str, bool] = {}
+processed_overlaps: Dict[str, bool] = {}  # Tracks all processed overlaps, not just those with logo potential
 state_lock = threading.Lock()
-message_count: Dict[str, int] = {}
-escalation_state: Dict[str, int] = {}
-gemini_generator = GeminiMessageGenerator()
-mail_crafting_in_progress: Dict[str, bool] = {}
-
-# Add a new dictionary to track who resolved each overlap
-resolved_by: Dict[str, str] = {}
-
-# Initialize the qualifier
+messaging_lock = threading.Lock()
+current_overlap_id: Optional[str] = None
 overlap_qualifier = OverlapQualifier()
+gemini_generator = GeminiMessageGenerator()
 
-def send_slack_message(webhook_url, channel_id, text, username="Moat", icon_emoji=":ghost:"):
+class InternalTeamMember(BaseModel):
+    name: str
+    designation: str
+    hierarchy: int
+    channel_id: str
+    webhook_url: str
+    max_message: int
+
+def load_internal_team_from_db() -> Dict[str, dict]:
+    """Load internal team data from the database."""
+    try:
+        with sqlite3.connect(DATABASE_URL.replace("sqlite:///", "")) as conn:
+            conn.row_factory = sqlite3.Row
+            cursor = conn.cursor()
+            cursor.execute("SELECT id, name, designation, hierarchy, channel_id, webhook_url, max_message FROM internal_team")
+            team = {row["name"]: dict(row) for row in cursor.fetchall()}
+        logger.info("Successfully loaded internal team from DB")
+        return team
+    except sqlite3.Error as e:
+        logger.error(f"Error loading internal team from DB: {e}")
+        return {}
+
+INTERNAL_TEAM = load_internal_team_from_db()
+
+def send_slack_message(webhook_url: str, channel_id: str, text: str) -> bool:
+    """Send a Slack message to the specified channel."""
     payload = {
         "channel": channel_id,
-        "username": username,
+        "username": SLACK_USERNAME,
         "text": text,
-        "icon_emoji": icon_emoji
+        "icon_emoji": SLACK_ICON_EMOJI
     }
-    response = requests.post(webhook_url, json=payload)
-    if response.status_code != 200:
-        print(f"Request to Slack returned error {response.status_code}, the response is:\n{response.text}")
-    else:
-        print("Message sent successfully!")
+    try:
+        response = requests.post(webhook_url, json=payload, timeout=5)
+        response.raise_for_status()
+        logger.info(f"Message sent successfully to {channel_id}")
+        return True
+    except requests.RequestException as e:
+        logger.error(f"Failed to send Slack message to {channel_id}: {e}")
+        return False
 
-def send_slack_message_with_button(webhook_url, channel_id, text, action_url, record_id, username="Moat", icon_emoji=":ghost:"):
+def send_slack_message_with_button(webhook_url: str, channel_id: str, text: str, action_url: str, record_id: str) -> bool:
+    """Send a Slack message with a 'RESOLVE' button."""
     payload = {
         "channel": channel_id,
-        "username": username,
-        "icon_emoji": icon_emoji,
+        "username": SLACK_USERNAME,
+        "icon_emoji": SLACK_ICON_EMOJI,
         "blocks": [
-            {
-                "type": "section",
-                "text": {"type": "mrkdwn", "text": text}
-            },
+            {"type": "section", "text": {"type": "mrkdwn", "text": text}},
             {
                 "type": "actions",
                 "elements": [
@@ -75,319 +111,420 @@ def send_slack_message_with_button(webhook_url, channel_id, text, action_url, re
             }
         ]
     }
-    response = requests.post(webhook_url, json=payload)
-    if response.status_code != 200:
-        print(f"Request to Slack returned error {response.status_code}, the response is:\n{response.text}")
-    else:
-        print("Message with button sent successfully!")
+    try:
+        response = requests.post(webhook_url, json=payload, timeout=5)
+        response.raise_for_status()
+        logger.info(f"Message with button sent successfully to {channel_id} for record {record_id}")
+        return True
+    except requests.RequestException as e:
+        logger.error(f"Failed to send Slack message with button to {channel_id}: {e}")
+        return False
 
-def get_hierarchy_designations(internal_team):
-    # Build a mapping of hierarchy level (as str) to designation from the internal team config
+def get_hierarchy_designations(internal_team: Dict[str, dict]) -> Dict[str, str]:
+    """Map hierarchy levels to designations."""
     designations = {}
     for member in internal_team.values():
-        if isinstance(member, dict):
-            level = str(member.get("hierarchy"))
-            designation = member.get("designation")
-            if level and designation and level not in designations:
-                designations[level] = designation
+        level = str(member.get("hierarchy"))
+        designation = member.get("designation")
+        if level and designation and level not in designations:
+            designations[level] = designation
     return designations
 
-def send_messages_with_gap(record_id: str, overlap_context: dict):
-    # Find the relevant overlap record by record_id from synthetic data
-    overlap_record = overlap_qualifier.get_enhanced_record(record_id)
-    if not overlap_record:
-        print(f"No overlap record found for record_id '{record_id}'.")
-        return
-    
-    record_name = overlap_record.get("record_name", "Unknown Account")
-    partner_record_name = overlap_record.get("partner_record_name", "Unknown Partner")
-    partner_company_type = overlap_record.get("partner_record_company_type", "Unknown")
-    
-    # Action URL for the OKAY button
-    action_url = f"https://65371c2620e0.ngrok-free.app/resolve_overlap"
+def get_best_overlap(exclude_id: Optional[str] = None) -> Optional[Dict]:
+    """Find the best overlap, prioritizing logo_potential=1, then highest priority_score, then lexicographically by record_name."""
+    all_overlaps = [
+        {
+            "record_id": record.get("id"),
+            "record_name": record.get("opportunity_name", "Unknown"),
+            "partner_record_name": record.get("partner_name", "Unknown"),
+            "context": context,
+            "priority_score": context.get("priority_score", 0),
+            "logo_potential": record.get("logo_potential", False)
+        }
+        for record in overlap_qualifier.crossbeam_data
+        if (should_process := overlap_qualifier.should_process_overlap(record)[0])
+        for context in [overlap_qualifier.should_process_overlap(record)[1]]
+        if record.get("id") != exclude_id and not resolved_state.get(record.get("id"), False)
+        and not processed_overlaps.get(record.get("id"), False)
+    ]
+    if not all_overlaps:
+        logger.debug("No qualifying unprocessed overlaps found")
+        return None
+    # Sort overlaps: prioritize logo_potential, then priority_score (descending), then record_name (lexicographically)
+    sorted_overlaps = sorted(
+        all_overlaps,
+        key=lambda x: (x["logo_potential"], x["priority_score"], x["record_name"]),
+        reverse=True
+    )
+    best = sorted_overlaps[0]
+    logger.debug(f"Selected best overlap: {best['record_id']}, score={best['priority_score']}, logo_potential={best['logo_potential']}")
+    return best
 
-    # HIERARCHY 1: Send 3 messages (Main + 2 follow-ups)
-    print(f"🎯 Starting HIERARCHY 1 for {record_id} ({record_name} ↔ {partner_record_name})")
-    
-    # Send main message to Hierarchy 1
-    send_message_to_hierarchy(record_id, record_name, partner_record_name, partner_company_type, 
-                             overlap_context, 1, "main", action_url)
-    time.sleep(10)
-    
-    # Check if resolved
-    if resolved_state.get(record_id):
-        print(f"✅ Overlap resolved for {record_id} at Hierarchy 1")
-        return
-    
-    # Send follow-up 1 to Hierarchy 1
-    send_message_to_hierarchy(record_id, record_name, partner_record_name, partner_company_type, 
-                             overlap_context, 1, "followup1", action_url)
-    time.sleep(10)
-    
-    # Check if resolved
-    if resolved_state.get(record_id):
-        print(f"✅ Overlap resolved for {record_id} at Hierarchy 1")
-        return
-    
-    # Send follow-up 2 to Hierarchy 1
-    send_message_to_hierarchy(record_id, record_name, partner_record_name, partner_company_type, 
-                             overlap_context, 1, "followup2", action_url)
-    time.sleep(10)
-    
-    # Check if resolved
-    if resolved_state.get(record_id):
-        print(f"✅ Overlap resolved for {record_id} at Hierarchy 1")
-        return
-    
-    # HIERARCHY 2: Send 2 messages (Main + 1 follow-up)
-    print(f"🔄 Escalating to HIERARCHY 2 for {record_id}")
-    
-    # Send main message to Hierarchy 2
-    send_message_to_hierarchy(record_id, record_name, partner_record_name, partner_company_type, 
-                             overlap_context, 2, "main", action_url)
-    time.sleep(10)
-    
-    # Check if resolved
-    if resolved_state.get(record_id):
-        print(f"✅ Overlap resolved for {record_id} at Hierarchy 2")
-        return
-    
-    # Send follow-up to Hierarchy 2
-    send_message_to_hierarchy(record_id, record_name, partner_record_name, partner_company_type, 
-                             overlap_context, 2, "followup1", action_url)
-    time.sleep(10)
-    
-    # Check if resolved
-    if resolved_state.get(record_id):
-        print(f"✅ Overlap resolved for {record_id} at Hierarchy 2")
-        return
-    
-    # HIERARCHY 3: Send 1 message (Main only)
-    print(f"🔄 Escalating to HIERARCHY 3 for {record_id}")
-    
-    # Send main message to Hierarchy 3
-    send_message_to_hierarchy(record_id, record_name, partner_record_name, partner_company_type, 
-                             overlap_context, 3, "main", action_url)
-    
-    print(f"🏁 Completed all messages for {record_id} (6 total messages sent)")
-
-def send_message_to_hierarchy(record_id: str, record_name: str, partner_record_name: str, 
-                             partner_company_type: str, overlap_context: dict, hierarchy_level: int, 
-                             message_type: str, action_url: str):
-    """Send a specific message to a specific hierarchy level"""
-    # Find the appropriate internal team member(s) for this hierarchy
-    internal_members = []
-    for member_name, member_info in INTERNAL_TEAM.items():
-        if isinstance(member_info, dict) and member_info.get("hierarchy") == hierarchy_level:
-            internal_members.append(member_info)
-    if not internal_members:
-        print(f"❌ No Hierarchy {hierarchy_level} member found in internal team.")
-        return
-    # Build dynamic hierarchy designations mapping
-    hierarchy_designations = get_hierarchy_designations(INTERNAL_TEAM)
-    # Find the Account Executive (AE) name from INTERNAL_TEAM
-    ae_name = None
-    for member in INTERNAL_TEAM.values():
-        if isinstance(member, dict) and member.get("hierarchy") == 1:
-            ae_name = member.get("name")
-            break
-    # Send message to all members at this hierarchy level
-    for internal_member in internal_members:
-        webhook_url = internal_member["webhook_url"]
-        channel_id = internal_member["channel_id"]
-        member_name = internal_member["name"]
-        # Get company name from we.json
-        company_name = INTERNAL_TEAM.get("company")
-        if not company_name:
-            company_name = "Moative"
-        # Find the internal team member/channel name and designation for personalization
-        channel_name = None
-        designation = None
-        for member in INTERNAL_TEAM.values():
-            if isinstance(member, dict) and member.get("channel_id") == channel_id:
-                channel_name = member.get("name")
-                designation = member.get("designation")
-                break
-        # Call the message generator with dynamic designations and AE name
-        message = gemini_generator.generate_overlap_message(
-            record_name=record_name,
-            overlap_type="overlap",  # or pass actual type if available
-            internal_name=member_name,
-            partner_record_name=partner_record_name,
-            partner_company_type=partner_company_type,
-            count=1 if message_type == "main" else (2 if message_type == "followup1" else 3),
-            hierarchy_level=hierarchy_level,
-            overlap_context=overlap_context,
-            hierarchy_designations=hierarchy_designations,
-            ae_name=ae_name
-        )
-        send_slack_message_with_button(webhook_url, channel_id, message, action_url, record_id)
+def trigger_overlap_processing(exclude_id: Optional[str] = None):
+    """Trigger processing of the best overlap if none is currently being processed."""
+    global current_overlap_id
+    with state_lock:
+        if current_overlap_id:
+            logger.info(f"Skipping overlap processing; {current_overlap_id} is being processed")
+            return
+        best_overlap = get_best_overlap(exclude_id)
+        if best_overlap:
+            best_id = best_overlap["record_id"]
+            logger.info(f"New best overlap detected: {best_id}")
+            resolved_state[best_id] = False
+            processed_overlaps[best_id] = True
+            current_overlap_id = best_id
+            threading.Thread(
+                target=send_messages_with_gap,
+                args=(best_id, best_overlap["context"]),
+                daemon=True
+            ).start()
+            logger.info(f"Started processing for overlap: {best_id} (in background thread)")
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    print("Starting overlap analysis and selection...")
-    all_overlaps = []
-    for record in overlap_qualifier.crossbeam_data:
-        record_id = record.get("record_id")
-        record_name = record.get("record_name")
-        partner_record_name = record.get("partner_record_name")
-        should_process, context = overlap_qualifier.should_process_overlap(record)
-        if should_process:
-            priority_score = context.get("priority_score", 0)
-            print(f"📊 ANALYZED: {record_name} with {partner_record_name} (ID: {record_id})")
-            print(f"   Priority Score: {priority_score}")
-            print(f"   LOGO Potential: {context.get('logo_potential', False)}")
-            print(f"   Partner Champion: {context.get('has_champion', False)}")
-            all_overlaps.append({
-                "record_id": record_id,
-                "record_name": record_name,
-                "partner_record_name": partner_record_name,
-                "context": context
-            })
-        else:
-            print(f"❌ SKIPPED: {record_name} with {partner_record_name} (ID: {record_id})")
-    if not all_overlaps:
-        print("❌ No overlaps found to analyze.")
+    """FastAPI lifespan event handler for startup analysis."""
+    global current_overlap_id
+    logger.info("Starting overlap analysis and selection...")
+    engine = create_engine(DATABASE_URL)
+    try:
+        with engine.connect() as conn:
+            result = conn.execute(text("SELECT * FROM scoring_weights"))
+            weights = [dict(row) for row in result.mappings()]
+        logger.debug(f"All scoring_weights from DB: {weights}")
+    except Exception as e:
+        logger.error(f"Error loading scoring weights: {e}")
         yield
         return
 
-    best_overlap = max(all_overlaps, key=lambda x: x["context"].get("priority_score", 0))
-    record_id = best_overlap["record_id"]
-    record_name = best_overlap["record_name"]
-    partner_record_name = best_overlap["partner_record_name"]
-    context = best_overlap["context"]
-    priority_score = context.get("priority_score", 0)
-    print(f"\n🏆 SELECTED BEST OVERLAP FROM ALL AVAILABLE:")
-    print(f"   {record_name} ↔ {partner_record_name} (ID: {record_id})")
-    print(f"   Priority Score: {priority_score}")
-    print(f"   LOGO Potential: {context.get('logo_potential', False)}")
-    print(f"   Partner Champion: {context.get('has_champion', False)}")
-    with state_lock:
-        resolved_state[record_id] = False
-    threading.Thread(target=send_messages_with_gap, args=(record_id, context), daemon=True).start()
-    print(f"✅ Started processing for the best overlap: {record_id} (in background thread)")
-    print("Overlap processing initialization complete.")
+    best_overlap = get_best_overlap()
+    if best_overlap:
+        record_id = best_overlap["record_id"]
+        record_name = best_overlap["record_name"]
+        partner_record_name = best_overlap["partner_record_name"]
+        context = best_overlap["context"]
+        priority_score = context.get("priority_score", 0)
+        logger.info(f"SELECTED BEST OVERLAP: {record_name} ↔ {partner_record_name} (ID: {record_id}), "
+                    f"Priority Score: {priority_score}, LOGO Potential: {context.get('logo_potential', False)}, "
+                    f"Partner Champion: {context.get('has_champion', False)}")
+        with state_lock:
+            resolved_state[record_id] = False
+            processed_overlaps[record_id] = True
+            current_overlap_id = record_id
+        threading.Thread(target=send_messages_with_gap, args=(record_id, context), daemon=True).start()
+        logger.info(f"Started processing for the best overlap: {record_id} (in background thread)")
+    else:
+        logger.info("No qualifying overlaps found at startup")
     yield
+    with state_lock:
+        current_overlap_id = None
+
+def send_messages_with_gap(record_id: str, context: Dict):
+    """Send Slack messages to team members one at a time, escalating through hierarchy levels."""
+    global current_overlap_id
+    designations = get_hierarchy_designations(INTERNAL_TEAM)
+    print(designations, "DESIGNATIONS")
+    max_hierarchy = max(
+        (member.get("hierarchy") for member in INTERNAL_TEAM.values() if isinstance(member.get("hierarchy"), (int, float))),
+        default=0
+    )
+    record = overlap_qualifier.get_enhanced_record(record_id)
+    record_name = record.get("opportunity_name", "Unknown") if record else "Unknown"
+    partner_record_name = record.get("partner_name", "Unknown") if record else "Unknown"
+    partner_company_type = record.get("partner_size_label", "Unknown") if record else "Unknown"
+    ae_name = record.get("ae_name", "Unknown") if record else "Unknown"
+
+    # Log message plan
+    logger.info(f"Message plan for overlap {record_id}:")
+    for hierarchy_level in range(1, int(max_hierarchy) + 1):
+        members = [m for m in INTERNAL_TEAM.values() if m.get("hierarchy") == hierarchy_level]
+        for member in members:
+            max_msgs = member.get("max_message", 0)
+            logger.info(f"  Hierarchy {hierarchy_level}, {member['name']}: {max_msgs} message(s)")
+
+    with messaging_lock:
+        for hierarchy_level in range(1, int(max_hierarchy) + 1):
+            internal_members = [
+                member for member in INTERNAL_TEAM.values()
+                if isinstance(member, dict) and member.get("hierarchy") == hierarchy_level
+            ]
+            if not internal_members:
+                logger.warning(f"No Hierarchy {hierarchy_level} member found in internal team")
+                continue
+
+            for member in internal_members:
+                max_message = member.get("max_message", 0)
+                if max_message < 1:
+                    logger.warning(f"No messages allowed for {member['name']} at Hierarchy {hierarchy_level}, skipping")
+                    continue
+                message_types = ["main"] + [f"followup{i}" for i in range(1, max_message)]
+                webhook_url = member.get("webhook_url")
+                channel_id = member.get("channel_id")
+                member_name = member.get("name")
+                if not webhook_url or not channel_id:
+                    logger.warning(f"No webhook_url or channel_id for {member_name}, skipping")
+                    continue
+
+                for idx, message_type in enumerate(message_types):
+                    with state_lock:
+                        if resolved_state.get(record_id, False):
+                            logger.info(f"Overlap resolved for {record_id} at Hierarchy {hierarchy_level}")
+                            current_overlap_id = None
+                            return
+
+                    message = gemini_generator.generate_overlap_message(
+                                            record_name=record_name,
+                                            overlap_type="overlap",
+                                            internal_name=member_name,
+                                            partner_record_name=partner_record_name,
+                                            partner_company_type=partner_company_type,
+                                            count=idx + 1,
+                                            hierarchy_level=hierarchy_level,
+                                            overlap_context=context,
+                                            hierarchy_designations=designations,
+                                            ae_name=ae_name
+                                        )
+                                            
+                    #message = f"ACCOUNT: {record_name} | PARTNER: {partner_record_name} | Hierarchy {hierarchy_level} | {message_type.capitalize()}"
+                    success = send_slack_message_with_button(webhook_url, channel_id, message, RESOLVE_ACTION_URL, record_id)
+                    if not success:
+                        logger.error(f"Failed to send message to {member_name} at hierarchy {hierarchy_level}")
+                    time.sleep(MESSAGE_DELAY_SECONDS)
+
+        logger.info(f"Completed all messages for {record_id}")
+        with state_lock:
+            current_overlap_id = None
 
 app = FastAPI(lifespan=lifespan)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"], 
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
-@app.post("/resolve_overlap")
-async def resolve_overlap_slash(
-    command: str = Form(...),
-    text: str = Form(...),
-    user_id: str = Form(...),
-    channel_id: str = Form(...)
-):
-    # Find which internal team member's channel this is
-    internal_member = None
-    internal_designation = None
-    for name, info in INTERNAL_TEAM.items():
-        if info.get("channel_id") == channel_id:
-            internal_member = name
-            internal_designation = info.get("designation", "Team Member")
-            break
-
-    if not internal_member:
-        return {"response_type": "ephemeral", "text": f"No internal team member found for channel {channel_id}."}
-
-    # Find all unresolved overlaps
-    unresolved_overlaps = []
-    for record_id, is_resolved in resolved_state.items():
-        if not is_resolved:  # Only unresolved overlaps
-            unresolved_overlaps.append(record_id)
-        
-    # If all overlaps are already resolved, say who resolved it
-    if not unresolved_overlaps:
-        # Try to find who resolved the last overlap
-        last_resolver = None
-        last_resolver_designation = None
-        for record_id in resolved_state:
-            if resolved_by.get(record_id):
-                last_resolver = resolved_by[record_id]
-                # Find designation from we.json
-                for info in INTERNAL_TEAM.values():
-                    if isinstance(info, dict) and info.get("designation") == last_resolver:
-                        last_resolver_designation = info.get("designation")
-                        break
-        if last_resolver:
-            return {"response_type": "ephemeral", "text": f"Overlap already resolved by {last_resolver}."}
-        else:
-            return {"response_type": "ephemeral", "text": "No active overlaps to resolve."}
-        
-    # If overlap is already resolved, say who resolved it
-    already_resolved = True
-    resolver_designation = None
-    for record_id in unresolved_overlaps:
-        if resolved_by.get(record_id):
-            resolver_designation = resolved_by[record_id]
-        if not resolved_state.get(record_id):
-            already_resolved = False
-            break
-    if already_resolved and resolver_designation:
-        return {"response_type": "ephemeral", "text": f"Overlap already resolved by {resolver_designation}."}
-
-    # Resolve all active overlaps and record who resolved it
+@app.post("/api/resolve-overlap")
+async def resolve_overlap(request: Request):
+    """Handle overlap resolution via Slack button."""
+    logger.info(f"Received request to resolve overlap: {await request.json()}")
+    data = await request.json()
+    record_id = data.get("record_id")
+    if not record_id:
+        logger.error("Missing record_id in resolve-overlap request")
+        raise HTTPException(status_code=400, detail="Missing record_id")
     with state_lock:
-        for record_id in unresolved_overlaps:
-            resolved_state[record_id] = True
-            message_count[record_id] = 0  # Reset the count
-            escalation_state[record_id] = 0  # Reset escalation state
-            if internal_designation:
-                resolved_by[record_id] = internal_designation
+        resolved_state[record_id] = True
+        logger.info(f"Overlap {record_id} marked as resolved")
+        if current_overlap_id == record_id:
+            current_overlap_id = None
+    return {"message": f"Overlap {record_id} resolved"}
 
-    return {"response_type": "in_channel", "text": f"Marked all active overlaps as resolved. Thank you, {internal_member}!"}
-
-@app.post("/slack/actions")
-async def slack_actions(request: Request):
-    form = await request.form()
-    payload = form.get("payload")
-    if not payload:
-        return JSONResponse(content={"text": "No payload received."})
+@app.get("/api/crossbeam-records")
+async def get_crossbeam_records():
+    """Retrieve all crossbeam records from the database."""
+    logger.info("Received GET request for /api/crossbeam-records")
+    engine = create_engine(DATABASE_URL)
     try:
-        payload_data = json.loads(payload)
-        action_id = payload_data["actions"][0]["action_id"]
-        response_url = payload_data.get("response_url")
-        record_id = payload_data["actions"][0].get("value")
-        channel_id = payload_data["channel"]["id"]
-        message_ts = payload_data["message"]["ts"]
+        with engine.connect() as conn:
+            result = conn.execute(text("SELECT * FROM crossbeam_records"))
+            records = [dict(row) for row in result.mappings()]
+        logger.info(f"Successfully retrieved {len(records)} crossbeam records")
+        return records
     except Exception as e:
-        return JSONResponse(content={"text": f"Error parsing payload: {e}"})
-    if action_id == "resolve_overlap":
-        with state_lock:
-            resolved_state[record_id] = True
-        # Find the webhook URL for the channel that resolved it
-        webhook_url = None
-        for member in INTERNAL_TEAM.values():
-            if isinstance(member, dict) and member.get("channel_id") == channel_id:
-                webhook_url = member.get("webhook_url")
-                break
-        # Remove the RESOLVE button by updating the original message
-        if SLACK_BOT_TOKEN and channel_id and message_ts:
-            # Get the original message text and blocks, but remove the actions block
-            original_blocks = payload_data["message"].get("blocks", [])
-            # Remove the actions block (usually the last block)
-            new_blocks = [block for block in original_blocks if block.get("type") != "actions"]
-            # Fallback: if all blocks are actions, just show the first section
-            if not new_blocks and original_blocks:
-                for block in original_blocks:
-                    if block.get("type") == "section":
-                        new_blocks.append(block)
-                        break
-            headers = {
-                "Authorization": f"Bearer {SLACK_BOT_TOKEN}",
-                "Content-Type": "application/json"
-            }
-            update_payload = {
-                "channel": channel_id,
-                "ts": message_ts,
-                "blocks": new_blocks
-            }
-            requests.post("https://slack.com/api/chat.update", headers=headers, json=update_payload)
-        if webhook_url:
-            send_slack_message(webhook_url, channel_id, "Thanks for resolving the overlap!")
-        return JSONResponse(content={"text": "Marked as resolved. Thank you!"})
-    return JSONResponse(content={"text": "Unknown action."})
+        logger.error(f"Error retrieving crossbeam records: {e}")
+        raise HTTPException(status_code=500, detail=f"Error retrieving crossbeam records: {e}")
+
+@app.get("/api/pipeline-scores")
+async def get_pipeline_scores():
+    """Retrieve crossbeam records with computed opportunity and partner scores."""
+    logger.info("Received GET request for /api/pipeline-scores")
+    engine = create_engine(DATABASE_URL)
+    try:
+        with engine.connect() as conn:
+            result = conn.execute(text("SELECT * FROM crossbeam_records"))
+            records = [dict(row) for row in result.mappings()]
+    except Exception as e:
+        logger.error(f"Error retrieving pipeline scores: {e}")
+        raise HTTPException(status_code=500, detail=f"Error retrieving pipeline scores: {e}")
+
+    for rec in records:
+        o_score = opportunity_score(rec)
+        p_score = partner_score(rec)
+        combined = (o_score + p_score) / 2
+        rec.update({
+            "opportunity_score": o_score,
+            "partner_score": p_score,
+            "combined_score_percent": (combined / 5) * 100
+        })
+    logger.info(f"Successfully computed scores for {len(records)} records")
+    return records
+
+@app.get("/api/internal-team")
+async def get_internal_team():
+    """Retrieve all internal team members from the database."""
+    logger.info("Received GET request for /api/internal-team")
+    try:
+        with sqlite3.connect(DATABASE_URL.replace("sqlite:///", "")) as conn:
+            conn.row_factory = sqlite3.Row
+            cursor = conn.cursor()
+            cursor.execute("SELECT id, name, designation, hierarchy, channel_id, webhook_url, max_message FROM internal_team")
+            team_members = [dict(row) for row in cursor.fetchall()]
+        logger.info(f"Successfully retrieved {len(team_members)} internal team members")
+        return JSONResponse(content=team_members)
+    except sqlite3.Error as e:
+        logger.error(f"Error retrieving internal team: {e}")
+        raise HTTPException(status_code=500, detail=f"Error retrieving internal team: {e}")
+
+@app.post("/api/internal-team")
+async def add_internal_team_member(member: InternalTeamMember):
+    """Add a new internal team member to the database and check for new best overlap."""
+    logger.info(f"Received POST request for /api/internal-team: {member.dict()}")
+    try:
+        with sqlite3.connect(DATABASE_URL.replace("sqlite:///", "")) as conn:
+            cursor = conn.cursor()
+            cursor.execute(
+                """
+                INSERT INTO internal_team (name, designation, hierarchy, channel_id, webhook_url, max_message)
+                VALUES (?, ?, ?, ?, ?, ?)
+                """,
+                (member.name, member.designation, member.hierarchy, member.channel_id, member.webhook_url, member.max_message)
+            )
+            conn.commit()
+            new_id = cursor.lastrowid
+        global INTERNAL_TEAM
+        INTERNAL_TEAM = load_internal_team_from_db()  # Reload internal team
+        logger.info(f"Team member added successfully, ID: {new_id}")
+        trigger_overlap_processing()  # Check for new best overlap
+        return {"message": "Team member added successfully", "id": new_id}
+    except sqlite3.Error as e:
+        logger.error(f"Error adding team member: {e}")
+        raise HTTPException(status_code=500, detail=f"Error adding team member: {e}")
+
+from fastapi import Path
+
+@app.put("/api/internal-team/{member_id}")
+async def update_internal_team_member(
+    member_id: int = Path(..., description="ID of the internal team member to update"),
+    member: InternalTeamMember = ...
+):
+    """Update an existing internal team member in the database and reload team data."""
+    logger.info(f"Received PUT request for /api/internal-team/{member_id}: {member.dict()}")
+    try:
+        with sqlite3.connect(DATABASE_URL.replace("sqlite:///", "")) as conn:
+            cursor = conn.cursor()
+            cursor.execute(
+                """
+                UPDATE internal_team
+                SET name = ?, designation = ?, hierarchy = ?, channel_id = ?, webhook_url = ?, max_message = ?
+                WHERE id = ?
+                """,
+                (member.name, member.designation, member.hierarchy, member.channel_id, member.webhook_url, member.max_message, member_id)
+            )
+            if cursor.rowcount == 0:
+                logger.warning(f"No team member found with ID: {member_id}")
+                raise HTTPException(status_code=404, detail="Team member not found")
+            conn.commit()
+
+        global INTERNAL_TEAM
+        INTERNAL_TEAM = load_internal_team_from_db()  # Reload internal team
+        logger.info(f"Team member updated successfully, ID: {member_id}")
+        return {"message": "Team member updated successfully", "id": member_id}
+
+    except sqlite3.Error as e:
+        logger.error(f"Error updating team member: {e}")
+        raise HTTPException(status_code=500, detail=f"Error updating team member: {e}")
+
+@app.delete("/api/internal-team/{member_id}")
+async def delete_internal_team_member(member_id: int):
+    """Delete an internal team member by ID and check for new best overlap."""
+    logger.info(f"Received DELETE request for /api/internal-team/{member_id}")
+    try:
+        with sqlite3.connect(DATABASE_URL.replace("sqlite:///", "")) as conn:
+            cursor = conn.cursor()
+            cursor.execute("SELECT * FROM internal_team WHERE id = ?", (member_id,))
+            if not cursor.fetchone():
+                logger.error(f"Team member with ID {member_id} not found")
+                raise HTTPException(status_code=404, detail="Team member not found")
+            cursor.execute("DELETE FROM internal_team WHERE id = ?", (member_id,))
+            conn.commit()
+        global INTERNAL_TEAM
+        INTERNAL_TEAM = load_internal_team_from_db()  # Reload internal team
+        logger.info(f"Team member with ID {member_id} deleted successfully")
+        trigger_overlap_processing()  # Check for new best overlap
+        return {"message": f"Team member with ID {member_id} deleted successfully"}
+    except sqlite3.Error as e:
+        logger.error(f"Error deleting team member: {e}")
+        raise HTTPException(status_code=500, detail=f"Error deleting team member: {e}")
+
+@app.get("/api/weights")
+async def get_weights():
+    """Retrieve all scoring weights from the database."""
+    logger.info("Received GET request for /api/weights")
+    try:
+        with sqlite3.connect(DATABASE_URL.replace("sqlite:///", "")) as conn:
+            conn.row_factory = sqlite3.Row
+            cursor = conn.cursor()
+            cursor.execute("SELECT * FROM scoring_weights")
+            weights = [{"name": row["parameter"], "type": row["section"], "weight": row["weight"]} for row in cursor.fetchall()]
+        logger.info(f"Successfully retrieved {len(weights)} scoring weights")
+        return JSONResponse(content=weights)
+    except sqlite3.Error as e:
+        logger.error(f"Error retrieving weights: {e}")
+        raise HTTPException(status_code=500, detail=f"Error retrieving weights: {e}")
+
+@app.post("/api/weights")
+async def save_weights(request: Request):
+    """Update scoring weights in the database and check for new best overlap."""
+    logger.info(f"Received POST request for /api/weights: {await request.json()}")
+    data = await request.json()
+    opportunity_weights = flatten_weights(data.get("opportunity", {}))
+    partner_weights = flatten_weights(data.get("partner", {}))
+
+    try:
+        with sqlite3.connect(DATABASE_URL.replace("sqlite:///", "")) as conn:
+            cursor = conn.cursor()
+            for key, weight in opportunity_weights.items():
+                logger.info(f"Updating opportunity weight → {key}: {weight}")
+                cursor.execute(
+                    """
+                    INSERT OR REPLACE INTO scoring_weights (parameter, section, weight)
+                    VALUES (?, ?, ?)
+                    """,
+                    (key, "opportunity", weight)
+                )
+            for key, weight in partner_weights.items():
+                logger.info(f"Updating partner weight → {key}: {weight}")
+                cursor.execute(
+                    """
+                    INSERT OR REPLACE INTO scoring_weights (parameter, section, weight)
+                    VALUES (?, ?, ?)
+                    """,
+                    (key, "partner", weight)
+                )
+            conn.commit()
+        logger.info("Weights updated successfully, triggering overlap processing")
+        trigger_overlap_processing()  # Check for new best overlap
+        return JSONResponse(content={"message": "Weights updated successfully"})
+    except sqlite3.Error as e:
+        logger.error(f"Error updating weights: {e}")
+        raise HTTPException(status_code=500, detail=f"Error updating weights: {e}")
+
+def flatten_weights(weights: Dict) -> Dict[str, float]:
+    """Flatten nested weight dictionary into a simple key-value map."""
+    result = {}
+    for key, value in weights.items():
+        if isinstance(value, dict) and "weight" in value:
+            result[key] = float(value["weight"])
+        else:
+            result[key] = float(value)
+    return result
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
+    uvicorn.run(
+        "main:app",
+        host=os.getenv("HOST", "0.0.0.0"),
+        port=int(os.getenv("PORT", 8000)),
+        reload=os.getenv("ENV", "development") == "development"
+    )

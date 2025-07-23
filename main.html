@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scoring Parameter Configuration</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        body {
+            font-family: Helvetica, Arial, sans-serif;
+            background: #121212;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+        }
+        h1, h2 {
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            color: #F5F6F2;
+        }
+        h1 {
+            margin-top: 2.5rem;
+            color: #F5F6F2;
+            font-size: 2.3rem;
+            font-weight: 700;
+            letter-spacing: -1px;
+            text-align: center;
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            justify-content: center;
+        }
+        .box {
+            background: #1E1E1E;
+            border-radius: 20px;
+            width: 30%;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+            padding: 2.2rem 2rem 1.7rem 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            border: 2px solid #23272e;
+            transition: box-shadow 0.2s, border 0.2s;
+        }
+        .box:hover {
+            box-shadow: 0 8px 32px rgba(245,246,242,0.18);
+            border: 2px solid #F5F6F2;
+        }
+        .box h2 {
+            margin-top: 0;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            color: #F5F6F2;
+            text-align: center;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+        }
+        .param-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.1rem;
+            gap: 0.7rem;
+        }
+        .param-row label {
+            flex: 1 1 60%;
+            font-size: 1.07rem;
+            color: #e0e0e0;
+        }
+        .param-row input[type="number"] {
+            width: 70px;
+            padding: 0.35rem 0.5rem;
+            border-radius: 7px;
+            border: 1px solid #333;
+            font-size: 1.07rem;
+            background: #232323;
+            color: #fff;
+            transition: border 0.2s;
+        }
+        .param-row input[type="number"]:focus {
+            border: 1.5px solid #F5F6F2;
+            outline: none;
+        }
+        .param-row input[type="checkbox"] {
+            accent-color: #4f8cff;
+            width: 20px;
+            height: 20px;
+        }
+        .total-row {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            margin-top: 0.7rem;
+            font-size: 1.13rem;
+            font-weight: 600;
+            color: #e0e0e0;
+        }
+        .total-row span {
+            margin-left: 0.5rem;
+            transition: color 0.2s;
+        }
+        .total-row .invalid {
+            color: #e74c3c;
+        }
+        .total-row .valid {
+            color: #22c55e;
+        }
+        .warning {
+            color: #e74c3c;
+            font-size: 1.01rem;
+            margin-top: 0.5rem;
+            text-align: right;
+        }
+        .submit-btn {
+            margin: 1rem auto 1.4rem auto;
+            display: block;
+            background: #232323;
+            color: #fff;
+            font-weight: 600;
+            font-size: 3vw;
+            border: none;
+            border-radius: 12px;
+            padding: 1rem 3.2rem;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(79,140,255,0.08);
+            transition: background 0.2s, box-shadow 0.2s;
+            width: 30%;
+        }
+        .submit-btn:disabled {
+            background: #bdbdbd;
+            cursor: not-allowed;
+        }
+        .submit-btn:hover:not(:disabled) {
+            background: #F5F6F2;
+            color: #232323;
+            box-shadow: 0 4px 16px rgba(245,246,242,0.13);
+        }
+        #team-container {
+            display: flex;
+            justify-content: center;
+            padding: 0;
+            width: 200%;
+        }
+        .team-box {
+            border-radius: 1rem;
+        }
+        #team-list {
+            display: flex;
+                flex-direction: column;
+            gap: 1.1rem;
+        }
+        .team-row {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            background: #232323;
+            width: 65vw;
+            border-radius: 10px;
+            padding: 0.7rem 0.7rem;
+            transition: box-shadow 0.2s, border 0.2s;
+            border: 1.5px solid transparent;
+        }
+        .team-row:hover {
+            box-shadow: 0 4px 16px rgba(245,246,242,0.10);
+            border: 1.5px solid #F5F6F2;
+        }
+        .team-row input {
+            border-radius: 6px;
+            border: 1px solid #333;
+            padding: 0.3rem;
+            width: 30%;
+            background: #232323;
+            color: #fff;
+            transition: border 0.2s;
+        }
+        .team-row input:focus {
+            border: 1.5px solid #F5F6F2;
+            outline: none;
+        }
+        .team-row button {
+            color: #e74c3c;
+            background: none;
+            border: none;
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: color 0.2s, background 0.2s;
+        }
+        .team-row button:hover {
+            color: #232323;
+            background: #F5F6F2;
+            border-radius: 50%;
+        }
+        #add-member-btn {
+            position: absolute;
+            right: 2.2rem;
+            bottom: 2.2rem;
+            background: #232323;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 44px;
+            height: 44px;
+            font-size: 2rem;
+            display: flex;
+                align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+            cursor: pointer;
+            transition: background 0.2s, box-shadow 0.2s;
+        }
+        #add-member-btn:hover {
+            background: #F5F6F2;
+            color: #232323;
+            box-shadow: 0 4px 16px rgba(245,246,242,0.13);
+        }
+        .percent-sign {
+            color: #fff;
+            font-weight: 600;
+            margin-left: 2px;
+        }
+        #sidebar-status {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 350px;
+            height: 100vh;
+            background: #181818;
+            border-right: 2px solid #23272e;
+            color: #F5F6F2;
+            z-index: 100;
+            padding: 2.2rem 1.2rem 1.2rem 1.2rem;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            overflow-y: auto;
+        }
+        #sidebar-status h2 {
+            font-size: 1.3rem;
+            margin-bottom: 1.2rem;
+            color: #F5F6F2;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+        }
+        #overlap-status-list {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 1.1rem;
+        }
+        .overlap-status-item {
+            display: flex;
+            flex-direction: column;
+            background: #232323;
+            border-radius: 10px;
+            padding: 0.7rem 0.9rem;
+            box-shadow: 0 2px 8px rgba(79,140,255,0.04);
+            border-left: 5px solid #e0e0e0;
+            transition: border 0.2s;
+            position: relative;
+        }
+        .overlap-status-item.resolved {
+            border-left: 5px solid #22c55e;
+        }
+        .overlap-status-item.unresolved {
+            border-left: 5px solid #e74c3c;
+        }
+        .resolve-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #22c55e;
+            color: #232323;
+            border: none;
+            border-radius: 6px;
+            padding: 0.18rem 0.7rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .resolve-btn:hover {
+            background: #F5F6F2;
+            color: #22c55e;
+        }
+        .overlap-status-title {
+            font-size: 1.08rem;
+            font-weight: 600;
+            color: #F5F6F2;
+        }
+        .overlap-status-partner {
+            font-size: 0.98rem;
+            color: #bdbdbd;
+        }
+        .overlap-status-meta {
+            margin-top: 0.2rem;
+            font-size: 0.93rem;
+            color: #bdbdbd;
+        }
+        .overlap-status-dot {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 7px;
+            vertical-align: middle;
+        }
+        .overlap-status-dot.resolved {
+            background: #22c55e;
+        }
+        .overlap-status-dot.unresolved {
+            background: #e74c3c;
+        }
+        .delete-btn {
+            position: absolute;
+            top: 10px;
+            right: 60px;
+            background: none;
+            color: #e74c3c;
+            border: none;
+            border-radius: 6px;
+            padding: 0.18rem 0.5rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .delete-btn:hover {
+            color: #fff;
+            background: #e74c3c;
+        }
+        #main-content {
+            margin-left: 350px;
+            width: calc(100vw - 350px);
+        }
+        .switch-label {
+            color: #F5F6F2;
+            font-size: 1.13rem;
+            font-family: Helvetica, Arial, sans-serif;
+            margin-right: 1rem;
+            font-weight: 600;
+        }
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 54px;
+            height: 28px;
+        }
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #232323;
+            border-radius: 34px;
+            transition: .3s;
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 4px;
+            bottom: 4px;
+            background-color: #F5F6F2;
+            border-radius: 50%;
+            transition: .3s;
+        }
+        input:checked + .slider {
+            background-color: #22c55e;
+        }
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+        .add-member-btn {
+            margin: 1.2rem auto 0 auto;
+            display: block;
+            background: #232323;
+            color: #22c55e;
+            font-weight: 700;
+            font-size: 1.1rem;
+            border: 2px solid #22c55e;
+            border-radius: 8px;
+            padding: 0.5rem 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(79,140,255,0.08);
+            transition: background 0.2s, color 0.2s, border 0.2s;
+        }
+        .add-member-btn:hover {
+            background: #22c55e;
+            color: #232323;
+            border: 2px solid #232323;
+        }
+        .status-actions {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            display: flex;
+            gap: 0.5rem;
+            z-index: 2;
+        }
+        .resolve-btn, .delete-btn {
+            position: static !important;
+            margin: 0;
+        }
+        #submit-btn {
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar toggle button (hamburger) -->
+    <button id="sidebar-toggle" aria-label="Show status sidebar" style="position:fixed;top:18px;left:18px;z-index:200;background:#232323;border:none;cursor:pointer;width:44px;height:44px;display:flex;align-items:center;justify-content:center;border-radius:50%;box-shadow:0 2px 8px rgba(0,0,0,0.10);transition:background 0.2s;">
+      <span style="font-size:2rem;color:#F5F6F2;line-height:1;">&#9776;</span>
+    </button>
+    <!-- Logout button (always visible for now) -->
+    <button id="logout-btn" title="Logout" style="position:fixed;top:18px;right:32px;z-index:9999;background:#232323;border:none;cursor:pointer;min-width:70px;height:44px;display:flex;align-items:center;justify-content:center;border-radius:22px;box-shadow:0 2px 8px rgba(0,0,0,0.10);transition:background 0.2s;color:#e74c3c;font-weight:700;font-size:1.1rem;padding:0 1.5rem;">
+  Logout
+</button>
+<style>
+#logout-btn {
+    background: #232323;
+    border: none;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+    padding: 0 1.5rem;
+    min-width: 70px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 22px;
+    position: fixed;
+    top: 18px;
+    right: 32px;
+    z-index: 9999;
+    cursor: pointer;
+    color: #e74c3c;
+    font-weight: 700;
+    font-size: 1.1rem;
+    transition: background 0.2s, color 0.2s;
+}
+#logout-btn:hover {
+    background: #e74c3c;
+    color: #fff;
+}
+</style>
+    <div id="sidebar-status">
+        <h2>Status</h2>
+        <div id="overlap-status-list"></div>
+    </div>
+    <div id="main-content">
+        <h1>Configure Weights</h1>
+        <div id="send-messages-toggle-row" style="display:flex;align-items:center;justify-content:center;margin-top:1.5rem;margin-bottom:1.5rem;">
+            <label class="switch-label" for="send-messages-toggle">Send Messages</label>
+            <label class="switch">
+                <input type="checkbox" id="send-messages-toggle">
+                <span class="slider"></span>
+            </label>
+        </div>
+        <div id="loading" class="loading">Loading...</div>
+        <form id="scoring-form" autocomplete="off" onsubmit="return false;" style="display:none;">
+            <div class="container" id="scoring-container" style="flex-wrap:nowrap;">
+            <div class="box opportunity-box">
+                <h2>Opportunity Weight</h2>
+                <div class="box-desc">Assign weights to each opportunity parameter so their total is 100%. These weights determine how much each factor influences the opportunity score.</div>
+                <div class="param-row">
+                    <label for="opportunity-size">Opportunity Size</label>
+                    <input type="number" min="0" max="100" value="0" step="1" class="opportunity-weight" id="opportunity-size"><span class="percent-sign">%</span>
+                </div>
+                <div class="param-row">
+                    <label for="opportunity-relationship">Relationship Status</label>
+                    <input type="number" min="0" max="100" value="0" step="1" class="opportunity-weight" id="opportunity-relationship"><span class="percent-sign">%</span>
+                </div>
+                <div class="param-row">
+                    <label for="opportunity-engagement">Engagement Score</label>
+                    <input type="number" min="0" max="100" value="0" step="1" class="opportunity-weight" id="opportunity-engagement"><span class="percent-sign">%</span>
+                </div>
+                <div class="param-row">
+                    <label for="opportunity-stage">Opportunity Stage</label>
+                    <input type="number" min="0" max="100" value="0" step="1" class="opportunity-weight" id="opportunity-stage"><span class="percent-sign">%</span>
+                </div>
+                <div class="param-row">
+                    <label for="opportunity-winnability">Winnability</label>
+                    <input type="number" min="0" max="100" value="0" step="1" class="opportunity-weight" id="opportunity-winnability"><span class="percent-sign">%</span>
+                </div>
+                <div class="total-row">Total: <span id="opportunity-total">0%</span></div>
+                <div class="warning" id="opportunity-warning" style="display:none;">Total must be 100%</div>
+            </div>
+            <div class="box partner-box">
+                <h2>Partner Weight</h2>
+                    <div class="box-desc">Assign weights to each partner parameter so their total is 100%. These weights determine how much each factor influences the partner score.</div>
+                <div class="param-row">
+                    <label for="partner-strength">Relationship Strength</label>
+                        <input type="number" min="0" max="100" value="0" step="1" class="partner-weight" id="partner-strength"><span class="percent-sign">%</span>
+                </div>
+                <div class="param-row">
+                    <label for="partner-support">Recent Deal Support</label>
+                        <input type="number" min="0" max="100" value="0" step="1" class="partner-weight" id="partner-support"><span class="percent-sign">%</span>
+                </div>
+                <div class="param-row">
+                    <label for="partner-stickiness">Stickiness Score</label>
+                    <input type="number" min="0" max="100" value="0" step="1" class="partner-weight" id="partner-stickiness"><span class="percent-sign">%</span>
+                </div>
+                <div class="total-row">Total: <span id="partner-total">0%</span></div>
+                <div class="warning" id="partner-warning" style="display:none;">Total must be 100%</div>
+            </div>
+            </div>
+            <div class="container" id="team-container">
+                <div class="box team-box" style="width:100%; max-width:100%;">
+                    <h2 style="text-align:center; color:#F5F6F2;">Internal Team</h2>
+                    <div class="box-desc" style="text-align:center;">Add or edit your internal team members. Each member should have a name, designation, hierarchy, channel ID, webhook URL, and max messages.</div>
+                    <div id="team-list"></div>
+                    <button type="button" class="add-member-btn" onclick="addMemberRow()">+ Add Member</button>
+            </div>
+        </div>
+            <button class="submit-btn" id="submit-btn">Save</button>
+        </form>
+
+        <style>
+        #scoring-container {
+            display: flex;
+            flex-direction: row;
+            gap: 1.5rem;
+            max-width: 90%;
+            margin: 0 auto 1.5rem auto;
+        }
+        .opportunity-box, .partner-box {
+            width: 40rem;
+        }
+        #team-container {
+            width: 90%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .team-box {
+            background: #181818;
+            border-radius: 20px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+            border: 2px solid #23272e;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0 auto;
+        }
+        #team-list {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .team-row {
+            display: flex;
+            align-items: center;
+            background: #232323;
+            transition: box-shadow 0.2s, border 0.2s;
+            justify-content: center;
+        }
+        .team-row input {
+            text-align: center;
+        }
+        .team-row button {
+            color: #e74c3c;
+            background: none;
+            border: none;
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: color 0.2s, background 0.2s;
+        }
+        .team-row button:hover {
+            color: #232323;
+            background: #F5F6F2;
+            border-radius: 50%;
+        }
+        form#scoring-form {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        .box-desc {
+            color: #bdbdbd;
+            font-size: 1.04rem;
+            margin-bottom: 1.2rem;
+            margin-top: -0.7rem;
+            font-weight: 400;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 900px) {
+            #sidebar-status {
+                position: fixed;
+                left: 0;
+                top: 0;
+                width: 80vw;
+                max-width: 350px;
+                height: 100vh;
+                background: #181818;
+                border-right: 2px solid #23272e;
+                color: #F5F6F2;
+                z-index: 150;
+                padding: 2.2rem 1.2rem 1.2rem 1.2rem;
+                box-sizing: border-box;
+                display: none;
+                flex-direction: column;
+                align-items: flex-start;
+                overflow-y: auto;
+                transition: left 0.3s, display 0.3s;
+            }
+            #sidebar-status.active {
+                display: flex;
+            }
+            #sidebar-toggle {
+                display: flex !important;
+            }
+            #sidebar-toggle:active, #sidebar-toggle:focus {
+                background: #e74c3c;
+                outline: none;
+            }
+            #sidebar-toggle span {
+                pointer-events: none;
+            }
+            #main-content {
+                margin-left: 0;
+                width: 100vw;
+            }
+            #scoring-container {
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 1rem;
+                max-width: 100%;
+            }
+            .opportunity-box, .partner-box {
+                width: 70vw;
+            }
+            #team-container {
+                width: 90%;
+                justify-content: center;
+                align-items: center;
+                margin-left: 0;
+            }
+            .team-row {
+                width: 100%;
+            }
+            h1 {
+                margin-top: 5rem;
+            }
+            #sidebar-status h2 {
+            font-size: 1.3rem;
+            margin-top: 3rem;
+            }
+        }
+        #sidebar-toggle {
+            display: none;
+        }
+        @media (max-width: 900px) {
+            #sidebar-toggle {
+                display: block !important;
+            }
+        }
+        #logout-btn {
+            display: none !important;
+        }
+        #logout-btn.visible {
+            display: block !important;
+        }
+        #logout-btn:hover {
+            background: #e74c3c;
+            color: #fff;
+        }
+        </style>
+    </div>
+    <div id="login-container" style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;background:#121212;position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:1000;">
+        <form id="login-form" autocomplete="off" style="background:#181818;padding:2.5rem 2.5rem 2rem 2.5rem;border-radius:20px;box-shadow:0 4px 24px rgba(0,0,0,0.18);display:flex;flex-direction:column;align-items:center;min-width:320px;max-width:90vw;">
+            <h2 id="login-title" style="color:#F5F6F2;font-family:Georgia, 'Times New Roman', Times, serif;font-size:2rem;margin-bottom:2rem;">Login</h2>
+            <input id="login-username" type="text" placeholder="Username" required style="margin-bottom:1.2rem;padding:0.8rem 1rem;border-radius:10px;border:1.5px solid #23272e;background:#232323;color:#fff;font-size:1.1rem;width:100%;max-width:320px;">
+            <input id="login-password" type="password" placeholder="Password" required style="margin-bottom:1.2rem;padding:0.8rem 1rem;border-radius:10px;border:1.5px solid #23272e;background:#232323;color:#fff;font-size:1.1rem;width:100%;max-width:320px;">
+            <button id="login-submit" type="submit" style="background:#22c55e;color:#232323;font-weight:700;font-size:1.15rem;border:none;border-radius:10px;padding:0.8rem 2.5rem;cursor:pointer;box-shadow:0 2px 8px rgba(79,140,255,0.08);margin-bottom:1.2rem;width:100%;max-width:320px;transition:background 0.2s, color 0.2s;">Login</button>
+            <span id="login-toggle-text" style="color:#bdbdbd;font-size:1rem;">Don't have an account? <a href="#" id="toggle-signup" style="color:#22c55e;text-decoration:none;">Sign up</a></span>
+            <span id="login-error" style="color:#e74c3c;font-size:1rem;margin-top:1rem;display:none;"></span>
+    </form>
+    </div>
+    <script>
+        const paramMap = {
+            opportunity: [
+                { id: 'opportunity-size', param: 'opportunity_size' },
+                { id: 'opportunity-relationship', param: 'relationship_status' },
+                { id: 'opportunity-engagement', param: 'engagement_score' },
+                { id: 'opportunity-stage', param: 'opportunity_stage' },
+                { id: 'opportunity-winnability', param: 'winnability_opinion' }
+            ],
+            partner: [
+                { id: 'partner-strength', param: 'relationship_strength_score' },
+                { id: 'partner-support', param: 'recent_deal_support' },
+                { id: 'partner-stickiness', param: 'stickiness_score' }
+            ]
+        };
+
+        function updateSection(section) {
+            const weights = Array.from(document.querySelectorAll('.' + section + '-weight'));
+            let total = 0;
+            weights.forEach(input => {
+                    total += parseInt(input.value) || 0;
+            });
+            const totalSpan = document.getElementById(section + '-total');
+            const warning = document.getElementById(section + '-warning');
+            if (total === 100) {
+                totalSpan.className = 'valid';
+                warning.style.display = 'none';
+            } else {
+                totalSpan.className = 'invalid';
+                warning.style.display = 'block';
+            }
+            totalSpan.textContent = total + '%';
+            return total === 100;
+        }
+
+        function validateAll() {
+            const opportunityValid = updateSection('opportunity');
+            const partnerValid = updateSection('partner');
+            document.getElementById('submit-btn').disabled = !(opportunityValid && partnerValid);
+        }
+
+        function setUIFromData(data) {
+            ['opportunity', 'partner'].forEach(section => {
+                paramMap[section].forEach((p, idx) => {
+                    const paramData = data[section] && data[section][p.param];
+                    const input = document.getElementById(p.id);
+                    if (input) {
+                        if (paramData && typeof paramData.weight !== 'undefined') {
+                            input.value = paramData.weight;
+                        } else {
+                            input.value = 0;
+                        }
+                    } else {
+                        console.warn(`[DEBUG] Input not found for ${section} ${p.param} (${p.id})`);
+                    }
+                });
+            });
+            validateAll();
+        }
+
+        async function loadWeights() {
+            document.getElementById('loading').style.display = '';
+            document.getElementById('scoring-form').style.display = 'none';
+            try {
+                const res = await fetch('/api/weights');
+                const data = await res.json();
+                setUIFromData(data);
+            } catch (e) {
+            }
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('scoring-form').style.display = '';
+        }
+
+        async function saveWeights() {
+            const data = { opportunity: {}, partner: {} };
+            ['opportunity', 'partner'].forEach(section => {
+                paramMap[section].forEach((p, idx) => {
+                    const input = document.getElementById(p.id);
+                    data[section][p.param] = {
+                        weight: parseFloat(input.value)
+                    };
+                });
+            });
+            const res = await fetch('/api/weights', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+        }
+
+        document.querySelectorAll('.opportunity-weight, .partner-weight').forEach(input => {
+            input.addEventListener('input', validateAll);
+        });
+        paramMap.opportunity.concat(paramMap.partner).forEach(p => {
+            document.getElementById(p.id).addEventListener('change', validateAll);
+        });
+        document.getElementById('scoring-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+            if (!document.getElementById('submit-btn').disabled) {
+                saveWeights();
+            }
+        });
+
+        // --- Team Management ---
+        let teamData = [];
+        function renderTeamTable() {
+            const list = document.getElementById('team-list');
+            list.innerHTML = '';
+            // Render all existing team members
+            teamData.forEach((member, idx) => {
+                const row = document.createElement('div');
+                row.className = 'team-row';
+                row.innerHTML = `
+                    <input value="${member.name}" placeholder="Name" onchange="teamData[${idx}].name=this.value; renderTeamTable();">
+                    <input value="${member.designation}" placeholder="Designation" onchange="teamData[${idx}].designation=this.value; renderTeamTable();">
+                    <input type="number" min="1" max="3" value="${member.hierarchy ?? ''}" placeholder="Hierarchy" onchange="teamData[${idx}].hierarchy=this.value ? parseInt(this.value) : ''; renderTeamTable();">
+                    <input value="${member.channel_id}" placeholder="Channel ID" onchange="teamData[${idx}].channel_id=this.value; renderTeamTable();">
+                    <input value="${member.webhook_url}" placeholder="Webhook URL" onchange="teamData[${idx}].webhook_url=this.value; renderTeamTable();">
+                    <input type="number" min="1" max="10" value="${member.max_message ?? ''}" placeholder="Max Msg" onchange="teamData[${idx}].max_message=this.value ? parseInt(this.value) : ''; renderTeamTable();">
+                    <button onclick="deleteMember(${idx})">&#10005;</button>
+                `;
+                list.appendChild(row);
+            });
+        }
+        window.deleteMember = function(idx) {
+            if(confirm('Delete this member?')) {
+                fetch(`/api/team/${encodeURIComponent(teamData[idx].name)}`, {method:'DELETE'})
+                    .then(() => { teamData.splice(idx,1); renderTeamTable(); });
+            }
+        }
+        window.addMemberRow = function() {
+                teamData.push({name:'',designation:'',hierarchy:'',channel_id:'',webhook_url:'',max_message:''});
+            renderTeamTable();
+        }
+        async function loadTeam() {
+            try {
+                const res = await fetch('/api/team');
+                teamData = await res.json();
+                renderTeamTable();
+            } catch(e) { alert('Failed to load team'); }
+        }
+        async function saveTeam() {
+            // Ensure hierarchy is always an integer or null
+            const cleanTeamData = teamData.map(member => ({
+                ...member,
+                hierarchy: member.hierarchy === '' || isNaN(member.hierarchy) ? null : parseInt(member.hierarchy)
+            }));
+            await fetch('/api/team', {
+                method:'POST',
+                headers:{'Content-Type':'application/json'},
+                body:JSON.stringify(cleanTeamData)
+            });
+            await loadTeam();
+        }
+        // In JS, remove saveTeam and the Save Team button event handler
+        // Save both config and team
+        document.getElementById('submit-btn').onclick = async function(e) {
+            e.preventDefault();
+            if (!document.getElementById('submit-btn').disabled) {
+                await saveWeights();
+                await saveTeam();
+                await loadWeights();
+            }
+        };
+        // Load all on page load
+        loadWeights();
+        loadTeam();
+
+        // --- Overlap Status Sidebar ---
+        async function loadOverlapStatus() {
+            try {
+                const res = await fetch('/api/overlap-status');
+                let data = await res.json();
+                // Sort: unresolved first, then resolved
+                data = data.sort((a, b) => (a.resolved === b.resolved) ? 0 : a.resolved ? 1 : -1);
+                const list = document.getElementById('overlap-status-list');
+                list.innerHTML = '';
+                data.forEach(item => {
+                    const div = document.createElement('div');
+                    div.className = 'overlap-status-item ' + (item.resolved ? 'resolved' : 'unresolved');
+                    let detailHtml = '';
+                    if (item.resolved) {
+                        detailHtml = `
+                        <span class="overlap-status-title">
+                                <span class="overlap-status-dot resolved"></span>
+                                ${item.opportunity_name || 'Unknown Opportunity'}
+                        </span>
+                            <span class="overlap-status-partner">Partner: ${item.partner_name || 'Unknown Partner'}</span>
+                            <span class="overlap-status-meta">Status: Resolved${item.resolved_by ? ' by ' + item.resolved_by : ''}</span>
+                            <span class="overlap-status-meta">Resolved at: ${item.resolved_at ? new Date(item.resolved_at).toLocaleString() : 'Unknown'}</span>
+                            <span class="overlap-status-meta">Time to resolve: ${item.time_to_resolve || 'Unknown'}</span>
+                        `;
+                    } else {
+                        detailHtml = `
+                            <span class="overlap-status-title">
+                                <span class="overlap-status-dot unresolved"></span>
+                                ${item.opportunity_name || 'Unknown Opportunity'}
+                            </span>
+                            <span class="overlap-status-partner">Partner: ${item.partner_name || 'Unknown Partner'}</span>
+                            <span class="overlap-status-meta">Status: Unresolved</span>
+                            <span class="overlap-status-meta">Sent at: ${item.created_at ? new Date(item.created_at).toLocaleString() : 'Unknown'}</span>
+                        `;
+                    }
+                    div.innerHTML = `
+                        ${detailHtml}
+                        ${!item.resolved ? `<div class='status-actions'><button class='resolve-btn' onclick='resolveOverlapStatus("${item.record_id}")'>Resolve</button><button class='delete-btn' title='Delete' onclick='deleteOverlapStatus("${item.record_id}")'>&#128465;</button></div>` : `<div class='status-actions'><button class='delete-btn' title='Delete' onclick='deleteOverlapStatus("${item.record_id}")'>&#128465;</button></div>`}
+                    `;
+                    list.appendChild(div);
+                });
+            } catch(e) {
+                document.getElementById('overlap-status-list').innerHTML = '<span style="color:#e74c3c">Failed to load status</span>';
+            }
+        }
+        window.resolveOverlapStatus = async function(record_id) {
+            // Optionally, you can prompt for a name or use a default
+            await fetch('/api/overlap-status/resolve', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({record_id, resolved_by: 'UI'})
+            });
+            loadOverlapStatus();
+        }
+        window.deleteOverlapStatus = async function(record_id) {
+            if (!confirm('Delete this overlap from status history?')) return;
+            await fetch(`/api/overlap-status/${record_id}`, { method: 'DELETE' });
+            loadOverlapStatus();
+        }
+        loadOverlapStatus();
+
+        // --- Send Messages Toggle ---
+        async function loadSendMessagesToggle() {
+            try {
+                const res = await fetch('/api/send-messages-toggle');
+                const data = await res.json();
+                document.getElementById('send-messages-toggle').checked = !!data.send_messages;
+            } catch(e) {}
+        }
+        document.getElementById('send-messages-toggle').addEventListener('change', async function() {
+            await fetch('/api/send-messages-toggle', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({send_messages: this.checked})
+            });
+        });
+        loadSendMessagesToggle();
+
+        // Sidebar toggle logic for mobile
+        const sidebar = document.getElementById('sidebar-status');
+        const sidebarToggle = document.getElementById('sidebar-toggle');
+        function closeSidebarOnOutsideClick(e) {
+            if (window.innerWidth > 900) return;
+            if (!sidebar.contains(e.target) && e.target !== sidebarToggle) {
+                sidebar.classList.remove('active');
+            }
+        }
+        sidebarToggle.addEventListener('click', function() {
+            sidebar.classList.toggle('active');
+        });
+        document.addEventListener('click', closeSidebarOnOutsideClick);
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 900) {
+                sidebar.classList.remove('active');
+            }
+        });
+
+        // Login/signup toggle logic
+        const loginContainer = document.getElementById('login-container');
+        const loginForm = document.getElementById('login-form');
+        const loginTitle = document.getElementById('login-title');
+        const loginSubmit = document.getElementById('login-submit');
+        const loginToggleText = document.getElementById('login-toggle-text');
+        const toggleSignup = document.getElementById('toggle-signup');
+        const loginError = document.getElementById('login-error');
+        let isSignup = false;
+        toggleSignup.addEventListener('click', function(e) {
+            e.preventDefault();
+            isSignup = !isSignup;
+            if (isSignup) {
+                loginTitle.textContent = 'Sign Up';
+                loginSubmit.textContent = 'Sign Up';
+                loginToggleText.innerHTML = 'Already have an account? <a href="#" id="toggle-signup" style="color:#22c55e;text-decoration:none;">Login</a>';
+            } else {
+                loginTitle.textContent = 'Login';
+                loginSubmit.textContent = 'Login';
+                loginToggleText.innerHTML = 'Don\'t have an account? <a href="#" id="toggle-signup" style="color:#22c55e;text-decoration:none;">Sign up</a>';
+            }
+            // Re-attach event listener to new link
+            document.getElementById('toggle-signup').addEventListener('click', arguments.callee);
+        });
+        // Persistent login state using localStorage
+        function showApp() {
+            loginContainer.style.display = 'none';
+            document.getElementById('main-content').style.display = '';
+            document.getElementById('sidebar-status').style.display = '';
+            document.getElementById('sidebar-toggle').style.display = '';
+            showLogoutButton(true);
+        }
+        function showLogin() {
+            loginContainer.style.display = 'flex';
+            document.getElementById('main-content').style.display = 'none';
+            document.getElementById('sidebar-status').style.display = 'none';
+            document.getElementById('sidebar-toggle').style.display = 'none';
+            showLogoutButton(false);
+        }
+        // On page load, check login state
+        if (localStorage.getItem('isLoggedIn') === 'true') {
+            showApp();
+        } else {
+            showLogin();
+        }
+        // On login
+        loginForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            // TODO: Replace with real backend call
+            const username = document.getElementById('login-username').value.trim();
+            const password = document.getElementById('login-password').value;
+            loginError.style.display = 'none';
+            if (!username || !password) {
+                loginError.textContent = 'Please enter both username and password.';
+                loginError.style.display = 'block';
+                return;
+            }
+            // Simulate login/signup success
+            setTimeout(() => {
+                localStorage.setItem('isLoggedIn', 'true');
+                showApp();
+            }, 500);
+        });
+        // On logout
+
+        document.getElementById('logout-btn').addEventListener('click', function() {
+            localStorage.removeItem('isLoggedIn');
+            showLogin();
+        });
+        // Show/hide logout button when logged in
+        function showLogoutButton(show) {
+            const btn = document.getElementById('logout-btn');
+            if (show) {
+                btn.classList.add('visible');
+                // Fallback: if Font Awesome icon is not rendered, show Unicode
+                setTimeout(() => {
+                    const faIcon = btn.querySelector('i.fas');
+                    const fallback = btn.querySelector('.logout-fallback');
+                    if (faIcon && window.getComputedStyle(faIcon).display === 'none') {
+                        fallback.style.display = 'inline';
+                    } else if (faIcon && faIcon.offsetWidth === 0) {
+                        fallback.style.display = 'inline';
+                    } else if (!faIcon || faIcon.offsetWidth === 0) {
+                        fallback.style.display = 'inline';
+                    } else {
+                        fallback.style.display = 'none';
+                    }
+                }, 100);
+                console.log('Logout button shown');
+            } else {
+                btn.classList.remove('visible');
+                console.log('Logout button hidden');
+            }
+        }
+        // On initial load, ensure logout button is hidden
+        showLogoutButton(false);
+    </script>
+</body>
+</html> 

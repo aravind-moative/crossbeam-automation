@@ -1,1552 +1,3002 @@
 [
   {
-    "record_id": "0998ab39-e865-4b28-843b-d6b288db8190",
-    "record_name": "Initech",
-    "record_website": "initech.com",
-    "crossbeam_record_id": "f844e104-3c0a-47de-9368-6bc9fed037c9",
-    "partner_record_id": "2326fbbb-cf41-4ab6-a627-d887a7930af2",
-    "partner_record_name": "Pied Piper",
-    "partner_record_website": "piedpiper.corp",
-    "partner_record_company_type": "Customer",
-    "partner_record_country": "India",
-    "partner_record_industry": "Manufacturing",
-    "partner_record_employees": 6201,
-    "partner_crossbeam_record_id": "788d9ad1-f0cd-4b7b-a25e-d06c2f30e6b9",
-    "partner_insights": {
-      "opportunity_relevance_score": 3,
-      "partner_champion": {
-        "is_flagged": false,
-        "score": 3
-      },
-      "relationship_strength_score": 5,
-      "recent_deal_support": 5,
-      "winnability_opinion": 1
-    },
-    "prospect_factors": {
-      "opportunity_size": 4,
-      "relationship_status": 5,
-      "engagement_score": "LOW",
-      "opportunity_stage": 1,
+    "opportunity_context": {
+      "name": "Umbrella",
+      "website": "www.waynetech.com",
+      "opportunity_size": { "label": "VERY LARGE", "score": 5 },
+      "relationship_status": { "label": "Past", "score": 3 },
+      "engagement_score": { "label": "LOW", "score": 1 },
+      "opportunity_stage": { "label": "WON", "score": 5 },
+      "winnability": { "label": "NEUTRAL", "score": 3 },
       "logo_potential": false
-    }
+    },
+    "partner_context": {
+      "name": "Softonic",
+      "website": "www.neuracore.com",
+      "country": "Japan",
+      "industry": "Manufacturing",
+      "employees": 2502,
+      "stickiness_score": 2.9,
+      "relationship_strength_score": { "label": "COLD", "score": 1 },
+      "recent_deal_support": { "label": "GOOD", "score": 5 },
+      "partner_champion": { "is_flagged": false }
+    },
+    "combined_score_percent": 10.6
   },
   {
-    "record_id": "2665c284-ecb3-4546-8cee-722970990380",
-    "record_name": "Cyberdyne Systems",
-    "record_website": "cyberdynesystems.com",
-    "crossbeam_record_id": "f0a4cec9-dfff-4c4c-a202-22d278ae6259",
-    "partner_record_id": "8e8e6b3b-fbd3-4b2e-8285-67b973564bfc",
-    "partner_record_name": "Globex",
-    "partner_record_website": "globex.tech",
-    "partner_record_company_type": "Customer",
-    "partner_record_country": "Canada",
-    "partner_record_industry": "Education",
-    "partner_record_employees": 5972,
-    "partner_crossbeam_record_id": "636be1ea-59fd-40b6-aa42-bf76859d5b11",
-    "partner_insights": {
-      "opportunity_relevance_score": 3,
-      "partner_champion": {
-        "is_flagged": false,
-        "score": 5
-      },
-      "relationship_strength_score": 3,
-      "recent_deal_support": 5,
-      "winnability_opinion": 5
-    },
-    "prospect_factors": {
-      "opportunity_size": 2,
-      "relationship_status": 1,
-      "engagement_score": "MEDIUM",
-      "opportunity_stage": 3,
+    "opportunity_context": {
+      "name": "Umbrella BETA",
+      "website": "www.waynetech.com",
+      "opportunity_size": { "label": "VERY LARGE", "score": 5 },
+      "relationship_status": { "label": "Past", "score": 3 },
+      "engagement_score": { "label": "LOW", "score": 1 },
+      "opportunity_stage": { "label": "WON", "score": 5 },
+      "winnability": { "label": "NEUTRAL", "score": 3 },
       "logo_potential": false
-    }
+    },
+    "partner_context": {
+      "name": "Softonic BETA",
+      "website": "www.neuracore.com",
+      "country": "Japan",
+      "industry": "Manufacturing",
+      "employees": 2502,
+      "stickiness_score": 2.9,
+      "relationship_strength_score": { "label": "COLD", "score": 1 },
+      "recent_deal_support": { "label": "GOOD", "score": 5 },
+      "partner_champion": { "is_flagged": false }
+    },
+    "combined_score_percent": 10.6
+  },
+    {
+    "opportunity_context": {
+      "name": "Umbrella GAMMA",
+      "website": "www.waynetech.com",
+      "opportunity_size": { "label": "VERY LARGE", "score": 5 },
+      "relationship_status": { "label": "Past", "score": 3 },
+      "engagement_score": { "label": "LOW", "score": 1 },
+      "opportunity_stage": { "label": "WON", "score": 5 },
+      "winnability": { "label": "NEUTRAL", "score": 3 },
+      "logo_potential": false
+    },
+    "partner_context": {
+      "name": "Softonic GAMMA",
+      "website": "www.neuracore.com",
+      "country": "Japan",
+      "industry": "Manufacturing",
+      "employees": 2502,
+      "stickiness_score": 2.9,
+      "relationship_strength_score": { "label": "COLD", "score": 1 },
+      "recent_deal_support": { "label": "GOOD", "score": 5 },
+      "partner_champion": { "is_flagged": false }
+    },
+    "combined_score_percent": 10.6
+  },
+    {
+    "opportunity_context": {
+      "name": "Umbrella Delta",
+      "website": "www.waynetech.com",
+      "opportunity_size": { "label": "VERY LARGE", "score": 5 },
+      "relationship_status": { "label": "Past", "score": 3 },
+      "engagement_score": { "label": "LOW", "score": 1 },
+      "opportunity_stage": { "label": "WON", "score": 5 },
+      "winnability": { "label": "NEUTRAL", "score": 3 },
+      "logo_potential": false
+    },
+    "partner_context": {
+      "name": "Softonic Delta",
+      "website": "www.neuracore.com",
+      "country": "Japan",
+      "industry": "Manufacturing",
+      "employees": 2502,
+      "stickiness_score": 2.9,
+      "relationship_strength_score": { "label": "COLD", "score": 1 },
+      "recent_deal_support": { "label": "GOOD", "score": 5 },
+      "partner_champion": { "is_flagged": false }
+    },
+    "combined_score_percent": 10.6
+  },
+    {
+    "opportunity_context": {
+      "name": "Umbrella Epsilon",
+      "website": "www.waynetech.com",
+      "opportunity_size": { "label": "VERY LARGE", "score": 5 },
+      "relationship_status": { "label": "Past", "score": 3 },
+      "engagement_score": { "label": "LOW", "score": 1 },
+      "opportunity_stage": { "label": "WON", "score": 5 },
+      "winnability": { "label": "NEUTRAL", "score": 3 },
+      "logo_potential": false
+    },
+    "partner_context": {
+      "name": "Softonic Epsilon",
+      "website": "www.neuracore.com",
+      "country": "Japan",
+      "industry": "Manufacturing",
+      "employees": 2502,
+      "stickiness_score": 2.9,
+      "relationship_strength_score": { "label": "COLD", "score": 1 },
+      "recent_deal_support": { "label": "GOOD", "score": 5 },
+      "partner_champion": { "is_flagged": false }
+    },
+    "combined_score_percent": 10.6
+  },
+    {
+    "opportunity_context": {
+      "name": "Umbrella Zeta",
+      "website": "www.waynetech.com",
+      "opportunity_size": { "label": "VERY LARGE", "score": 5 },
+      "relationship_status": { "label": "Past", "score": 3 },
+      "engagement_score": { "label": "LOW", "score": 1 },
+      "opportunity_stage": { "label": "WON", "score": 5 },
+      "winnability": { "label": "NEUTRAL", "score": 3 },
+      "logo_potential": false
+    },
+    "partner_context": {
+      "name": "Softonic Zeta",
+      "website": "www.neuracore.com",
+      "country": "Japan",
+      "industry": "Manufacturing",
+      "employees": 2502,
+      "stickiness_score": 2.9,
+      "relationship_strength_score": { "label": "COLD", "score": 1 },
+      "recent_deal_support": { "label": "GOOD", "score": 5 },
+      "partner_champion": { "is_flagged": false }
+    },
+    "combined_score_percent": 10.6
+  },
+    {
+    "opportunity_context": {
+      "name": "Umbrella Eta",
+      "website": "www.waynetech.com",
+      "opportunity_size": { "label": "VERY LARGE", "score": 5 },
+      "relationship_status": { "label": "Past", "score": 3 },
+      "engagement_score": { "label": "LOW", "score": 1 },
+      "opportunity_stage": { "label": "WON", "score": 5 },
+      "winnability": { "label": "NEUTRAL", "score": 3 },
+      "logo_potential": false
+    },
+    "partner_context": {
+      "name": "Softonic Eta",
+      "website": "www.neuracore.com",
+      "country": "Japan",
+      "industry": "Manufacturing",
+      "employees": 2502,
+      "stickiness_score": 2.9,
+      "relationship_strength_score": { "label": "COLD", "score": 1 },
+      "recent_deal_support": { "label": "GOOD", "score": 5 },
+      "partner_champion": { "is_flagged": false }
+    },
+    "combined_score_percent": 10.6
+  },
+    {
+    "opportunity_context": {
+      "name": "Soylent",
+      "website": "www.wonkainc.com",
+      "opportunity_size": { "label": "MEDIUM", "score": 3 },
+      "relationship_status": { "label": "Existing", "score": 5 },
+      "engagement_score": { "label": "LOW", "score": 1 },
+      "opportunity_stage": { "label": "EARLY CRM STAGE", "score": 1 },
+      "winnability": { "label": "NEUTRAL", "score": 3 },
+      "logo_potential": false
+    },
+    "partner_context": {
+      "name": "TechWorx",
+      "website": "www.omnilink.com",
+      "country": "India",
+      "industry": "Software",
+      "employees": 3805,
+      "stickiness_score": 1.7,
+      "relationship_strength_score": { "label": "TRANSACTIONAL", "score": 3 },
+      "recent_deal_support": { "label": "POOR", "score": 1 },
+      "partner_champion": { "is_flagged": true }
+    },
+    "combined_score_percent": 9.7
   },
   {
-    "record_id": "0e449d2a-06a7-4f48-9e0a-d4d91c018eee",
-    "record_name": "Wayne Enterprises",
-    "record_website": "wayneenterprises.tech",
-    "crossbeam_record_id": "57e065a3-65ab-4a62-98b9-31346f18e41d",
-    "partner_record_id": "2ddf947f-a570-4591-a436-36c1bfad3981",
-    "partner_record_name": "Stark Industries",
-    "partner_record_website": "starkindustries.com",
-    "partner_record_company_type": "Customer",
-    "partner_record_country": "Germany",
-    "partner_record_industry": "Healthcare",
-    "partner_record_employees": 6452,
-    "partner_crossbeam_record_id": "19adb45e-e4c3-401d-9c65-fca954443d12",
-    "partner_insights": {
-      "opportunity_relevance_score": 4,
-      "partner_champion": {
-        "is_flagged": false,
-        "score": 3
-      },
-      "relationship_strength_score": 3,
-      "recent_deal_support": 1,
-      "winnability_opinion": 3
-    },
-    "prospect_factors": {
-      "opportunity_size": 2,
-      "relationship_status": 5,
-      "engagement_score": "HIGH",
-      "opportunity_stage": 5,
+    "opportunity_context": {
+      "name": "Cyberdyne",
+      "website": "www.soylent.com",
+      "opportunity_size": { "label": "SMALL", "score": 1 },
+      "relationship_status": { "label": "Existing", "score": 5 },
+      "engagement_score": { "label": "MEDIUM", "score": 3 },
+      "opportunity_stage": { "label": "CLOSE TO WIN", "score": 4 },
+      "winnability": { "label": "LOW", "score": 1 },
       "logo_potential": false
-    }
+    },
+    "partner_context": {
+      "name": "Softonic",
+      "website": "www.nextleap.com",
+      "country": "Netherlands",
+      "industry": "Manufacturing",
+      "employees": 3756,
+      "stickiness_score": 0.9,
+      "relationship_strength_score": { "label": "COLD", "score": 1 },
+      "recent_deal_support": { "label": "ADEQUATE", "score": 3 },
+      "partner_champion": { "is_flagged": true }
+    },
+    "combined_score_percent": 19.5
   },
   {
-    "record_id": "f8d52a2c-7b81-4dc9-a242-2bbf849536a9",
-    "record_name": "Massive Dynamic",
-    "record_website": "massivedynamic.corp",
-    "crossbeam_record_id": "c6e92831-28e8-49c2-9888-895cbaeb1793",
-    "partner_record_id": "22703050-a8eb-45a3-8342-b69e36dd2d4f",
-    "partner_record_name": "Stark Industries",
-    "partner_record_website": "starkindustries.ai",
-    "partner_record_company_type": "Customer",
-    "partner_record_country": "USA",
-    "partner_record_industry": "Healthcare",
-    "partner_record_employees": 262,
-    "partner_crossbeam_record_id": "9653343c-2eef-4074-bfad-e20fa618e933",
-    "partner_insights": {
-      "opportunity_relevance_score": 1,
-      "partner_champion": {
-        "is_flagged": false,
-        "score": 5
-      },
-      "relationship_strength_score": 1,
-      "recent_deal_support": 3,
-      "winnability_opinion": 3
-    },
-    "prospect_factors": {
-      "opportunity_size": 1,
-      "relationship_status": 3,
-      "engagement_score": "LOW",
-      "opportunity_stage": 5,
+    "opportunity_context": {
+      "name": "Nexlify",
+      "website": "www.nexlify.io",
+      "opportunity_size": { "label": "LARGE", "score": 4 },
+      "relationship_status": { "label": "New", "score": 1 },
+      "engagement_score": { "label": "HIGH", "score": 5 },
+      "opportunity_stage": { "label": "EARLY CRM STAGE", "score": 5 },
+      "winnability": { "label": "HIGH", "score": 5 },
       "logo_potential": false
-    }
+    },
+    "partner_context": {
+      "name": "Innovex",
+      "website": "www.innovexsolutions.com",
+      "country": "USA",
+      "industry": "Technology",
+      "employees": 500,
+      "stickiness_score": 4.2,
+      "relationship_strength_score": { "label": "STRATEGIC", "score": 5 },
+      "recent_deal_support": { "label": "GOOD", "score": 5 },
+      "partner_champion": { "is_flagged": true }
+    },
+    "combined_score_percent": 82.4
   },
   {
-    "record_id": "fdc1807c-b1e0-4b51-a7a1-6ba94031dc82",
-    "record_name": "Initech",
-    "record_website": "initech.net",
-    "crossbeam_record_id": "ba81174f-6787-4021-93fb-f8e31cc4da98",
-    "partner_record_id": "3726281a-172e-4c0a-b296-b0656de67be5",
-    "partner_record_name": "Soylent",
-    "partner_record_website": "soylent.tech",
-    "partner_record_company_type": "Partner",
-    "partner_record_country": "USA",
-    "partner_record_industry": "Finance",
-    "partner_record_employees": 6898,
-    "partner_crossbeam_record_id": "cfdbe691-9aac-478d-b9fa-5f1dac58ff67",
-    "partner_insights": {
-      "opportunity_relevance_score": 1,
-      "partner_champion": {
-        "is_flagged": false,
-        "score": 2
-      },
-      "relationship_strength_score": 5,
-      "recent_deal_support": 5,
-      "winnability_opinion": 5
-    },
-    "prospect_factors": {
-      "opportunity_size": 1,
-      "relationship_status": 5,
-      "engagement_score": "HIGH",
-      "opportunity_stage": 4,
+    "opportunity_context": {
+      "name": "QuantumLabs",
+      "website": "www.quantum-labs.com",
+      "opportunity_size": { "label": "SMALL", "score": 1 },
+      "relationship_status": { "label": "Past", "score": 3 },
+      "engagement_score": { "label": "LOW", "score": 1 },
+      "opportunity_stage": { "label": "LATE STAGE", "score": 1 },
+      "winnability": { "label": "LOW", "score": 1 },
       "logo_potential": false
-    }
+    },
+    "partner_context": {
+      "name": "DataCore",
+      "website": "www.datacoretech.com",
+      "country": "Germany",
+      "industry": "Data Analytics",
+      "employees": 750,
+      "stickiness_score": 1.2,
+      "relationship_strength_score": { "label": "COLD", "score": 1 },
+      "recent_deal_support": { "label": "POOR", "score": 1 },
+      "partner_champion": { "is_flagged": false }
+    },
+    "combined_score_percent": 13.8
   },
   {
-    "record_id": "b712b7e4-7f97-4212-a6a5-4fcda3088d05",
-    "record_name": "Umbrella Corp",
-    "record_website": "umbrellacorp.ai",
-    "crossbeam_record_id": "71fd8342-572f-4a20-98cc-2b96b67b6ea4",
-    "partner_record_id": "69d38bd6-121f-43f1-acf9-e7f9ca4342a6",
-    "partner_record_name": "Acme Corp",
-    "partner_record_website": "acmecorp.tech",
-    "partner_record_company_type": "Partner",
-    "partner_record_country": "Canada",
-    "partner_record_industry": "Manufacturing",
-    "partner_record_employees": 5794,
-    "partner_crossbeam_record_id": "1a23db04-feb6-4e7e-9f62-b4d01362f56e",
-    "partner_insights": {
-      "opportunity_relevance_score": 4,
-      "partner_champion": {
-        "is_flagged": false,
-        "score": null
-      },
-      "relationship_strength_score": 3,
-      "recent_deal_support": 5,
-      "winnability_opinion": 3
-    },
-    "prospect_factors": {
-      "opportunity_size": 3,
-      "relationship_status": 1,
-      "engagement_score": "LOW",
-      "opportunity_stage": 1,
+    "opportunity_context": {
+      "name": "BlueHorizon",
+      "website": "www.bluehorizon.co",
+      "opportunity_size": { "label": "MEDIUM", "score": 3 },
+      "relationship_status": { "label": "Existing", "score": 5 },
+      "engagement_score": { "label": "MEDIUM", "score": 3 },
+      "opportunity_stage": { "label": "CLOSE TO WIN", "score": 4 },
+      "winnability": { "label": "NEUTRAL", "score": 3 },
       "logo_potential": false
-    }
+    },
+    "partner_context": {
+      "name": "CloudPeak",
+      "website": "www.cloudpeak.net",
+      "country": "UK",
+      "industry": "Cloud Services",
+      "employees": 320,
+      "stickiness_score": 3.8,
+      "relationship_strength_score": { "label": "TRANSACTIONAL", "score": 3 },
+      "recent_deal_support": { "label": "ADEQUATE", "score": 3 },
+      "partner_champion": { "is_flagged": true }
+    },
+    "combined_score_percent": 54.7
   },
   {
-    "record_id": "7ab11a65-24ce-4167-84c8-b36c7059b530",
-    "record_name": "Acme Corp",
-    "record_website": "acmecorp.ai",
-    "crossbeam_record_id": "4223f49c-3cd5-4167-9a1f-d1163ebffba3",
-    "partner_record_id": "d0e86da7-3ce1-4aab-bbab-e33c9fc86687",
-    "partner_record_name": "Globex",
-    "partner_record_website": "globex.com",
-    "partner_record_company_type": "Partner",
-    "partner_record_country": "Germany",
-    "partner_record_industry": "Finance",
-    "partner_record_employees": 9084,
-    "partner_crossbeam_record_id": "4e8a7c77-cb3b-4ec1-b99f-bc30c4efbc2c",
-    "partner_insights": {
-      "opportunity_relevance_score": 5,
-      "partner_champion": {
-        "is_flagged": true,
-        "score": null
-      },
-      "relationship_strength_score": 3,
-      "recent_deal_support": 5,
-      "winnability_opinion": 1
-    },
-    "prospect_factors": {
-      "opportunity_size": 1,
-      "relationship_status": 1,
-      "engagement_score": "HIGH",
-      "opportunity_stage": 4,
+    "opportunity_context": {
+      "name": "StratoTech",
+      "website": "www.stratotech.com",
+      "opportunity_size": { "label": "VERY LARGE", "score": 5 },
+      "relationship_status": { "label": "New", "score": 1 },
+      "engagement_score": { "label": "HIGH", "score": 5 },
+      "opportunity_stage": { "label": "EARLY CRM STAGE", "score": 5 },
+      "winnability": { "label": "HIGH", "score": 5 },
       "logo_potential": false
-    }
+    },
+    "partner_context": {
+      "name": "Nexlify",
+      "website": "www.nexlify-partners.io",
+      "country": "Canada",
+      "industry": "Software",
+      "employees": 200,
+      "stickiness_score": 4.5,
+      "relationship_strength_score": { "label": "STRATEGIC", "score": 5 },
+      "recent_deal_support": { "label": "GOOD", "score": 5 },
+      "partner_champion": { "is_flagged": true }
+    },
+    "combined_score_percent": 89.0
   },
   {
-    "record_id": "a7294abb-70bd-4d03-b085-26df41fb81c2",
-    "record_name": "Aperture Science",
-    "record_website": "aperturescience.com",
-    "crossbeam_record_id": "bb42933f-d2a5-46a3-bf9d-d818c2e4b15b",
-    "partner_record_id": "e2e395d8-3867-4b06-ba5b-5956d3d9c430",
-    "partner_record_name": "Massive Dynamic",
-    "partner_record_website": "massivedynamic.corp",
-    "partner_record_company_type": "Prospect",
-    "partner_record_country": "USA",
-    "partner_record_industry": "Education",
-    "partner_record_employees": 4764,
-    "partner_crossbeam_record_id": "916e92e8-fe4a-43b5-a496-5dd9cdf05913",
-    "partner_insights": {
-      "opportunity_relevance_score": 2,
-      "partner_champion": {
-        "is_flagged": true,
-        "score": null
-      },
-      "relationship_strength_score": 3,
-      "recent_deal_support": 5,
-      "winnability_opinion": 3
-    },
-    "prospect_factors": {
-      "opportunity_size": 5,
-      "relationship_status": 1,
-      "engagement_score": "MEDIUM",
-      "opportunity_stage": 1,
+    "opportunity_context": {
+      "name": "PeakPulse",
+      "website": "www.peakpulse.io",
+      "opportunity_size": { "label": "SMALL", "score": 1 },
+      "relationship_status": { "label": "Past", "score": 3 },
+      "engagement_score": { "label": "LOW", "score": 1 },
+      "opportunity_stage": { "label": "LATE STAGE", "score": 1 },
+      "winnability": { "label": "LOW", "score": 1 },
       "logo_potential": false
-    }
+    },
+    "partner_context": {
+      "name": "BrightWave",
+      "website": "www.brightwave.com",
+      "country": "Australia",
+      "industry": "Telecommunications",
+      "employees": 1800,
+      "stickiness_score": 2.0,
+      "relationship_strength_score": { "label": "COLD", "score": 1 },
+      "recent_deal_support": { "label": "POOR", "score": 1 },
+      "partner_champion": { "is_flagged": false }
+    },
+    "combined_score_percent": 15.2
   },
   {
-    "record_id": "9185ba4e-d1cb-4c44-a64a-252e4fa902b9",
-    "record_name": "Acme Corp",
-    "record_website": "acmecorp.tech",
-    "crossbeam_record_id": "142fee47-6e87-4d23-b496-a67353ee6e45",
-    "partner_record_id": "ea4d6439-1f03-4058-ab9f-acfb29589052",
-    "partner_record_name": "Hooli",
-    "partner_record_website": "hooli.com",
-    "partner_record_company_type": "Prospect",
-    "partner_record_country": "Germany",
-    "partner_record_industry": "Finance",
-    "partner_record_employees": 8440,
-    "partner_crossbeam_record_id": "3dd1f1ff-3342-437c-987f-c57dbbbfc074",
-    "partner_insights": {
-      "opportunity_relevance_score": 5,
-      "partner_champion": {
-        "is_flagged": true,
-        "score": null
-      },
-      "relationship_strength_score": 5,
-      "recent_deal_support": 1,
-      "winnability_opinion": 1
-    },
-    "prospect_factors": {
-      "opportunity_size": 4,
-      "relationship_status": 3,
-      "engagement_score": "HIGH",
-      "opportunity_stage": 3,
+    "opportunity_context": {
+      "name": "InnoCore",
+      "website": "www.innocoretech.com",
+      "opportunity_size": { "label": "LARGE", "score": 4 },
+      "relationship_status": { "label": "Existing", "score": 5 },
+      "engagement_score": { "label": "MEDIUM", "score": 3 },
+      "opportunity_stage": { "label": "CLOSE TO WIN", "score": 4 },
+      "winnability": { "label": "NEUTRAL", "score": 3 },
       "logo_potential": false
-    }
+    },
+    "partner_context": {
+      "name": "SkyNet",
+      "website": "www.skynetglobal.com",
+      "country": "USA",
+      "industry": "AI Solutions",
+      "employees": 600,
+      "stickiness_score": 3.2,
+      "relationship_strength_score": { "label": "TRANSACTIONAL", "score": 3 },
+      "recent_deal_support": { "label": "ADEQUATE", "score": 3 },
+      "partner_champion": { "is_flagged": true }
+    },
+    "combined_score_percent": 59.3
   },
   {
-    "record_id": "1f1accec-a92e-4116-9131-06ca661fc1d8",
-    "record_name": "Globex",
-    "record_website": "globex.corp",
-    "crossbeam_record_id": "1a14c813-1eed-40e1-bb9b-85a8f2097cbf",
-    "partner_record_id": "72e9e53d-22f2-48d7-85d0-d6ca2cd54631",
-    "partner_record_name": "Soylent",
-    "partner_record_website": "soylent.ai",
-    "partner_record_company_type": "Customer",
-    "partner_record_country": "India",
-    "partner_record_industry": "Technology",
-    "partner_record_employees": 8922,
-    "partner_crossbeam_record_id": "1570f02b-65c5-4cf7-b113-f016e21e5cff",
-    "partner_insights": {
-      "opportunity_relevance_score": 5,
-      "partner_champion": {
-        "is_flagged": false,
-        "score": 5
-      },
-      "relationship_strength_score": 3,
-      "recent_deal_support": 3,
-      "winnability_opinion": 3
-    },
-    "prospect_factors": {
-      "opportunity_size": 1,
-      "relationship_status": 3,
-      "engagement_score": "HIGH",
-      "opportunity_stage": 3,
+    "opportunity_context": {
+      "name": "VertexSolutions",
+      "website": "www.vertexsolutions.co",
+      "opportunity_size": { "label": "MEDIUM", "score": 3 },
+      "relationship_status": { "label": "New", "score": 1 },
+      "engagement_score": { "label": "HIGH", "score": 5 },
+      "opportunity_stage": { "label": "EARLY CRM STAGE", "score": 5 },
+      "winnability": { "label": "HIGH", "score": 5 },
       "logo_potential": false
-    }
+    },
+    "partner_context": {
+      "name": "CoreDynamics",
+      "website": "www.coredynamics.io",
+      "country": "Singapore",
+      "industry": "FinTech",
+      "employees": 450,
+      "stickiness_score": 4.0,
+      "relationship_strength_score": { "label": "STRATEGIC", "score": 5 },
+      "recent_deal_support": { "label": "GOOD", "score": 5 },
+      "partner_champion": { "is_flagged": true }
+    },
+    "combined_score_percent": 78.6
   },
   {
-    "record_id": "9c4b8d5f-e57f-43bd-8f2f-78400eb3ee1a",
-    "record_name": "Cyberdyne Systems",
-    "record_website": "cyberdynesystems.com",
-    "crossbeam_record_id": "5eb091b8-6bd6-4531-99e8-a13ab3f79651",
-    "partner_record_id": "c661dbcd-bc7a-4514-a425-decf2bb242df",
-    "partner_record_name": "Aperture Science",
-    "partner_record_website": "aperturescience.net",
-    "partner_record_company_type": "Partner",
-    "partner_record_country": "UK",
-    "partner_record_industry": "Technology",
-    "partner_record_employees": 8341,
-    "partner_crossbeam_record_id": "32292ee2-e5ae-4668-b07a-3f5486c32a14",
-    "partner_insights": {
-      "opportunity_relevance_score": 3,
-      "partner_champion": {
-        "is_flagged": false,
-        "score": 3
-      },
-      "relationship_strength_score": 5,
-      "recent_deal_support": 5,
-      "winnability_opinion": 5
-    },
-    "prospect_factors": {
-      "opportunity_size": 1,
-      "relationship_status": 5,
-      "engagement_score": "HIGH",
-      "opportunity_stage": 1,
+    "opportunity_context": {
+      "name": "GrowEasy",
+      "website": "www.groweasy.com",
+      "opportunity_size": { "label": "SMALL", "score": 1 },
+      "relationship_status": { "label": "Past", "score": 3 },
+      "engagement_score": { "label": "LOW", "score": 1 },
+      "opportunity_stage": { "label": "LATE STAGE", "score": 1 },
+      "winnability": { "label": "LOW", "score": 1 },
       "logo_potential": false
-    }
+    },
+    "partner_context": {
+      "name": "TechTrend",
+      "website": "www.techtrend.io",
+      "country": "Brazil",
+      "industry": "E-commerce",
+      "employees": 300,
+      "stickiness_score": 1.5,
+      "relationship_strength_score": { "label": "COLD", "score": 1 },
+      "recent_deal_support": { "label": "POOR", "score": 1 },
+      "partner_champion": { "is_flagged": false }
+    },
+    "combined_score_percent": 14.5
   },
   {
-    "record_id": "8e92a530-c6dd-43d2-b663-6a7d06cc160f",
-    "record_name": "Wayne Enterprises",
-    "record_website": "wayneenterprises.tech",
-    "crossbeam_record_id": "14c72a14-9db0-4da2-bf34-d92aa26e4306",
-    "partner_record_id": "356c0fe4-1095-4d30-b326-061bdf1adcb7",
-    "partner_record_name": "Cyberdyne Systems",
-    "partner_record_website": "cyberdynesystems.tech",
-    "partner_record_company_type": "Customer",
-    "partner_record_country": "Canada",
-    "partner_record_industry": "Technology",
-    "partner_record_employees": 910,
-    "partner_crossbeam_record_id": "f77506a0-6045-4415-8234-9d5e1f6f9292",
-    "partner_insights": {
-      "opportunity_relevance_score": 3,
-      "partner_champion": {
-        "is_flagged": false,
-        "score": 1
-      },
-      "relationship_strength_score": 3,
-      "recent_deal_support": 3,
-      "winnability_opinion": 3
-    },
-    "prospect_factors": {
-      "opportunity_size": 4,
-      "relationship_status": 1,
-      "engagement_score": "HIGH",
-      "opportunity_stage": 2,
+    "opportunity_context": {
+      "name": "BrightPath",
+      "website": "www.brightpath.io",
+      "opportunity_size": { "label": "VERY LARGE", "score": 5 },
+      "relationship_status": { "label": "Existing", "score": 5 },
+      "engagement_score": { "label": "HIGH", "score": 5 },
+      "opportunity_stage": { "label": "CLOSE TO WIN", "score": 4 },
+      "winnability": { "label": "HIGH", "score": 5 },
       "logo_potential": false
-    }
+    },
+    "partner_context": {
+      "name": "Nexlify",
+      "website": "www.nexlifyglobal.com",
+      "country": "USA",
+      "industry": "Software",
+      "employees": 1200,
+      "stickiness_score": 4.8,
+      "relationship_strength_score": { "label": "STRATEGIC", "score": 5 },
+      "recent_deal_support": { "label": "GOOD", "score": 5 },
+      "partner_champion": { "is_flagged": true }
+    },
+    "combined_score_percent": 92.4
   },
   {
-    "record_id": "5b12f140-0ea5-45fb-9c56-21ca939ef641",
-    "record_name": "Globex",
-    "record_website": "globex.com",
-    "crossbeam_record_id": "e21ab0bc-e83b-4b4d-a95e-19fdf889a296",
-    "partner_record_id": "f1e60781-c2de-4ab9-880b-1afd2e4855b0",
-    "partner_record_name": "Pied Piper",
-    "partner_record_website": "piedpiper.net",
-    "partner_record_company_type": "Customer",
-    "partner_record_country": "USA",
-    "partner_record_industry": "Technology",
-    "partner_record_employees": 5712,
-    "partner_crossbeam_record_id": "612d4c0e-b429-41a3-b611-2d86037609bc",
-    "partner_insights": {
-      "opportunity_relevance_score": 2,
-      "partner_champion": {
-        "is_flagged": false,
-        "score": 1
-      },
-      "relationship_strength_score": 3,
-      "recent_deal_support": 5,
-      "winnability_opinion": 5
-    },
-    "prospect_factors": {
-      "opportunity_size": 4,
-      "relationship_status": 5,
-      "engagement_score": "LOW",
-      "opportunity_stage": 5,
+    "opportunity_context": {
+      "name": "DataWave",
+      "website": "www.datawave.ai",
+      "opportunity_size": { "label": "MEDIUM", "score": 3 },
+      "relationship_status": { "label": "Past", "score": 3 },
+      "engagement_score": { "label": "MEDIUM", "score": 3 },
+      "opportunity_stage": { "label": "EARLY CRM STAGE", "score": 5 },
+      "winnability": { "label": "NEUTRAL", "score": 3 },
       "logo_potential": false
-    }
+    },
+    "partner_context": {
+      "name": "CloudCore",
+      "website": "www.cloudcore.io",
+      "country": "France",
+      "industry": "Cloud Services",
+      "employees": 800,
+      "stickiness_score": 3.0,
+      "relationship_strength_score": { "label": "TRANSACTIONAL", "score": 3 },
+      "recent_deal_support": { "label": "ADEQUATE", "score": 3 },
+      "partner_champion": { "is_flagged": false }
+    },
+    "combined_score_percent": 49.7
   },
   {
-    "record_id": "80f74863-7790-4182-a84c-72e3df343508",
-    "record_name": "Soylent",
-    "record_website": "soylent.corp",
-    "crossbeam_record_id": "dbfddd2f-2990-488b-bfb7-59562fe06742",
-    "partner_record_id": "9e2f1601-305d-4b2a-b5e7-5cc8f1ab2e4e",
-    "partner_record_name": "Acme Corp",
-    "partner_record_website": "acmecorp.net",
-    "partner_record_company_type": "Partner",
-    "partner_record_country": "Canada",
-    "partner_record_industry": "Healthcare",
-    "partner_record_employees": 9779,
-    "partner_crossbeam_record_id": "0ad89b60-431b-49cc-8754-8a35f40188af",
-    "partner_insights": {
-      "opportunity_relevance_score": 0,
-      "partner_champion": {
-        "is_flagged": false,
-        "score": 2
-      },
-      "relationship_strength_score": 1,
-      "recent_deal_support": 5,
-      "winnability_opinion": 3
-    },
-    "prospect_factors": {
-      "opportunity_size": 5,
-      "relationship_status": 5,
-      "engagement_score": "HIGH",
-      "opportunity_stage": 1,
+    "opportunity_context": {
+      "name": "IntelliGrow",
+      "website": "www.intelligrow.com",
+      "opportunity_size": { "label": "LARGE", "score": 4 },
+      "relationship_status": { "label": "New", "score": 1 },
+      "engagement_score": { "label": "HIGH", "score": 5 },
+      "opportunity_stage": { "label": "LATE STAGE", "score": 1 },
+      "winnability": { "label": "HIGH", "score": 5 },
       "logo_potential": false
-    }
+    },
+    "partner_context": {
+      "name": "TechNova",
+      "website": "www.technova.io",
+      "country": "India",
+      "industry": "Software",
+      "employees": 1500,
+      "stickiness_score": 4.0,
+      "relationship_strength_score": { "label": "STRATEGIC", "score": 5 },
+      "recent_deal_support": { "label": "GOOD", "score": 5 },
+      "partner_champion": { "is_flagged": true }
+    },
+    "combined_score_percent": 75.2
   },
   {
-    "record_id": "024f4917-fa4c-41b1-a46a-0ebb2b12e0f2",
-    "record_name": "Globex",
-    "record_website": "globex.com",
-    "crossbeam_record_id": "d9ea40d2-8142-4d8c-b3b4-ef1dae32463d",
-    "partner_record_id": "62fe67a9-7e4e-40e9-8a0b-fd337cd1e458",
-    "partner_record_name": "Aperture Science",
-    "partner_record_website": "aperturescience.corp",
-    "partner_record_company_type": "Partner",
-    "partner_record_country": "Germany",
-    "partner_record_industry": "Manufacturing",
-    "partner_record_employees": 1742,
-    "partner_crossbeam_record_id": "e94d62ed-da2b-4bcd-8ae8-477e2b3cb0f9",
-    "partner_insights": {
-      "opportunity_relevance_score": 4,
-      "partner_champion": {
-        "is_flagged": true,
-        "score": null
-      },
-      "relationship_strength_score": 5,
-      "recent_deal_support": 3,
-      "winnability_opinion": 5
-    },
-    "prospect_factors": {
-      "opportunity_size": 1,
-      "relationship_status": 1,
-      "engagement_score": "HIGH",
-      "opportunity_stage": 4,
+    "opportunity_context": {
+      "name": "Skyward",
+      "website": "www.skywardtech.com",
+      "opportunity_size": { "label": "SMALL", "score": 1 },
+      "relationship_status": { "label": "Past", "score": 3 },
+      "engagement_score": { "label": "LOW", "score": 1 },
+      "opportunity_stage": { "label": "LATE STAGE", "score": 1 },
+      "winnability": { "label": "LOW", "score": 1 },
       "logo_potential": false
-    }
+    },
+    "partner_context": {
+      "name": "BrightCore",
+      "website": "www.brightcore.io",
+      "country": "South Africa",
+      "industry": "Energy",
+      "employees": 400,
+      "stickiness_score": 1.8,
+      "relationship_strength_score": { "label": "COLD", "score": 1 },
+      "recent_deal_support": { "label": "POOR", "score": 1 },
+      "partner_champion": { "is_flagged": false }
+    },
+    "combined_score_percent": 14.8
   },
   {
-    "record_id": "93f79231-7299-4a45-9f9e-fb5c5a9603f1",
-    "record_name": "Massive Dynamic",
-    "record_website": "massivedynamic.ai",
-    "crossbeam_record_id": "a605e4fa-e88e-4058-8770-6ae50bce0c81",
-    "partner_record_id": "786ce520-0040-46e7-afb9-3fe4cd870033",
-    "partner_record_name": "Acme Corp",
-    "partner_record_website": "acmecorp.tech",
-    "partner_record_company_type": "Prospect",
-    "partner_record_country": "Germany",
-    "partner_record_industry": "Manufacturing",
-    "partner_record_employees": 4522,
-    "partner_crossbeam_record_id": "790623d8-21e8-4568-85ae-bac37130ba08",
-    "partner_insights": {
-      "opportunity_relevance_score": 5,
-      "partner_champion": {
-        "is_flagged": false,
-        "score": 4
-      },
-      "relationship_strength_score": 1,
-      "recent_deal_support": 3,
-      "winnability_opinion": 5
-    },
-    "prospect_factors": {
-      "opportunity_size": 3,
-      "relationship_status": 3,
-      "engagement_score": "MEDIUM",
-      "opportunity_stage": 3,
+    "opportunity_context": {
+      "name": "CoreStream",
+      "website": "www.corestream.io",
+      "opportunity_size": { "label": "VERY LARGE", "score": 5 },
+      "relationship_status": { "label": "Existing", "score": 5 },
+      "engagement_score": { "label": "HIGH", "score": 5 },
+      "opportunity_stage": { "label": "CLOSE TO WIN", "score": 4 },
+      "winnability": { "label": "HIGH", "score": 5 },
       "logo_potential": false
-    }
+    },
+    "partner_context": {
+      "name": "DataTrend",
+      "website": "www.datatrend.com",
+      "country": "USA",
+      "industry": "Data Analytics",
+      "employees": 900,
+      "stickiness_score": 4.5,
+      "relationship_strength_score": { "label": "STRATEGIC", "score": 5 },
+      "recent_deal_support": { "label": "GOOD", "score": 5 },
+      "partner_champion": { "is_flagged": true }
+    },
+    "combined_score_percent": 94.5
   },
   {
-    "record_id": "e9a4d741-fd9a-4325-95b4-5c6426f23b9a",
-    "record_name": "Cyberdyne Systems",
-    "record_website": "cyberdynesystems.tech",
-    "crossbeam_record_id": "18749f89-9288-45ae-be09-cb4b965143d3",
-    "partner_record_id": "465eadb6-d479-401d-8800-3370b91ac6d4",
-    "partner_record_name": "Soylent",
-    "partner_record_website": "soylent.corp",
-    "partner_record_company_type": "Partner",
-    "partner_record_country": "India",
-    "partner_record_industry": "Education",
-    "partner_record_employees": 2277,
-    "partner_crossbeam_record_id": "c77ec890-b12a-4b76-b28e-b8d52f050fe8",
-    "partner_insights": {
-      "opportunity_relevance_score": 0,
-      "partner_champion": {
-        "is_flagged": true,
-        "score": null
-      },
-      "relationship_strength_score": 1,
-      "recent_deal_support": 1,
-      "winnability_opinion": 1
-    },
-    "prospect_factors": {
-      "opportunity_size": 5,
-      "relationship_status": 1,
-      "engagement_score": "HIGH",
-      "opportunity_stage": 4,
+    "opportunity_context": {
+      "name": "OptimaTech",
+      "website": "www.optimatech.com",
+      "opportunity_size": { "label": "MEDIUM", "score": 3 },
+      "relationship_status": { "label": "Past", "score": 3 },
+      "engagement_score": { "label": "MEDIUM", "score": 3 },
+      "opportunity_stage": { "label": "EARLY CRM STAGE", "score": 5 },
+      "winnability": { "label": "NEUTRAL", "score": 3 },
       "logo_potential": false
-    }
+    },
+    "partner_context": {
+      "name": "CloudWave",
+      "website": "www.cloudwave.io",
+      "country": "Germany",
+      "industry": "Cloud Services",
+      "employees": 700,
+      "stickiness_score": 3.2,
+      "relationship_strength_score": { "label": "TRANSACTIONAL", "score": 3 },
+      "recent_deal_support": { "label": "ADEQUATE", "score": 3 },
+      "partner_champion": { "is_flagged": false }
+    },
+    "combined_score_percent": 50.3
   },
   {
-    "record_id": "fc9d4544-7de4-478e-90b7-250ba1826ab2",
-    "record_name": "Wonka Industries",
-    "record_website": "wonkaindustries.net",
-    "crossbeam_record_id": "105fd7c9-9e19-43ca-99ef-0f6812cc0003",
-    "partner_record_id": "d03d286c-b870-4e88-bbfc-0995fba6de30",
-    "partner_record_name": "Wonka Industries",
-    "partner_record_website": "wonkaindustries.tech",
-    "partner_record_company_type": "Partner",
-    "partner_record_country": "Canada",
-    "partner_record_industry": "Technology",
-    "partner_record_employees": 6704,
-    "partner_crossbeam_record_id": "5b7a9b32-3380-46c1-a5c7-912c807bd386",
-    "partner_insights": {
-      "opportunity_relevance_score": 4,
-      "partner_champion": {
-        "is_flagged": false,
-        "score": 5
-      },
-      "relationship_strength_score": 1,
-      "recent_deal_support": 1,
-      "winnability_opinion": 1
-    },
-    "prospect_factors": {
-      "opportunity_size": 3,
-      "relationship_status": 1,
-      "engagement_score": "LOW",
-      "opportunity_stage": 4,
+    "opportunity_context": {
+      "name": "NextGen",
+      "website": "www.nextgen.io",
+      "opportunity_size": { "label": "LARGE", "score": 4 },
+      "relationship_status": { "label": "New", "score": 1 },
+      "engagement_score": { "label": "HIGH", "score": 5 },
+      "opportunity_stage": { "label": "LATE STAGE", "score": 1 },
+      "winnability": { "label": "HIGH", "score": 5 },
       "logo_potential": false
-    }
+    },
+    "partner_context": {
+      "name": "TechCore",
+      "website": "www.techcore.io",
+      "country": "UK",
+      "industry": "Software",
+      "employees": 500,
+      "stickiness_score": 4.0,
+      "relationship_strength_score": { "label": "STRATEGIC", "score": 5 },
+      "recent_deal_support": { "label": "GOOD", "score": 5 },
+      "partner_champion": { "is_flagged": true }
+    },
+    "combined_score_percent": 76.5
   },
   {
-    "record_id": "7dcf3ec3-de15-4f9f-8a2b-06c3c88eff4e",
-    "record_name": "Soylent",
-    "record_website": "soylent.net",
-    "crossbeam_record_id": "bd5a4985-7926-41a3-bd63-ec160dcfbe16",
-    "partner_record_id": "7af78518-a7f0-4848-83ba-b46265677677",
-    "partner_record_name": "Stark Industries",
-    "partner_record_website": "starkindustries.ai",
-    "partner_record_company_type": "Partner",
-    "partner_record_country": "USA",
-    "partner_record_industry": "Education",
-    "partner_record_employees": 6601,
-    "partner_crossbeam_record_id": "22fca51b-5baf-4d8c-a0d2-88d6572fc569",
-    "partner_insights": {
-      "opportunity_relevance_score": 3,
-      "partner_champion": {
-        "is_flagged": true,
-        "score": null
-      },
-      "relationship_strength_score": 1,
-      "recent_deal_support": 5,
-      "winnability_opinion": 3
-    },
-    "prospect_factors": {
-      "opportunity_size": 2,
-      "relationship_status": 1,
-      "engagement_score": "LOW",
-      "opportunity_stage": 1,
+    "opportunity_context": {
+      "name": "BrightStar",
+      "website": "www.brightstar.co",
+      "opportunity_size": { "label": "SMALL", "score": 1 },
+      "relationship_status": { "label": "Past", "score": 3 },
+      "engagement_score": { "label": "LOW", "score": 1 },
+      "opportunity_stage": { "label": "LATE STAGE", "score": 1 },
+      "winnability": { "label": "LOW", "score": 1 },
       "logo_potential": false
-    }
+    },
+    "partner_context": {
+      "name": "DataPeak",
+      "website": "www.datapeak.io",
+      "country": "Canada",
+      "industry": "Data Analytics",
+      "employees": 300,
+      "stickiness_score": 1.5,
+      "relationship_strength_score": { "label": "COLD", "score": 1 },
+      "recent_deal_support": { "label": "POOR", "score": 1 },
+      "partner_champion": { "is_flagged": false }
+    },
+    "combined_score_percent": 14.1
   },
   {
-    "record_id": "bf0f4153-3834-4a55-b983-732eec70a85a",
-    "record_name": "Aperture Science",
-    "record_website": "aperturescience.net",
-    "crossbeam_record_id": "9633e54a-367f-45f5-8186-b07d4976dcfe",
-    "partner_record_id": "657b8ba2-c2f9-44be-885b-911998ebaa89",
-    "partner_record_name": "Aperture Science",
-    "partner_record_website": "aperturescience.tech",
-    "partner_record_company_type": "Partner",
-    "partner_record_country": "India",
-    "partner_record_industry": "Technology",
-    "partner_record_employees": 6124,
-    "partner_crossbeam_record_id": "22f055db-8805-437b-8ad2-253fe5b4946e",
-    "partner_insights": {
-      "opportunity_relevance_score": 1,
-      "partner_champion": {
-        "is_flagged": true,
-        "score": null
-      },
-      "relationship_strength_score": 5,
-      "recent_deal_support": 5,
-      "winnability_opinion": 1
-    },
-    "prospect_factors": {
-      "opportunity_size": 1,
-      "relationship_status": 1,
-      "engagement_score": "MEDIUM",
-      "opportunity_stage": 4,
+    "opportunity_context": {
+      "name": "CoreInnovate",
+      "website": "www.coreinnovate.com",
+      "opportunity_size": { "label": "VERY LARGE", "score": 5 },
+      "relationship_status": { "label": "Existing", "score": 5 },
+      "engagement_score": { "label": "HIGH", "score": 5 },
+      "opportunity_stage": { "label": "CLOSE TO WIN", "score": 4 },
+      "winnability": { "label": "HIGH", "score": 5 },
       "logo_potential": false
-    }
+    },
+    "partner_context": {
+      "name": "TechWave",
+      "website": "www.techwave.io",
+      "country": "Australia",
+      "industry": "Software",
+      "employees": 1000,
+      "stickiness_score": 4.7,
+      "relationship_strength_score": { "label": "STRATEGIC", "score": 5 },
+      "recent_deal_support": { "label": "GOOD", "score": 5 },
+      "partner_champion": { "is_flagged": true }
+    },
+    "combined_score_percent": 93.8
   },
   {
-    "record_id": "6ff9f612-e4f5-4b9f-9b73-f7efc7e85272",
-    "record_name": "Cyberdyne Systems",
-    "record_website": "cyberdynesystems.com",
-    "crossbeam_record_id": "808f79d6-71b4-4cf7-8957-fa2b5cef2391",
-    "partner_record_id": "6bb3986b-2e1a-4a18-95c7-c36a343a22a0",
-    "partner_record_name": "Wayne Enterprises",
-    "partner_record_website": "wayneenterprises.tech",
-    "partner_record_company_type": "Prospect",
-    "partner_record_country": "Germany",
-    "partner_record_industry": "Finance",
-    "partner_record_employees": 4376,
-    "partner_crossbeam_record_id": "30b587db-0a6a-4100-9086-a74df2009f48",
-    "partner_insights": {
-      "opportunity_relevance_score": 4,
-      "partner_champion": {
-        "is_flagged": false,
-        "score": 3
-      },
-      "relationship_strength_score": 1,
-      "recent_deal_support": 3,
-      "winnability_opinion": 3
-    },
-    "prospect_factors": {
-      "opportunity_size": 3,
-      "relationship_status": 3,
-      "engagement_score": "LOW",
-      "opportunity_stage": 4,
+    "opportunity_context": {
+      "name": "SkyHigh",
+      "website": "www.skyhigh.io",
+      "opportunity_size": { "label": "MEDIUM", "score": 3 },
+      "relationship_status": { "label": "Past", "score": 3 },
+      "engagement_score": { "label": "MEDIUM", "score": 3 },
+      "opportunity_stage": { "label": "EARLY CRM STAGE", "score": 5 },
+      "winnability": { "label": "NEUTRAL", "score": 3 },
       "logo_potential": false
-    }
+    },
+    "partner_context": {
+      "name": "CloudTrend",
+      "website": "www.cloudtrend.io",
+      "country": "Netherlands",
+      "industry": "Cloud Services",
+      "employees": 600,
+      "stickiness_score": 3.5,
+      "relationship_strength_score": { "label": "TRANSACTIONAL", "score": 3 },
+      "recent_deal_support": { "label": "ADEQUATE", "score": 3 },
+      "partner_champion": { "is_flagged": false }
+    },
+    "combined_score_percent": 51.0
   },
   {
-    "record_id": "92e8325f-49d3-41f4-8446-264e109e0d0b",
-    "record_name": "Initech",
-    "record_website": "initech.corp",
-    "crossbeam_record_id": "27540381-46f9-40a8-a22b-e31ca8b28818",
-    "partner_record_id": "3c852786-8dde-4cd1-9f7a-93f4104c38ea",
-    "partner_record_name": "Globex",
-    "partner_record_website": "globex.ai",
-    "partner_record_company_type": "Prospect",
-    "partner_record_country": "UK",
-    "partner_record_industry": "Technology",
-    "partner_record_employees": 9084,
-    "partner_crossbeam_record_id": "9e1805c9-c2ef-4a23-857a-86ca8bc62634",
-    "partner_insights": {
-      "opportunity_relevance_score": 0,
-      "partner_champion": {
-        "is_flagged": true,
-        "score": null
-      },
-      "relationship_strength_score": 5,
-      "recent_deal_support": 3,
-      "winnability_opinion": 3
-    },
-    "prospect_factors": {
-      "opportunity_size": 2,
-      "relationship_status": 1,
-      "engagement_score": "MEDIUM",
-      "opportunity_stage": 3,
+    "opportunity_context": {
+      "name": "InnoTech",
+      "website": "www.innotech.com",
+      "opportunity_size": { "label": "LARGE", "score": 4 },
+      "relationship_status": { "label": "New", "score": 1 },
+      "engagement_score": { "label": "HIGH", "score": 5 },
+      "opportunity_stage": { "label": "LATE STAGE", "score": 1 },
+      "winnability": { "label": "HIGH", "score": 5 },
       "logo_potential": false
-    }
+    },
+    "partner_context": {
+      "name": "DataNova",
+      "website": "www.datanova.io",
+      "country": "India",
+      "industry": "Data Analytics",
+      "employees": 800,
+      "stickiness_score": 4.2,
+      "relationship_strength_score": { "label": "STRATEGIC", "score": 5 },
+      "recent_deal_support": { "label": "GOOD", "score": 5 },
+      "partner_champion": { "is_flagged": true }
+    },
+    "combined_score_percent": 77.9
   },
   {
-    "record_id": "0c384573-bbeb-4ea6-8f8f-15405bc6badb",
-    "record_name": "Wonka Industries",
-    "record_website": "wonkaindustries.tech",
-    "crossbeam_record_id": "ea2f8bcd-d8d4-4027-aee7-98bf5726234e",
-    "partner_record_id": "0f7a6b70-7ab2-449c-af69-1201ed7c357c",
-    "partner_record_name": "Wonka Industries",
-    "partner_record_website": "wonkaindustries.ai",
-    "partner_record_company_type": "Prospect",
-    "partner_record_country": "India",
-    "partner_record_industry": "Finance",
-    "partner_record_employees": 8120,
-    "partner_crossbeam_record_id": "62642681-e4fa-4828-a5bf-f0920d683f2d",
-    "partner_insights": {
-      "opportunity_relevance_score": 0,
-      "partner_champion": {
-        "is_flagged": true,
-        "score": null
-      },
-      "relationship_strength_score": 5,
-      "recent_deal_support": 1,
-      "winnability_opinion": 3
-    },
-    "prospect_factors": {
-      "opportunity_size": 4,
-      "relationship_status": 3,
-      "engagement_score": "MEDIUM",
-      "opportunity_stage": 4,
+    "opportunity_context": {
+      "name": "BrightFuture",
+      "website": "www.brightfuture.co",
+      "opportunity_size": { "label": "SMALL", "score": 1 },
+      "relationship_status": { "label": "Past", "score": 3 },
+      "engagement_score": { "label": "LOW", "score": 1 },
+      "opportunity_stage": { "label": "LATE STAGE", "score": 1 },
+      "winnability": { "label": "LOW", "score": 1 },
       "logo_potential": false
-    }
+    },
+    "partner_context": {
+      "name": "TechPeak",
+      "website": "www.techpeak.io",
+      "country": "Brazil",
+      "industry": "Software",
+      "employees": 400,
+      "stickiness_score": 1.8,
+      "relationship_strength_score": { "label": "COLD", "score": 1 },
+      "recent_deal_support": { "label": "POOR", "score": 1 },
+      "partner_champion": { "is_flagged": false }
+    },
+    "combined_score_percent": 14.3
   },
   {
-    "record_id": "e7fdf1c7-5c64-47ed-9c75-340707c76072",
-    "record_name": "Soylent",
-    "record_website": "soylent.net",
-    "crossbeam_record_id": "d619746f-f55e-41fd-9891-18c152972f1a",
-    "partner_record_id": "f1fa8bf3-6e1a-4d4a-aa83-fbc5004a5655",
-    "partner_record_name": "Pied Piper",
-    "partner_record_website": "piedpiper.net",
-    "partner_record_company_type": "Prospect",
-    "partner_record_country": "USA",
-    "partner_record_industry": "Education",
-    "partner_record_employees": 5428,
-    "partner_crossbeam_record_id": "6cb078f6-4d87-4e00-ab0f-119f087df013",
-    "partner_insights": {
-      "opportunity_relevance_score": 2,
-      "partner_champion": {
-        "is_flagged": false,
-        "score": 3
-      },
-      "relationship_strength_score": 1,
-      "recent_deal_support": 3,
-      "winnability_opinion": 3
-    },
-    "prospect_factors": {
-      "opportunity_size": 4,
-      "relationship_status": 1,
-      "engagement_score": "HIGH",
-      "opportunity_stage": 3,
+    "opportunity_context": {
+      "name": "CoreWave",
+      "website": "www.corewave.io",
+      "opportunity_size": { "label": "VERY LARGE", "score": 5 },
+      "relationship_status": { "label": "Existing", "score": 5 },
+      "engagement_score": { "label": "HIGH", "score": 5 },
+      "opportunity_stage": { "label": "CLOSE TO WIN", "score": 4 },
+      "winnability": { "label": "HIGH", "score": 5 },
       "logo_potential": false
-    }
+    },
+    "partner_context": {
+      "name": "CloudNova",
+      "website": "www.cloudnova.io",
+      "country": "USA",
+      "industry": "Cloud Services",
+      "employees": 1100,
+      "stickiness_score": 4.9,
+      "relationship_strength_score": { "label": "STRATEGIC", "score": 5 },
+      "recent_deal_support": { "label": "GOOD", "score": 5 },
+      "partner_champion": { "is_flagged": true }
+    },
+    "combined_score_percent": 95.2
   },
   {
-    "record_id": "af70fda8-6d82-4433-9638-00b2028e4657",
-    "record_name": "Aperture Science",
-    "record_website": "aperturescience.com",
-    "crossbeam_record_id": "4de281a2-126f-43ed-91d8-af0ff0ee447f",
-    "partner_record_id": "976a1b0a-3c17-47b2-9c0c-415abe3a2f1e",
-    "partner_record_name": "Cyberdyne Systems",
-    "partner_record_website": "cyberdynesystems.tech",
-    "partner_record_company_type": "Customer",
-    "partner_record_country": "Germany",
-    "partner_record_industry": "Finance",
-    "partner_record_employees": 9087,
-    "partner_crossbeam_record_id": "d518a5b9-8a3d-436e-9c22-e27c9e6a8d53",
-    "partner_insights": {
-      "opportunity_relevance_score": 5,
-      "partner_champion": {
-        "is_flagged": false,
-        "score": 2
-      },
-      "relationship_strength_score": 3,
-      "recent_deal_support": 5,
-      "winnability_opinion": 3
-    },
-    "prospect_factors": {
-      "opportunity_size": 1,
-      "relationship_status": 1,
-      "engagement_score": "LOW",
-      "opportunity_stage": 2,
+    "opportunity_context": {
+      "name": "OptiGrow",
+      "website": "www.optigrow.com",
+      "opportunity_size": { "label": "MEDIUM", "score": 3 },
+      "relationship_status": { "label": "Past", "score": 3 },
+      "engagement_score": { "label": "MEDIUM", "score": 3 },
+      "opportunity_stage": { "label": "EARLY CRM STAGE", "score": 5 },
+      "winnability": { "label": "NEUTRAL", "score": 3 },
       "logo_potential": false
-    }
+    },
+    "partner_context": {
+      "name": "TechTrend",
+      "website": "www.techtrend.io",
+      "country": "Germany",
+      "industry": "Software",
+      "employees": 700,
+      "stickiness_score": 3.3,
+      "relationship_strength_score": { "label": "TRANSACTIONAL", "score": 3 },
+      "recent_deal_support": { "label": "ADEQUATE", "score": 3 },
+      "partner_champion": { "is_flagged": false }
+    },
+    "combined_score_percent": 50.7
   },
   {
-    "record_id": "9b053548-2f76-467d-873f-49e505b1f937",
-    "record_name": "Soylent",
-    "record_website": "soylent.corp",
-    "crossbeam_record_id": "980d4c6f-0654-407d-be96-12aabe70564b",
-    "partner_record_id": "48f41295-580c-4317-af46-26c5607544f3",
-    "partner_record_name": "Initech",
-    "partner_record_website": "initech.net",
-    "partner_record_company_type": "Partner",
-    "partner_record_country": "UK",
-    "partner_record_industry": "Finance",
-    "partner_record_employees": 8377,
-    "partner_crossbeam_record_id": "3c1439ec-427b-40b0-8e52-460ab17565a0",
-    "partner_insights": {
-      "opportunity_relevance_score": 4,
-      "partner_champion": {
-        "is_flagged": false,
-        "score": 5
-      },
-      "relationship_strength_score": 1,
-      "recent_deal_support": 3,
-      "winnability_opinion": 3
-    },
-    "prospect_factors": {
-      "opportunity_size": 1,
-      "relationship_status": 3,
-      "engagement_score": "HIGH",
-      "opportunity_stage": 1,
+    "opportunity_context": {
+      "name": "NextWave",
+      "website": "www.nextwave.io",
+      "opportunity_size": { "label": "LARGE", "score": 4 },
+      "relationship_status": { "label": "New", "score": 1 },
+      "engagement_score": { "label": "HIGH", "score": 5 },
+      "opportunity_stage": { "label": "LATE STAGE", "score": 1 },
+      "winnability": { "label": "HIGH", "score": 5 },
       "logo_potential": false
-    }
+    },
+    "partner_context": {
+      "name": "DataCore",
+      "website": "www.datacore.io",
+      "country": "UK",
+      "industry": "Data Analytics",
+      "employees": 600,
+      "stickiness_score": 4.1,
+      "relationship_strength_score": { "label": "STRATEGIC", "score": 5 },
+      "recent_deal_support": { "label": "GOOD", "score": 5 },
+      "partner_champion": { "is_flagged": true }
+    },
+    "combined_score_percent": 77.2
   },
   {
-    "record_id": "5308a1c2-6873-440a-8df9-e6818edafecc",
-    "record_name": "Hooli",
-    "record_website": "hooli.ai",
-    "crossbeam_record_id": "5c568ce6-b833-4d14-b41b-88242b953991",
-    "partner_record_id": "c5d89310-8dc1-4a28-9e0c-e2002331e6db",
-    "partner_record_name": "Aperture Science",
-    "partner_record_website": "aperturescience.com",
-    "partner_record_company_type": "Prospect",
-    "partner_record_country": "Germany",
-    "partner_record_industry": "Healthcare",
-    "partner_record_employees": 2543,
-    "partner_crossbeam_record_id": "d45a1003-2788-4577-a836-acdf8af792fa",
-    "partner_insights": {
-      "opportunity_relevance_score": 2,
-      "partner_champion": {
-        "is_flagged": false,
-        "score": 5
-      },
-      "relationship_strength_score": 3,
-      "recent_deal_support": 3,
-      "winnability_opinion": 1
-    },
-    "prospect_factors": {
-      "opportunity_size": 4,
-      "relationship_status": 5,
-      "engagement_score": "MEDIUM",
-      "opportunity_stage": 5,
+    "opportunity_context": {
+      "name": "BrightCore",
+      "website": "www.brightcore.co",
+      "opportunity_size": { "label": "SMALL", "score": 1 },
+      "relationship_status": { "label": "Past", "score": 3 },
+      "engagement_score": { "label": "LOW", "score": 1 },
+      "opportunity_stage": { "label": "LATE STAGE", "score": 1 },
+      "winnability": { "label": "LOW", "score": 1 },
       "logo_potential": false
-    }
+    },
+    "partner_context": {
+      "name": "TechWave",
+      "website": "www.techwave.io",
+      "country": "Canada",
+      "industry": "Software",
+      "employees": 400,
+      "stickiness_score": 1.7,
+      "relationship_strength_score": { "label": "COLD", "score": 1 },
+      "recent_deal_support": { "label": "POOR", "score": 1 },
+      "partner_champion": { "is_flagged": false }
+    },
+    "combined_score_percent": 14.0
   },
   {
-    "record_id": "899fd612-7807-420b-9251-23a20c945273",
-    "record_name": "Hooli",
-    "record_website": "hooli.tech",
-    "crossbeam_record_id": "04981d36-f8c7-487f-9cac-85f77df03eba",
-    "partner_record_id": "039c78a6-fe89-43bd-908f-b4f9ed51b169",
-    "partner_record_name": "Wayne Enterprises",
-    "partner_record_website": "wayneenterprises.corp",
-    "partner_record_company_type": "Customer",
-    "partner_record_country": "USA",
-    "partner_record_industry": "Education",
-    "partner_record_employees": 6896,
-    "partner_crossbeam_record_id": "07ab55a1-0cf1-4fe4-a7de-33f0301b9d2b",
-    "partner_insights": {
-      "opportunity_relevance_score": 0,
-      "partner_champion": {
-        "is_flagged": false,
-        "score": 3
-      },
-      "relationship_strength_score": 3,
-      "recent_deal_support": 5,
-      "winnability_opinion": 3
-    },
-    "prospect_factors": {
-      "opportunity_size": 2,
-      "relationship_status": 3,
-      "engagement_score": "LOW",
-      "opportunity_stage": 1,
+    "opportunity_context": {
+      "name": "CoreNova",
+      "website": "www.corenova.io",
+      "opportunity_size": { "label": "VERY LARGE", "score": 5 },
+      "relationship_status": { "label": "Existing", "score": 5 },
+      "engagement_score": { "label": "HIGH", "score": 5 },
+      "opportunity_stage": { "label": "CLOSE TO WIN", "score": 4 },
+      "winnability": { "label": "HIGH", "score": 5 },
       "logo_potential": false
-    }
+    },
+    "partner_context": {
+      "name": "CloudPeak",
+      "website": "www.cloudpeak.io",
+      "country": "USA",
+      "industry": "Cloud Services",
+      "employees": 1200,
+      "stickiness_score": 4.8,
+      "relationship_strength_score": { "label": "STRATEGIC", "score": 5 },
+      "recent_deal_support": { "label": "GOOD", "score": 5 },
+      "partner_champion": { "is_flagged": true }
+    },
+    "combined_score_percent": 94.8
   },
   {
-    "record_id": "758f702c-1fd6-41d7-ad23-c2415e8c3f3a",
-    "record_name": "Aperture Science",
-    "record_website": "aperturescience.tech",
-    "crossbeam_record_id": "e32e9860-2c24-4c99-b24a-45029fce66f4",
-    "partner_record_id": "f0cea477-213d-42ff-841d-04f0d2f24f8a",
-    "partner_record_name": "Initech",
-    "partner_record_website": "initech.com",
-    "partner_record_company_type": "Partner",
-    "partner_record_country": "Canada",
-    "partner_record_industry": "Technology",
-    "partner_record_employees": 8852,
-    "partner_crossbeam_record_id": "14e9456c-4499-4716-9e52-5fca7855cbf7",
-    "partner_insights": {
-      "opportunity_relevance_score": 0,
-      "partner_champion": {
-        "is_flagged": true,
-        "score": null
-      },
-      "relationship_strength_score": 1,
-      "recent_deal_support": 3,
-      "winnability_opinion": 3
-    },
-    "prospect_factors": {
-      "opportunity_size": 1,
-      "relationship_status": 1,
-      "engagement_score": "MEDIUM",
-      "opportunity_stage": 1,
+    "opportunity_context": {
+      "name": "OptiWave",
+      "website": "www.optiwave.com",
+      "opportunity_size": { "label": "MEDIUM", "score": 3 },
+      "relationship_status": { "label": "Past", "score": 3 },
+      "engagement_score": { "label": "MEDIUM", "score": 3 },
+      "opportunity_stage": { "label": "EARLY CRM STAGE", "score": 5 },
+      "winnability": { "label": "NEUTRAL", "score": 3 },
       "logo_potential": false
-    }
+    },
+    "partner_context": {
+      "name": "TechNova",
+      "website": "www.technova.io",
+      "country": "Germany",
+      "industry": "Software",
+      "employees": 700,
+      "stickiness_score": 3.4,
+      "relationship_strength_score": { "label": "TRANSACTIONAL", "score": 3 },
+      "recent_deal_support": { "label": "ADEQUATE", "score": 3 },
+      "partner_champion": { "is_flagged": false }
+    },
+    "combined_score_percent": 51.3
   },
   {
-    "record_id": "74fa8532-362b-47c1-ab6e-107ab4476b75",
-    "record_name": "Umbrella Corp",
-    "record_website": "umbrellacorp.tech",
-    "crossbeam_record_id": "8d96085d-b617-49f2-81f4-28de1c65cd4e",
-    "partner_record_id": "1c4c286b-a321-4594-a869-13e461489773",
-    "partner_record_name": "Wonka Industries",
-    "partner_record_website": "wonkaindustries.ai",
-    "partner_record_company_type": "Partner",
-    "partner_record_country": "Germany",
-    "partner_record_industry": "Manufacturing",
-    "partner_record_employees": 5380,
-    "partner_crossbeam_record_id": "0726faa2-b689-4e6e-a2dc-a7b603cfaa3f",
-    "partner_insights": {
-      "opportunity_relevance_score": 2,
-      "partner_champion": {
-        "is_flagged": true,
-        "score": null
-      },
-      "relationship_strength_score": 5,
-      "recent_deal_support": 1,
-      "winnability_opinion": 5
-    },
-    "prospect_factors": {
-      "opportunity_size": 2,
-      "relationship_status": 1,
-      "engagement_score": "LOW",
-      "opportunity_stage": 3,
+    "opportunity_context": {
+      "name": "NextCore",
+      "website": "www.nextcore.io",
+      "opportunity_size": { "label": "LARGE", "score": 4 },
+      "relationship_status": { "label": "New", "score": 1 },
+      "engagement_score": { "label": "HIGH", "score": 5 },
+      "opportunity_stage": { "label": "LATE STAGE", "score": 1 },
+      "winnability": { "label": "HIGH", "score": 5 },
       "logo_potential": false
-    }
+    },
+    "partner_context": {
+      "name": "DataTrend",
+      "website": "www.datatrend.io",
+      "country": "UK",
+      "industry": "Data Analytics",
+      "employees": 600,
+      "stickiness_score": 4.3,
+      "relationship_strength_score": { "label": "STRATEGIC", "score": 5 },
+      "recent_deal_support": { "label": "GOOD", "score": 5 },
+      "partner_champion": { "is_flagged": true }
+    },
+    "combined_score_percent": 78.1
   },
   {
-    "record_id": "82adb722-ae47-47c3-9bcc-a9b77b9bcacf",
-    "record_name": "Wayne Enterprises",
-    "record_website": "wayneenterprises.tech",
-    "crossbeam_record_id": "f224112d-f960-4d0e-af28-9aa634c12ecc",
-    "partner_record_id": "aa248d86-a836-4bc5-ae57-f50940855a70",
-    "partner_record_name": "Massive Dynamic",
-    "partner_record_website": "massivedynamic.net",
-    "partner_record_company_type": "Partner",
-    "partner_record_country": "USA",
-    "partner_record_industry": "Finance",
-    "partner_record_employees": 6266,
-    "partner_crossbeam_record_id": "a5ec3aa6-cf8a-413d-b8c3-135c27ec5ff6",
-    "partner_insights": {
-      "opportunity_relevance_score": 5,
-      "partner_champion": {
-        "is_flagged": true,
-        "score": null
-      },
-      "relationship_strength_score": 5,
-      "recent_deal_support": 1,
-      "winnability_opinion": 1
-    },
-    "prospect_factors": {
-      "opportunity_size": 5,
-      "relationship_status": 1,
-      "engagement_score": "HIGH",
-      "opportunity_stage": 3,
+    "opportunity_context": {
+      "name": "BrightNova",
+      "website": "www.brightnova.co",
+      "opportunity_size": { "label": "SMALL", "score": 1 },
+      "relationship_status": { "label": "Past", "score": 3 },
+      "engagement_score": { "label": "LOW", "score": 1 },
+      "opportunity_stage": { "label": "LATE STAGE", "score": 1 },
+      "winnability": { "label": "LOW", "score": 1 },
       "logo_potential": false
-    }
+    },
+    "partner_context": {
+      "name": "TechCore",
+      "website": "www.techcore.io",
+      "country": "Canada",
+      "industry": "Software",
+      "employees": 400,
+      "stickiness_score": 1.6,
+      "relationship_strength_score": { "label": "COLD", "score": 1 },
+      "recent_deal_support": { "label": "POOR", "score": 1 },
+      "partner_champion": { "is_flagged": false }
+    },
+    "combined_score_percent": 13.9
   },
   {
-    "record_id": "ac2fc490-fb58-42f3-80ca-17b571f27562",
-    "record_name": "Initech",
-    "record_website": "initech.tech",
-    "crossbeam_record_id": "cf44a849-c51c-4b62-ad55-5fe61ffa8d96",
-    "partner_record_id": "a87b5fb5-620d-42ed-a2e3-130ea6adffc9",
-    "partner_record_name": "Initech",
-    "partner_record_website": "initech.net",
-    "partner_record_company_type": "Customer",
-    "partner_record_country": "USA",
-    "partner_record_industry": "Education",
-    "partner_record_employees": 2748,
-    "partner_crossbeam_record_id": "0b8bf1da-7d43-4472-b382-60979e64e10d",
-    "partner_insights": {
-      "opportunity_relevance_score": 2,
-      "partner_champion": {
-        "is_flagged": false,
-        "score": 4
-      },
-      "relationship_strength_score": 3,
-      "recent_deal_support": 1,
-      "winnability_opinion": 5
-    },
-    "prospect_factors": {
-      "opportunity_size": 2,
-      "relationship_status": 1,
-      "engagement_score": "MEDIUM",
-      "opportunity_stage": 3,
+    "opportunity_context": {
+      "name": "CorePeak",
+      "website": "www.corepeak.io",
+      "opportunity_size": { "label": "VERY LARGE", "score": 5 },
+      "relationship_status": { "label": "Existing", "score": 5 },
+      "engagement_score": { "label": "HIGH", "score": 5 },
+      "opportunity_stage": { "label": "CLOSE TO WIN", "score": 4 },
+      "winnability": { "label": "HIGH", "score": 5 },
       "logo_potential": false
-    }
+    },
+    "partner_context": {
+      "name": "CloudWave",
+      "website": "www.cloudwave.io",
+      "country": "USA",
+      "industry": "Cloud Services",
+      "employees": 1100,
+      "stickiness_score": 4.7,
+      "relationship_strength_score": { "label": "STRATEGIC", "score": 5 },
+      "recent_deal_support": { "label": "GOOD", "score": 5 },
+      "partner_champion": { "is_flagged": true }
+    },
+    "combined_score_percent": 94.3
   },
   {
-    "record_id": "9caa0984-0d1c-40f3-94d5-e1eae1a2f852",
-    "record_name": "Wayne Enterprises",
-    "record_website": "wayneenterprises.ai",
-    "crossbeam_record_id": "659a479c-8a79-4b52-be6b-896b4742928a",
-    "partner_record_id": "53eac088-dedd-4744-a8bc-da9072c43b10",
-    "partner_record_name": "Massive Dynamic",
-    "partner_record_website": "massivedynamic.ai",
-    "partner_record_company_type": "Prospect",
-    "partner_record_country": "USA",
-    "partner_record_industry": "Manufacturing",
-    "partner_record_employees": 5808,
-    "partner_crossbeam_record_id": "0d3b3cfa-82df-4add-892e-9596c64102f1",
-    "partner_insights": {
-      "opportunity_relevance_score": 5,
-      "partner_champion": {
-        "is_flagged": false,
-        "score": 2
-      },
-      "relationship_strength_score": 5,
-      "recent_deal_support": 5,
-      "winnability_opinion": 5
-    },
-    "prospect_factors": {
-      "opportunity_size": 3,
-      "relationship_status": 5,
-      "engagement_score": "MEDIUM",
-      "opportunity_stage": 1,
+    "opportunity_context": {
+      "name": "OptiCore",
+      "website": "www.opticore.com",
+      "opportunity_size": { "label": "MEDIUM", "score": 3 },
+      "relationship_status": { "label": "Past", "score": 3 },
+      "engagement_score": { "label": "MEDIUM", "score": 3 },
+      "opportunity_stage": { "label": "EARLY CRM STAGE", "score": 5 },
+      "winnability": { "label": "NEUTRAL", "score": 3 },
       "logo_potential": false
-    }
+    },
+    "partner_context": {
+      "name": "TechNova",
+      "website": "www.technova.io",
+      "country": "Germany",
+      "industry": "Software",
+      "employees": 700,
+      "stickiness_score": 3.2,
+      "relationship_strength_score": { "label": "TRANSACTIONAL", "score": 3 },
+      "recent_deal_support": { "label": "ADEQUATE", "score": 3 },
+      "partner_champion": { "is_flagged": false }
+    },
+    "combined_score_percent": 50.9
   },
   {
-    "record_id": "980eed8f-9e0c-42d6-8a9f-a7e5b56d151c",
-    "record_name": "Aperture Science",
-    "record_website": "aperturescience.ai",
-    "crossbeam_record_id": "ae5472a6-0abd-4082-8a7f-aced0c2023f3",
-    "partner_record_id": "a6c0e7e5-aa20-40b3-8132-b21b995b1e9a",
-    "partner_record_name": "Soylent",
-    "partner_record_website": "soylent.ai",
-    "partner_record_company_type": "Prospect",
-    "partner_record_country": "UK",
-    "partner_record_industry": "Technology",
-    "partner_record_employees": 9115,
-    "partner_crossbeam_record_id": "fc5b3401-9dbf-4a5f-90bb-3c9fdb7e3189",
-    "partner_insights": {
-      "opportunity_relevance_score": 0,
-      "partner_champion": {
-        "is_flagged": false,
-        "score": 2
-      },
-      "relationship_strength_score": 5,
-      "recent_deal_support": 5,
-      "winnability_opinion": 5
-    },
-    "prospect_factors": {
-      "opportunity_size": 3,
-      "relationship_status": 5,
-      "engagement_score": "LOW",
-      "opportunity_stage": 5,
+    "opportunity_context": {
+      "name": "NextPeak",
+      "website": "www.nextpeak.io",
+      "opportunity_size": { "label": "LARGE", "score": 4 },
+      "relationship_status": { "label": "New", "score": 1 },
+      "engagement_score": { "label": "HIGH", "score": 5 },
+      "opportunity_stage": { "label": "LATE STAGE", "score": 1 },
+      "winnability": { "label": "HIGH", "score": 5 },
       "logo_potential": false
-    }
+    },
+    "partner_context": {
+      "name": "DataCore",
+      "website": "www.datacore.io",
+      "country": "UK",
+      "industry": "Data Analytics",
+      "employees": 600,
+      "stickiness_score": 4.4,
+      "relationship_strength_score": { "label": "STRATEGIC", "score": 5 },
+      "recent_deal_support": { "label": "GOOD", "score": 5 },
+      "partner_champion": { "is_flagged": true }
+    },
+    "combined_score_percent": 78.7
   },
   {
-    "record_id": "0a8a24e6-50b8-4ae1-852f-ae6e03d26823",
-    "record_name": "Acme Corp",
-    "record_website": "acmecorp.tech",
-    "crossbeam_record_id": "7196ad45-6fb2-4037-b295-9563effd3aac",
-    "partner_record_id": "7f637d85-dd16-4477-8496-724371d9d0d3",
-    "partner_record_name": "Wonka Industries",
-    "partner_record_website": "wonkaindustries.ai",
-    "partner_record_company_type": "Partner",
-    "partner_record_country": "Germany",
-    "partner_record_industry": "Finance",
-    "partner_record_employees": 8441,
-    "partner_crossbeam_record_id": "f59399ab-486f-4cb1-afa9-93de79069b34",
-    "partner_insights": {
-      "opportunity_relevance_score": 5,
-      "partner_champion": {
-        "is_flagged": true,
-        "score": null
-      },
-      "relationship_strength_score": 1,
-      "recent_deal_support": 1,
-      "winnability_opinion": 3
-    },
-    "prospect_factors": {
-      "opportunity_size": 3,
-      "relationship_status": 5,
-      "engagement_score": "MEDIUM",
-      "opportunity_stage": 3,
+    "opportunity_context": {
+      "name": "BrightWave",
+      "website": "www.brightwave.co",
+      "opportunity_size": { "label": "SMALL", "score": 1 },
+      "relationship_status": { "label": "Past", "score": 3 },
+      "engagement_score": { "label": "LOW", "score": 1 },
+      "opportunity_stage": { "label": "LATE STAGE", "score": 1 },
+      "winnability": { "label": "LOW", "score": 1 },
       "logo_potential": false
-    }
+    },
+    "partner_context": {
+      "name": "TechTrend",
+      "website": "www.techtrend.io",
+      "country": "Canada",
+      "industry": "Software",
+      "employees": 400,
+      "stickiness_score": 1.9,
+      "relationship_strength_score": { "label": "COLD", "score": 1 },
+      "recent_deal_support": { "label": "POOR", "score": 1 },
+      "partner_champion": { "is_flagged": false }
+    },
+    "combined_score_percent": 14.2
   },
   {
-    "record_id": "a8520e3e-7d1e-474c-b54b-b36f8050c97d",
-    "record_name": "Initech",
-    "record_website": "initech.net",
-    "crossbeam_record_id": "0cbc0df5-d23a-423e-8b85-a40cd51335d7",
-    "partner_record_id": "fd23ede0-4108-4363-8424-fbd73d79b89d",
-    "partner_record_name": "Stark Industries",
-    "partner_record_website": "starkindustries.ai",
-    "partner_record_company_type": "Prospect",
-    "partner_record_country": "India",
-    "partner_record_industry": "Technology",
-    "partner_record_employees": 1963,
-    "partner_crossbeam_record_id": "bcf9b690-43fd-4b2e-9eed-4b1d18b741cc",
-    "partner_insights": {
-      "opportunity_relevance_score": 1,
-      "partner_champion": {
-        "is_flagged": false,
-        "score": 1
-      },
-      "relationship_strength_score": 1,
-      "recent_deal_support": 1,
-      "winnability_opinion": 5
-    },
-    "prospect_factors": {
-      "opportunity_size": 2,
-      "relationship_status": 3,
-      "engagement_score": "LOW",
-      "opportunity_stage": 5,
+    "opportunity_context": {
+      "name": "CoreTrend",
+      "website": "www.coretrend.io",
+      "opportunity_size": { "label": "VERY LARGE", "score": 5 },
+      "relationship_status": { "label": "Existing", "score": 5 },
+      "engagement_score": { "label": "HIGH", "score": 5 },
+      "opportunity_stage": { "label": "CLOSE TO WIN", "score": 4 },
+      "winnability": { "label": "HIGH", "score": 5 },
       "logo_potential": false
-    }
+    },
+    "partner_context": {
+      "name": "CloudNova",
+      "website": "www.cloudnova.io",
+      "country": "USA",
+      "industry": "Cloud Services",
+      "employees": 1100,
+      "stickiness_score": 4.6,
+      "relationship_strength_score": { "label": "STRATEGIC", "score": 5 },
+      "recent_deal_support": { "label": "GOOD", "score": 5 },
+      "partner_champion": { "is_flagged": true }
+    },
+    "combined_score_percent": 94.1
   },
   {
-    "record_id": "80cb0c1c-f90e-4dfb-b35f-2250da83cd3f",
-    "record_name": "Initech",
-    "record_website": "initech.tech",
-    "crossbeam_record_id": "33aeac2a-aa54-4610-b7ee-e9abdd9d8ada",
-    "partner_record_id": "a2c22892-792d-4abf-bd1f-00eb5917df36",
-    "partner_record_name": "Globex",
-    "partner_record_website": "globex.ai",
-    "partner_record_company_type": "Partner",
-    "partner_record_country": "India",
-    "partner_record_industry": "Finance",
-    "partner_record_employees": 696,
-    "partner_crossbeam_record_id": "f90c419d-27e3-404d-b85b-a33073b7062a",
-    "partner_insights": {
-      "opportunity_relevance_score": 1,
-      "partner_champion": {
-        "is_flagged": false,
-        "score": 4
-      },
-      "relationship_strength_score": 5,
-      "recent_deal_support": 5,
-      "winnability_opinion": 5
-    },
-    "prospect_factors": {
-      "opportunity_size": 2,
-      "relationship_status": 5,
-      "engagement_score": "HIGH",
-      "opportunity_stage": 5,
+    "opportunity_context": {
+      "name": "OptiNova",
+      "website": "www.optinova.com",
+      "opportunity_size": { "label": "MEDIUM", "score": 3 },
+      "relationship_status": { "label": "Past", "score": 3 },
+      "engagement_score": { "label": "MEDIUM", "score": 3 },
+      "opportunity_stage": { "label": "EARLY CRM STAGE", "score": 5 },
+      "winnability": { "label": "NEUTRAL", "score": 3 },
       "logo_potential": false
-    }
+    },
+    "partner_context": {
+      "name": "TechCore",
+      "website": "www.techcore.io",
+      "country": "Germany",
+      "industry": "Software",
+      "employees": 700,
+      "stickiness_score": 3.3,
+      "relationship_strength_score": { "label": "TRANSACTIONAL", "score": 3 },
+      "recent_deal_support": { "label": "ADEQUATE", "score": 3 },
+      "partner_champion": { "is_flagged": false }
+    },
+    "combined_score_percent": 50.8
   },
   {
-    "record_id": "4183cccc-e786-4849-a359-2502815f719b",
-    "record_name": "Acme Corp",
-    "record_website": "acmecorp.net",
-    "crossbeam_record_id": "68a76313-d89c-4c63-9de6-c8f3c24b1591",
-    "partner_record_id": "44f4444a-d0a3-40dd-975d-619efdc9e7f9",
-    "partner_record_name": "Umbrella Corp",
-    "partner_record_website": "umbrellacorp.com",
-    "partner_record_company_type": "Partner",
-    "partner_record_country": "Germany",
-    "partner_record_industry": "Finance",
-    "partner_record_employees": 5956,
-    "partner_crossbeam_record_id": "214e8fb8-4e06-491b-8292-d87d5d56efde",
-    "partner_insights": {
-      "opportunity_relevance_score": 2,
-      "partner_champion": {
-        "is_flagged": false,
-        "score": 3
-      },
-      "relationship_strength_score": 5,
-      "recent_deal_support": 1,
-      "winnability_opinion": 3
-    },
-    "prospect_factors": {
-      "opportunity_size": 1,
-      "relationship_status": 1,
-      "engagement_score": "MEDIUM",
-      "opportunity_stage": 4,
+    "opportunity_context": {
+      "name": "NextTrend",
+      "website": "www.nexttrend.io",
+      "opportunity_size": { "label": "LARGE", "score": 4 },
+      "relationship_status": { "label": "New", "score": 1 },
+      "engagement_score": { "label": "HIGH", "score": 5 },
+      "opportunity_stage": { "label": "LATE STAGE", "score": 1 },
+      "winnability": { "label": "HIGH", "score": 5 },
       "logo_potential": false
-    }
+    },
+    "partner_context": {
+      "name": "DataPeak",
+      "website": "www.datapeak.io",
+      "country": "UK",
+      "industry": "Data Analytics",
+      "employees": 600,
+      "stickiness_score": 4.5,
+      "relationship_strength_score": { "label": "STRATEGIC", "score": 5 },
+      "recent_deal_support": { "label": "GOOD", "score": 5 },
+      "partner_champion": { "is_flagged": true }
+    },
+    "combined_score_percent": 78.9
   },
   {
-    "record_id": "4e044e15-83d5-44ab-8f22-fb8fd25eac90",
-    "record_name": "Stark Industries",
-    "record_website": "starkindustries.corp",
-    "crossbeam_record_id": "1e324869-c334-4e13-9341-9163fff99a03",
-    "partner_record_id": "4df14aa0-b500-48f9-9db2-d742dc8af33d",
-    "partner_record_name": "Cyberdyne Systems",
-    "partner_record_website": "cyberdynesystems.corp",
-    "partner_record_company_type": "Customer",
-    "partner_record_country": "Canada",
-    "partner_record_industry": "Technology",
-    "partner_record_employees": 9404,
-    "partner_crossbeam_record_id": "c4a839de-be0c-4385-8389-0a3497ccc5a5",
-    "partner_insights": {
-      "opportunity_relevance_score": 5,
-      "partner_champion": {
-        "is_flagged": true,
-        "score": null
-      },
-      "relationship_strength_score": 5,
-      "recent_deal_support": 5,
-      "winnability_opinion": 5
-    },
-    "prospect_factors": {
-      "opportunity_size": 5,
-      "relationship_status": 1,
-      "engagement_score": "HIGH",
-      "opportunity_stage": 4,
+    "opportunity_context": {
+      "name": "BrightPeak",
+      "website": "www.brightpeak.co",
+      "opportunity_size": { "label": "SMALL", "score": 1 },
+      "relationship_status": { "label": "Past", "score": 3 },
+      "engagement_score": { "label": "LOW", "score": 1 },
+      "opportunity_stage": { "label": "LATE STAGE", "score": 1 },
+      "winnability": { "label": "LOW", "score": 1 },
       "logo_potential": false
-    }
+    },
+    "partner_context": {
+      "name": "TechWave",
+      "website": "www.techwave.io",
+      "country": "Canada",
+      "industry": "Software",
+      "employees": 400,
+      "stickiness_score": 1.8,
+      "relationship_strength_score": { "label": "COLD", "score": 1 },
+      "recent_deal_support": { "label": "POOR", "score": 1 },
+      "partner_champion": { "is_flagged": false }
+    },
+    "combined_score_percent": 14.1
   },
   {
-    "record_id": "6620db96-8586-4e1b-8255-dd44b59f8720",
-    "record_name": "Soylent",
-    "record_website": "soylent.ai",
-    "crossbeam_record_id": "09f1becd-2844-4a6f-a8f7-d2e2f7a3b28a",
-    "partner_record_id": "de27324a-cb59-478d-8837-89acc1e3ec36",
-    "partner_record_name": "Initech",
-    "partner_record_website": "initech.net",
-    "partner_record_company_type": "Partner",
-    "partner_record_country": "Germany",
-    "partner_record_industry": "Finance",
-    "partner_record_employees": 2352,
-    "partner_crossbeam_record_id": "c2788e48-f9ef-4440-bdf1-0abb32ecc94e",
-    "partner_insights": {
-      "opportunity_relevance_score": 1,
-      "partner_champion": {
-        "is_flagged": false,
-        "score": 4
-      },
-      "relationship_strength_score": 1,
-      "recent_deal_support": 5,
-      "winnability_opinion": 3
-    },
-    "prospect_factors": {
-      "opportunity_size": 4,
-      "relationship_status": 3,
-      "engagement_score": "LOW",
-      "opportunity_stage": 4,
+    "opportunity_context": {
+      "name": "CoreNova",
+      "website": "www.corenova.io",
+      "opportunity_size": { "label": "VERY LARGE", "score": 5 },
+      "relationship_status": { "label": "Existing", "score": 5 },
+      "engagement_score": { "label": "HIGH", "score": 5 },
+      "opportunity_stage": { "label": "CLOSE TO WIN", "score": 4 },
+      "winnability": { "label": "HIGH", "score": 5 },
       "logo_potential": false
-    }
+    },
+    "partner_context": {
+      "name": "CloudTrend",
+      "website": "www.cloudtrend.io",
+      "country": "USA",
+      "industry": "Cloud Services",
+      "employees": 1100,
+      "stickiness_score": 4.8,
+      "relationship_strength_score": { "label": "STRATEGIC", "score": 5 },
+      "recent_deal_support": { "label": "GOOD", "score": 5 },
+      "partner_champion": { "is_flagged": true }
+    },
+    "combined_score_percent": 94.7
   },
   {
-    "record_id": "eaf7c8c9-e348-4d8d-b192-80a0dc20f9de",
-    "record_name": "Hooli",
-    "record_website": "hooli.ai",
-    "crossbeam_record_id": "0b37922f-1764-476b-9ce1-b510e87b5339",
-    "partner_record_id": "a731674d-3fc8-4b04-a4ae-5b3ecbff41ec",
-    "partner_record_name": "Aperture Science",
-    "partner_record_website": "aperturescience.com",
-    "partner_record_company_type": "Partner",
-    "partner_record_country": "Germany",
-    "partner_record_industry": "Healthcare",
-    "partner_record_employees": 4580,
-    "partner_crossbeam_record_id": "53e49125-6cb3-401f-b263-dd23eac03050",
-    "partner_insights": {
-      "opportunity_relevance_score": 5,
-      "partner_champion": {
-        "is_flagged": true,
-        "score": null
-      },
-      "relationship_strength_score": 5,
-      "recent_deal_support": 1,
-      "winnability_opinion": 3
-    },
-    "prospect_factors": {
-      "opportunity_size": 3,
-      "relationship_status": 3,
-      "engagement_score": "LOW",
-      "opportunity_stage": 4,
+    "opportunity_context": {
+      "name": "OptiTrend",
+      "website": "www.optitrend.com",
+      "opportunity_size": { "label": "MEDIUM", "score": 3 },
+      "relationship_status": { "label": "Past", "score": 3 },
+      "engagement_score": { "label": "MEDIUM", "score": 3 },
+      "opportunity_stage": { "label": "EARLY CRM STAGE", "score": 5 },
+      "winnability": { "label": "NEUTRAL", "score": 3 },
       "logo_potential": false
-    }
+    },
+    "partner_context": {
+      "name": "TechPeak",
+      "website": "www.techpeak.io",
+      "country": "Germany",
+      "industry": "Software",
+      "employees": 700,
+      "stickiness_score": 3.4,
+      "relationship_strength_score": { "label": "TRANSACTIONAL", "score": 3 },
+      "recent_deal_support": { "label": "ADEQUATE", "score": 3 },
+      "partner_champion": { "is_flagged": false }
+    },
+    "combined_score_percent": 51.2
   },
   {
-    "record_id": "49546b69-dc8c-44da-95b2-b7b102509e31",
-    "record_name": "Hooli",
-    "record_website": "hooli.tech",
-    "crossbeam_record_id": "cd92bf47-b7ef-4776-a057-225046a2f779",
-    "partner_record_id": "ecf40aa8-a57f-4003-b323-c24fe7768ebb",
-    "partner_record_name": "Hooli",
-    "partner_record_website": "hooli.net",
-    "partner_record_company_type": "Partner",
-    "partner_record_country": "Germany",
-    "partner_record_industry": "Manufacturing",
-    "partner_record_employees": 9355,
-    "partner_crossbeam_record_id": "d55d6d1e-fe09-4d4a-b3b1-c68fb37eb01a",
-    "partner_insights": {
-      "opportunity_relevance_score": 2,
-      "partner_champion": {
-        "is_flagged": true,
-        "score": null
-      },
-      "relationship_strength_score": 5,
-      "recent_deal_support": 5,
-      "winnability_opinion": 1
-    },
-    "prospect_factors": {
-      "opportunity_size": 3,
-      "relationship_status": 5,
-      "engagement_score": "LOW",
-      "opportunity_stage": 1,
+    "opportunity_context": {
+      "name": "NextNova",
+      "website": "www.nextnova.io",
+      "opportunity_size": { "label": "LARGE", "score": 4 },
+      "relationship_status": { "label": "New", "score": 1 },
+      "engagement_score": { "label": "HIGH", "score": 5 },
+      "opportunity_stage": { "label": "LATE STAGE", "score": 1 },
+      "winnability": { "label": "HIGH", "score": 5 },
       "logo_potential": false
-    }
+    },
+    "partner_context": {
+      "name": "DataWave",
+      "website": "www.datawave.io",
+      "country": "UK",
+      "industry": "Data Analytics",
+      "employees": 600,
+      "stickiness_score": 4.6,
+      "relationship_strength_score": { "label": "STRATEGIC", "score": 5 },
+      "recent_deal_support": { "label": "GOOD", "score": 5 },
+      "partner_champion": { "is_flagged": true }
+    },
+    "combined_score_percent": 79.1
   },
   {
-    "record_id": "cd3fcfc4-d106-4c1e-86b6-e0b7aef63785",
-    "record_name": "Massive Dynamic",
-    "record_website": "massivedynamic.ai",
-    "crossbeam_record_id": "62139177-e2b4-44c1-8d5a-514e2b302a55",
-    "partner_record_id": "84d0d7b3-cd1f-45bc-81de-79afaac6da0d",
-    "partner_record_name": "Stark Industries",
-    "partner_record_website": "starkindustries.corp",
-    "partner_record_company_type": "Prospect",
-    "partner_record_country": "UK",
-    "partner_record_industry": "Finance",
-    "partner_record_employees": 3644,
-    "partner_crossbeam_record_id": "289e24ea-6526-4ef5-90ce-eea37188a546",
-    "partner_insights": {
-      "opportunity_relevance_score": 3,
-      "partner_champion": {
-        "is_flagged": true,
-        "score": null
-      },
-      "relationship_strength_score": 5,
-      "recent_deal_support": 5,
-      "winnability_opinion": 3
-    },
-    "prospect_factors": {
-      "opportunity_size": 1,
-      "relationship_status": 5,
-      "engagement_score": "HIGH",
-      "opportunity_stage": 4,
+    "opportunity_context": {
+      "name": "BrightTrend",
+      "website": "www.brighttrend.co",
+      "opportunity_size": { "label": "SMALL", "score": 1 },
+      "relationship_status": { "label": "Past", "score": 3 },
+      "engagement_score": { "label": "LOW", "score": 1 },
+      "opportunity_stage": { "label": "LATE STAGE", "score": 1 },
+      "winnability": { "label": "LOW", "score": 1 },
       "logo_potential": false
-    }
+    },
+    "partner_context": {
+      "name": "TechNova",
+      "website": "www.technova.io",
+      "country": "Canada",
+      "industry": "Software",
+      "employees": 400,
+      "stickiness_score": 1.7,
+      "relationship_strength_score": { "label": "COLD", "score": 1 },
+      "recent_deal_support": { "label": "POOR", "score": 1 },
+      "partner_champion": { "is_flagged": false }
+    },
+    "combined_score_percent": 14.0
   },
   {
-    "record_id": "0bc3424f-df81-478a-aded-cdccef4a8443",
-    "record_name": "Aperture Science",
-    "record_website": "aperturescience.com",
-    "crossbeam_record_id": "837dbfbb-8532-4f88-88f0-fec8766429f6",
-    "partner_record_id": "97fc6500-c335-4418-a2a9-ae278191eba9",
-    "partner_record_name": "Umbrella Corp",
-    "partner_record_website": "umbrellacorp.com",
-    "partner_record_company_type": "Prospect",
-    "partner_record_country": "UK",
-    "partner_record_industry": "Healthcare",
-    "partner_record_employees": 653,
-    "partner_crossbeam_record_id": "5b1ea42e-b602-427a-a721-3a8f8eec0678",
-    "partner_insights": {
-      "opportunity_relevance_score": 2,
-      "partner_champion": {
-        "is_flagged": false,
-        "score": 3
-      },
-      "relationship_strength_score": 3,
-      "recent_deal_support": 3,
-      "winnability_opinion": 5
-    },
-    "prospect_factors": {
-      "opportunity_size": 1,
-      "relationship_status": 5,
-      "engagement_score": "HIGH",
-      "opportunity_stage": 4,
+    "opportunity_context": {
+      "name": "CoreWave",
+      "website": "www.corewave.io",
+      "opportunity_size": { "label": "VERY LARGE", "score": 5 },
+      "relationship_status": { "label": "Existing", "score": 5 },
+      "engagement_score": { "label": "HIGH", "score": 5 },
+      "opportunity_stage": { "label": "CLOSE TO WIN", "score": 4 },
+      "winnability": { "label": "HIGH", "score": 5 },
       "logo_potential": false
-    }
+    },
+    "partner_context": {
+      "name": "CloudPeak",
+      "website": "www.cloudpeak.io",
+      "country": "USA",
+      "industry": "Cloud Services",
+      "employees": 1100,
+      "stickiness_score": 4.9,
+      "relationship_strength_score": { "label": "STRATEGIC", "score": 5 },
+      "recent_deal_support": { "label": "GOOD", "score": 5 },
+      "partner_champion": { "is_flagged": true }
+    },
+    "combined_score_percent": 95.0
   },
   {
-    "record_id": "57fdd16b-b443-484b-954d-727b8f009a93",
-    "record_name": "Stark Industries",
-    "record_website": "starkindustries.com",
-    "crossbeam_record_id": "ed8132a9-1c6c-4d97-8ac4-e2cdebe158a9",
-    "partner_record_id": "cc5616b6-9aba-4f74-b32f-628627ce14e0",
-    "partner_record_name": "Globex",
-    "partner_record_website": "globex.corp",
-    "partner_record_company_type": "Prospect",
-    "partner_record_country": "Germany",
-    "partner_record_industry": "Manufacturing",
-    "partner_record_employees": 1311,
-    "partner_crossbeam_record_id": "5ed1fbd3-3159-47e4-9cb6-e28b56cca8c0",
-    "partner_insights": {
-      "opportunity_relevance_score": 2,
-      "partner_champion": {
-        "is_flagged": false,
-        "score": 4
-      },
-      "relationship_strength_score": 1,
-      "recent_deal_support": 5,
-      "winnability_opinion": 5
-    },
-    "prospect_factors": {
-      "opportunity_size": 4,
-      "relationship_status": 1,
-      "engagement_score": "LOW",
-      "opportunity_stage": 5,
+    "opportunity_context": {
+      "name": "OptiPeak",
+      "website": "www.optipeak.com",
+      "opportunity_size": { "label": "MEDIUM", "score": 3 },
+      "relationship_status": { "label": "Past", "score": 3 },
+      "engagement_score": { "label": "MEDIUM", "score": 3 },
+      "opportunity_stage": { "label": "EARLY CRM STAGE", "score": 5 },
+      "winnability": { "label": "NEUTRAL", "score": 3 },
       "logo_potential": false
-    }
+    },
+    "partner_context": {
+      "name": "TechTrend",
+      "website": "www.techtrend.io",
+      "country": "Germany",
+      "industry": "Software",
+      "employees": 700,
+      "stickiness_score": 3.5,
+      "relationship_strength_score": { "label": "TRANSACTIONAL", "score": 3 },
+      "recent_deal_support": { "label": "ADEQUATE", "score": 3 },
+      "partner_champion": { "is_flagged": false }
+    },
+    "combined_score_percent": 51.4
   },
   {
-    "record_id": "59122564-483b-484e-91fb-b73e23652210",
-    "record_name": "Umbrella Corp",
-    "record_website": "umbrellacorp.tech",
-    "crossbeam_record_id": "1f708be1-1a11-47d1-aba3-ca8ca87924e0",
-    "partner_record_id": "23d37977-908f-403b-8d2b-9614bfa74f9a",
-    "partner_record_name": "Cyberdyne Systems",
-    "partner_record_website": "cyberdynesystems.ai",
-    "partner_record_company_type": "Customer",
-    "partner_record_country": "Canada",
-    "partner_record_industry": "Education",
-    "partner_record_employees": 7638,
-    "partner_crossbeam_record_id": "36d38bb1-4349-4667-b850-b21e38a080b3",
-    "partner_insights": {
-      "opportunity_relevance_score": 2,
-      "partner_champion": {
-        "is_flagged": false,
-        "score": 2
-      },
-      "relationship_strength_score": 5,
-      "recent_deal_support": 3,
-      "winnability_opinion": 5
-    },
-    "prospect_factors": {
-      "opportunity_size": 3,
-      "relationship_status": 3,
-      "engagement_score": "LOW",
-      "opportunity_stage": 5,
+    "opportunity_context": {
+      "name": "NextWave",
+      "website": "www.nextwave.io",
+      "opportunity_size": { "label": "LARGE", "score": 4 },
+      "relationship_status": { "label": "New", "score": 1 },
+      "engagement_score": { "label": "HIGH", "score": 5 },
+      "opportunity_stage": { "label": "LATE STAGE", "score": 1 },
+      "winnability": { "label": "HIGH", "score": 5 },
       "logo_potential": false
-    }
+    },
+    "partner_context": {
+      "name": "DataCore",
+      "website": "www.datacore.io",
+      "country": "UK",
+      "industry": "Data Analytics",
+      "employees": 600,
+      "stickiness_score": 4.7,
+      "relationship_strength_score": { "label": "STRATEGIC", "score": 5 },
+      "recent_deal_support": { "label": "GOOD", "score": 5 },
+      "partner_champion": { "is_flagged": true }
+    },
+    "combined_score_percent": 79.3
   },
   {
-    "record_id": "0b9e3cb3-9990-44aa-87b4-ff8d7c84c076",
-    "record_name": "Wayne Enterprises",
-    "record_website": "wayneenterprises.com",
-    "crossbeam_record_id": "635d9530-990c-4b7c-ae12-9c68d4402d7f",
-    "partner_record_id": "275a8d50-d731-4891-bcce-557146ebc7d1",
-    "partner_record_name": "Soylent",
-    "partner_record_website": "soylent.corp",
-    "partner_record_company_type": "Prospect",
-    "partner_record_country": "Germany",
-    "partner_record_industry": "Technology",
-    "partner_record_employees": 9814,
-    "partner_crossbeam_record_id": "d35d8bc2-d347-4834-ab1e-1e179b193af1",
-    "partner_insights": {
-      "opportunity_relevance_score": 3,
-      "partner_champion": {
-        "is_flagged": false,
-        "score": 1
-      },
-      "relationship_strength_score": 3,
-      "recent_deal_support": 1,
-      "winnability_opinion": 5
-    },
-    "prospect_factors": {
-      "opportunity_size": 2,
-      "relationship_status": 3,
-      "engagement_score": "MEDIUM",
-      "opportunity_stage": 4,
+    "opportunity_context": {
+      "name": "BrightCore",
+      "website": "www.brightcore.co",
+      "opportunity_size": { "label": "SMALL", "score": 1 },
+      "relationship_status": { "label": "Past", "score": 3 },
+      "engagement_score": { "label": "LOW", "score": 1 },
+      "opportunity_stage": { "label": "LATE STAGE", "score": 1 },
+      "winnability": { "label": "LOW", "score": 1 },
       "logo_potential": false
-    }
+    },
+    "partner_context": {
+      "name": "TechWave",
+      "website": "www.techwave.io",
+      "country": "Canada",
+      "industry": "Software",
+      "employees": 400,
+      "stickiness_score": 1.6,
+      "relationship_strength_score": { "label": "COLD", "score": 1 },
+      "recent_deal_support": { "label": "POOR", "score": 1 },
+      "partner_champion": { "is_flagged": false }
+    },
+    "combined_score_percent": 13.8
   },
   {
-    "record_id": "ceb54c52-6014-49f4-8678-59f102e4838b",
-    "record_name": "Soylent",
-    "record_website": "soylent.corp",
-    "crossbeam_record_id": "3b471567-8f4e-4a16-9f27-8dd0ac6d8464",
-    "partner_record_id": "b7a3435b-ec2c-4004-94ab-825c52d807b0",
-    "partner_record_name": "Cyberdyne Systems",
-    "partner_record_website": "cyberdynesystems.net",
-    "partner_record_company_type": "Customer",
-    "partner_record_country": "UK",
-    "partner_record_industry": "Healthcare",
-    "partner_record_employees": 7571,
-    "partner_crossbeam_record_id": "92595bdd-595e-435e-b4e9-4824feeacb73",
-    "partner_insights": {
-      "opportunity_relevance_score": 1,
-      "partner_champion": {
-        "is_flagged": false,
-        "score": 5
-      },
-      "relationship_strength_score": 5,
-      "recent_deal_support": 1,
-      "winnability_opinion": 1
-    },
-    "prospect_factors": {
-      "opportunity_size": 2,
-      "relationship_status": 1,
-      "engagement_score": "HIGH",
-      "opportunity_stage": 5,
+    "opportunity_context": {
+      "name": "CoreNova",
+      "website": "www.corenova.io",
+      "opportunity_size": { "label": "VERY LARGE", "score": 5 },
+      "relationship_status": { "label": "Existing", "score": 5 },
+      "engagement_score": { "label": "HIGH", "score": 5 },
+      "opportunity_stage": { "label": "CLOSE TO WIN", "score": 4 },
+      "winnability": { "label": "HIGH", "score": 5 },
       "logo_potential": false
-    }
+    },
+    "partner_context": {
+      "name": "CloudPeak",
+      "website": "www.cloudpeak.io",
+      "country": "USA",
+      "industry": "Cloud Services",
+      "employees": 1100,
+      "stickiness_score": 4.8,
+      "relationship_strength_score": { "label": "STRATEGIC", "score": 5 },
+      "recent_deal_support": { "label": "GOOD", "score": 5 },
+      "partner_champion": { "is_flagged": true }
+    },
+    "combined_score_percent": 94.6
   },
   {
-    "record_id": "50caf3af-07ca-45c6-a1d9-507609402275",
-    "record_name": "Massive Dynamic",
-    "record_website": "massivedynamic.ai",
-    "crossbeam_record_id": "5b88b8ac-b98a-4543-add2-3ddd5194aaf6",
-    "partner_record_id": "658ba9ce-e9fc-4625-aa3d-a2d9eeee6587",
-    "partner_record_name": "Umbrella Corp",
-    "partner_record_website": "umbrellacorp.ai",
-    "partner_record_company_type": "Customer",
-    "partner_record_country": "UK",
-    "partner_record_industry": "Education",
-    "partner_record_employees": 1987,
-    "partner_crossbeam_record_id": "b09240fa-3ca2-4bd0-84cd-98daf0ca278a",
-    "partner_insights": {
-      "opportunity_relevance_score": 0,
-      "partner_champion": {
-        "is_flagged": false,
-        "score": 1
-      },
-      "relationship_strength_score": 1,
-      "recent_deal_support": 3,
-      "winnability_opinion": 1
-    },
-    "prospect_factors": {
-      "opportunity_size": 4,
-      "relationship_status": 5,
-      "engagement_score": "MEDIUM",
-      "opportunity_stage": 3,
+    "opportunity_context": {
+      "name": "OptiWave",
+      "website": "www.optiwave.com",
+      "opportunity_size": { "label": "MEDIUM", "score": 3 },
+      "relationship_status": { "label": "Past", "score": 3 },
+      "engagement_score": { "label": "MEDIUM", "score": 3 },
+      "opportunity_stage": { "label": "EARLY CRM STAGE", "score": 5 },
+      "winnability": { "label": "NEUTRAL", "score": 3 },
       "logo_potential": false
-    }
+    },
+    "partner_context": {
+      "name": "TechNova",
+      "website": "www.technova.io",
+      "country": "Germany",
+      "industry": "Software",
+      "employees": 700,
+      "stickiness_score": 3.3,
+      "relationship_strength_score": { "label": "TRANSACTIONAL", "score": 3 },
+      "recent_deal_support": { "label": "ADEQUATE", "score": 3 },
+      "partner_champion": { "is_flagged": false }
+    },
+    "combined_score_percent": 51.1
   },
   {
-    "record_id": "b40e42fa-12f3-47ff-bfa4-ae19740f34b6",
-    "record_name": "Wonka Industries",
-    "record_website": "wonkaindustries.tech",
-    "crossbeam_record_id": "dade14dd-299d-454a-8c75-ae165a38544d",
-    "partner_record_id": "518e3815-e495-4422-9c55-23d3d227df45",
-    "partner_record_name": "Globex",
-    "partner_record_website": "globex.net",
-    "partner_record_company_type": "Customer",
-    "partner_record_country": "USA",
-    "partner_record_industry": "Education",
-    "partner_record_employees": 2758,
-    "partner_crossbeam_record_id": "4630cf4d-1f27-40db-aa1c-7b80eea66542",
-    "partner_insights": {
-      "opportunity_relevance_score": 5,
-      "partner_champion": {
-        "is_flagged": true,
-        "score": null
-      },
-      "relationship_strength_score": 3,
-      "recent_deal_support": 3,
-      "winnability_opinion": 3
-    },
-    "prospect_factors": {
-      "opportunity_size": 3,
-      "relationship_status": 5,
-      "engagement_score": "MEDIUM",
-      "opportunity_stage": 4,
+    "opportunity_context": {
+      "name": "NextCore",
+      "website": "www.nextcore.io",
+      "opportunity_size": { "label": "LARGE", "score": 4 },
+      "relationship_status": { "label": "New", "score": 1 },
+      "engagement_score": { "label": "HIGH", "score": 5 },
+      "opportunity_stage": { "label": "LATE STAGE", "score": 1 },
+      "winnability": { "label": "HIGH", "score": 5 },
       "logo_potential": false
-    }
+    },
+    "partner_context": {
+      "name": "DataTrend",
+      "website": "www.datatrend.io",
+      "country": "UK",
+      "industry": "Data Analytics",
+      "employees": 600,
+      "stickiness_score": 4.4,
+      "relationship_strength_score": { "label": "STRATEGIC", "score": 5 },
+      "recent_deal_support": { "label": "GOOD", "score": 5 },
+      "partner_champion": { "is_flagged": true }
+    },
+    "combined_score_percent": 78.8
+  },
+  {
+    "opportunity_context": {
+      "name": "BrightNova",
+      "website": "www.brightnova.co",
+      "opportunity_size": { "label": "SMALL", "score": 1 },
+      "relationship_status": { "label": "Past", "score": 3 },
+      "engagement_score": { "label": "LOW", "score": 1 },
+      "opportunity_stage": { "label": "LATE STAGE", "score": 1 },
+      "winnability": { "label": "LOW", "score": 1 },
+      "logo_potential": false
+    },
+    "partner_context": {
+      "name": "TechCore",
+      "website": "www.techcore.io",
+      "country": "Canada",
+      "industry": "Software",
+      "employees": 400,
+      "stickiness_score": 1.7,
+      "relationship_strength_score": { "label": "COLD", "score": 1 },
+      "recent_deal_support": { "label": "POOR", "score": 1 },
+      "partner_champion": { "is_flagged": false }
+    },
+    "combined_score_percent": 14.0
+  },
+  {
+    "opportunity_context": {
+      "name": "CorePeak",
+      "website": "www.corepeak.io",
+      "opportunity_size": { "label": "VERY LARGE", "score": 5 },
+      "relationship_status": { "label": "Existing", "score": 5 },
+      "engagement_score": { "label": "HIGH", "score": 5 },
+      "opportunity_stage": { "label": "CLOSE TO WIN", "score": 4 },
+      "winnability": { "label": "HIGH", "score": 5 },
+      "logo_potential": false
+    },
+    "partner_context": {
+      "name": "CloudWave",
+      "website": "www.cloudwave.io",
+      "country": "USA",
+      "industry": "Cloud Services",
+      "employees": 1100,
+      "stickiness_score": 4.7,
+      "relationship_strength_score": { "label": "STRATEGIC", "score": 5 },
+      "recent_deal_support": { "label": "GOOD", "score": 5 },
+      "partner_champion": { "is_flagged": true }
+    },
+    "combined_score_percent": 94.4
+  },
+  {
+    "opportunity_context": {
+      "name": "OptiCore",
+      "website": "www.opticore.com",
+      "opportunity_size": { "label": "MEDIUM", "score": 3 },
+      "relationship_status": { "label": "Past", "score": 3 },
+      "engagement_score": { "label": "MEDIUM", "score": 3 },
+      "opportunity_stage": { "label": "EARLY CRM STAGE", "score": 5 },
+      "winnability": { "label": "NEUTRAL", "score": 3 },
+      "logo_potential": false
+    },
+    "partner_context": {
+      "name": "TechNova",
+      "website": "www.technova.io",
+      "country": "Germany",
+      "industry": "Software",
+      "employees": 700,
+      "stickiness_score": 3.2,
+      "relationship_strength_score": { "label": "TRANSACTIONAL", "score": 3 },
+      "recent_deal_support": { "label": "ADEQUATE", "score": 3 },
+      "partner_champion": { "is_flagged": false }
+    },
+    "combined_score_percent": 50.9
+  },
+  {
+    "opportunity_context": {
+      "name": "NextPeak",
+      "website": "www.nextpeak.io",
+      "opportunity_size": { "label": "LARGE", "score": 4 },
+      "relationship_status": { "label": "New", "score": 1 },
+      "engagement_score": { "label": "HIGH", "score": 5 },
+      "opportunity_stage": { "label": "LATE STAGE", "score": 1 },
+      "winnability": { "label": "HIGH", "score": 5 },
+      "logo_potential": false
+    },
+    "partner_context": {
+      "name": "DataCore",
+      "website": "www.datacore.io",
+      "country": "UK",
+      "industry": "Data Analytics",
+      "employees": 600,
+      "stickiness_score": 4.4,
+      "relationship_strength_score": { "label": "STRATEGIC", "score": 5 },
+      "recent_deal_support": { "label": "GOOD", "score": 5 },
+      "partner_champion": { "is_flagged": true }
+    },
+    "combined_score_percent": 78.7
+  },
+  {
+    "opportunity_context": {
+      "name": "BrightWave",
+      "website": "www.brightwave.co",
+      "opportunity_size": { "label": "SMALL", "score": 1 },
+      "relationship_status": { "label": "Past", "score": 3 },
+      "engagement_score": { "label": "LOW", "score": 1 },
+      "opportunity_stage": { "label": "LATE STAGE", "score": 1 },
+      "winnability": { "label": "LOW", "score": 1 },
+      "logo_potential": false
+    },
+    "partner_context": {
+      "name": "TechTrend",
+      "website": "www.techtrend.io",
+      "country": "Canada",
+      "industry": "Software",
+      "employees": 400,
+      "stickiness_score": 1.9,
+      "relationship_strength_score": { "label": "COLD", "score": 1 },
+      "recent_deal_support": { "label": "POOR", "score": 1 },
+      "partner_champion": { "is_flagged": false }
+    },
+    "combined_score_percent": 14.2
+  },
+  {
+    "opportunity_context": {
+      "name": "CoreTrend",
+      "website": "www.coretrend.io",
+      "opportunity_size": { "label": "VERY LARGE", "score": 5 },
+      "relationship_status": { "label": "Existing", "score": 5 },
+      "engagement_score": { "label": "HIGH", "score": 5 },
+      "opportunity_stage": { "label": "CLOSE TO WIN", "score": 4 },
+      "winnability": { "label": "HIGH", "score": 5 },
+      "logo_potential": false
+    },
+    "partner_context": {
+      "name": "CloudNova",
+      "website": "www.cloudnova.io",
+      "country": "USA",
+      "industry": "Cloud Services",
+      "employees": 1100,
+      "stickiness_score": 4.6,
+      "relationship_strength_score": { "label": "STRATEGIC", "score": 5 },
+      "recent_deal_support": { "label": "GOOD", "score": 5 },
+      "partner_champion": { "is_flagged": true }
+    },
+    "combined_score_percent": 94.1
+  },
+  {
+    "opportunity_context": {
+      "name": "OptiNova",
+      "website": "www.optinova.com",
+      "opportunity_size": { "label": "MEDIUM", "score": 3 },
+      "relationship_status": { "label": "Past", "score": 3 },
+      "engagement_score": { "label": "MEDIUM", "score": 3 },
+      "opportunity_stage": { "label": "EARLY CRM STAGE", "score": 5 },
+      "winnability": { "label": "NEUTRAL", "score": 3 },
+      "logo_potential": false
+    },
+    "partner_context": {
+      "name": "TechCore",
+      "website": "www.techcore.io",
+      "country": "Germany",
+      "industry": "Software",
+      "employees": 700,
+      "stickiness_score": 3.3,
+      "relationship_strength_score": { "label": "TRANSACTIONAL", "score": 3 },
+      "recent_deal_support": { "label": "ADEQUATE", "score": 3 },
+      "partner_champion": { "is_flagged": false }
+    },
+    "combined_score_percent": 50.8
+  },
+  {
+    "opportunity_context": {
+      "name": "NextTrend",
+      "website": "www.nexttrend.io",
+      "opportunity_size": { "label": "LARGE", "score": 4 },
+      "relationship_status": { "label": "New", "score": 1 },
+      "engagement_score": { "label": "HIGH", "score": 5 },
+      "opportunity_stage": { "label": "LATE STAGE", "score": 1 },
+      "winnability": { "label": "HIGH", "score": 5 },
+      "logo_potential": false
+    },
+    "partner_context": {
+      "name": "DataPeak",
+      "website": "www.datapeak.io",
+      "country": "UK",
+      "industry": "Data Analytics",
+      "employees": 600,
+      "stickiness_score": 4.5,
+      "relationship_strength_score": { "label": "STRATEGIC", "score": 5 },
+      "recent_deal_support": { "label": "GOOD", "score": 5 },
+      "partner_champion": { "is_flagged": true }
+    },
+    "combined_score_percent": 78.9
+  },
+  {
+    "opportunity_context": {
+      "name": "BrightPeak",
+      "website": "www.brightpeak.co",
+      "opportunity_size": { "label": "SMALL", "score": 1 },
+      "relationship_status": { "label": "Past", "score": 3 },
+      "engagement_score": { "label": "LOW", "score": 1 },
+      "opportunity_stage": { "label": "LATE STAGE", "score": 1 },
+      "winnability": { "label": "LOW", "score": 1 },
+      "logo_potential": false
+    },
+    "partner_context": {
+      "name": "TechWave",
+      "website": "www.techwave.io",
+      "country": "Canada",
+      "industry": "Software",
+      "employees": 400,
+      "stickiness_score": 1.7,
+      "relationship_strength_score": { "label": "COLD", "score": 1 },
+      "recent_deal_support": { "label": "POOR", "score": 1 },
+      "partner_champion": { "is_flagged": false }
+    },
+    "combined_score_percent": 14.1
+  },
+  {
+    "opportunity_context": {
+      "name": "CoreNova",
+      "website": "www.corenova.io",
+      "opportunity_size": { "label": "VERY LARGE", "score": 5 },
+      "relationship_status": { "label": "Existing", "score": 5 },
+      "engagement_score": { "label": "HIGH", "score": 5 },
+      "opportunity_stage": { "label": "CLOSE TO WIN", "score": 4 },
+      "winnability": { "label": "HIGH", "score": 5 },
+      "logo_potential": false
+    },
+    "partner_context": {
+      "name": "CloudPeak",
+      "website": "www.cloudpeak.io",
+      "country": "USA",
+      "industry": "Cloud Services",
+      "employees": 1100,
+      "stickiness_score": 4.8,
+      "relationship_strength_score": { "label": "STRATEGIC", "score": 5 },
+      "recent_deal_support": { "label": "GOOD", "score": 5 },
+      "partner_champion": { "is_flagged": true }
+    },
+    "combined_score_percent": 94.7
+  },
+  {
+    "opportunity_context": {
+      "name": "OptiTrend",
+      "website": "www.optitrend.com",
+      "opportunity_size": { "label": "MEDIUM", "score": 3 },
+      "relationship_status": { "label": "Past", "score": 3 },
+      "engagement_score": { "label": "MEDIUM", "score": 3 },
+      "opportunity_stage": { "label": "EARLY CRM STAGE", "score": 5 },
+      "winnability": { "label": "NEUTRAL", "score": 3 },
+      "logo_potential": false
+    },
+    "partner_context": {
+      "name": "TechCore",
+      "website": "www.techcore.io",
+      "country": "Germany",
+      "industry": "Software",
+      "employees": 700,
+      "stickiness_score": 3.3,
+      "relationship_strength_score": { "label": "TRANSACTIONAL", "score": 3 },
+      "recent_deal_support": { "label": "ADEQUATE", "score": 3 },
+      "partner_champion": { "is_flagged": false }
+    },
+    "combined_score_percent": 50.8
+  },
+  {
+    "opportunity_context": {
+      "name": "NextNova",
+      "website": "www.nextnova.io",
+      "opportunity_size": { "label": "LARGE", "score": 4 },
+      "relationship_status": { "label": "New", "score": 1 },
+      "engagement_score": { "label": "HIGH", "score": 5 },
+      "opportunity_stage": { "label": "LATE STAGE", "score": 1 },
+      "winnability": { "label": "HIGH", "score": 5 },
+      "logo_potential": false
+    },
+    "partner_context": {
+      "name": "DataPeak",
+      "website": "www.datapeak.io",
+      "country": "UK",
+      "industry": "Data Analytics",
+      "employees": 600,
+      "stickiness_score": 4.5,
+      "relationship_strength_score": { "label": "STRATEGIC", "score": 5 },
+      "recent_deal_support": { "label": "GOOD", "score": 5 },
+      "partner_champion": { "is_flagged": true }
+    },
+    "combined_score_percent": 78.9
+  },
+  {
+    "opportunity_context": {
+      "name": "BrightTrend",
+      "website": "www.brighttrend.co",
+      "opportunity_size": { "label": "SMALL", "score": 1 },
+      "relationship_status": { "label": "Past", "score": 3 },
+      "engagement_score": { "label": "LOW", "score": 1 },
+      "opportunity_stage": { "label": "LATE STAGE", "score": 1 },
+      "winnability": { "label": "LOW", "score": 1 },
+      "logo_potential": false
+    },
+    "partner_context": {
+      "name": "TechNova",
+      "website": "www.technova.io",
+      "country": "Canada",
+      "industry": "Software",
+      "employees": 400,
+      "stickiness_score": 1.7,
+      "relationship_strength_score": { "label": "COLD", "score": 1 },
+      "recent_deal_support": { "label": "POOR", "score": 1 },
+"partner_champion": { "is_flagged": false }
+},
+"combined_score_percent": 14.0
+},
+{
+"opportunity_context": {
+"name": "TechSphere",
+"website": "www.techsphere.io",
+"opportunity_size": { "label": "VERY LARGE", "score": 5 },
+"relationship_status": { "label": "Existing", "score": 5 },
+"engagement_score": { "label": "HIGH", "score": 5 },
+"opportunity_stage": { "label": "CLOSE TO WIN", "score": 4 },
+"winnability": { "label": "HIGH", "score": 5 },
+"logo_potential": false
+},
+"partner_context": {
+"name": "CloudCore",
+"website": "www.cloudcore.io",
+"country": "USA",
+"industry": "Cloud Services",
+"employees": 950,
+"stickiness_score": 4.6,
+"relationship_strength_score": { "label": "STRATEGIC", "score": 5 },
+"recent_deal_support": { "label": "GOOD", "score": 5 },
+"partner_champion": { "is_flagged": true }
+},
+"combined_score_percent": 93.8
+},
+{
+"opportunity_context": {
+"name": "GrowSmart",
+"website": "www.growsmart.co",
+"opportunity_size": { "label": "MEDIUM", "score": 3 },
+"relationship_status": { "label": "Past", "score": 3 },
+"engagement_score": { "label": "MEDIUM", "score": 3 },
+"opportunity_stage": { "label": "EARLY CRM STAGE", "score": 5 },
+"winnability": { "label": "NEUTRAL", "score": 3 },
+"logo_potential": false
+},
+"partner_context": {
+"name": "DataTrend",
+"website": "www.datatrend.io",
+"country": "Germany",
+"industry": "Data Analytics",
+"employees": 650,
+"stickiness_score": 3.3,
+"relationship_strength_score": { "label": "TRANSACTIONAL", "score": 3 },
+"recent_deal_support": { "label": "ADEQUATE", "score": 3 },
+"partner_champion": { "is_flagged": false }
+},
+"combined_score_percent": 50.7
+},
+{
+"opportunity_context": {
+"name": "InnoPulse",
+"website": "www.innopulse.com",
+"opportunity_size": { "label": "LARGE", "score": 4 },
+"relationship_status": { "label": "New", "score": 1 },
+"engagement_score": { "label": "HIGH", "score": 5 },
+"opportunity_stage": { "label": "LATE STAGE", "score": 1 },
+"winnability": { "label": "HIGH", "score": 5 },
+"logo_potential": false
+},
+"partner_context": {
+"name": "TechWave",
+"website": "www.techwave.io",
+"country": "UK",
+"industry": "Software",
+"employees": 550,
+"stickiness_score": 4.2,
+"relationship_strength_score": { "label": "STRATEGIC", "score": 5 },
+"recent_deal_support": { "label": "GOOD", "score": 5 },
+"partner_champion": { "is_flagged": true }
+},
+"combined_score_percent": 77.6
+},
+{
+"opportunity_context": {
+"name": "BrightPath",
+"website": "www.brightpath.co",
+"opportunity_size": { "label": "SMALL", "score": 1 },
+"relationship_status": { "label": "Past", "score": 3 },
+"engagement_score": { "label": "LOW", "score": 1 },
+"opportunity_stage": { "label": "LATE STAGE", "score": 1 },
+"winnability": { "label": "LOW", "score": 1 },
+"logo_potential": false
+},
+"partner_context": {
+"name": "CloudNova",
+"website": "www.cloudnova.io",
+"country": "Canada",
+"industry": "Cloud Services",
+"employees": 350,
+"stickiness_score": 1.8,
+"relationship_strength_score": { "label": "COLD", "score": 1 },
+"recent_deal_support": { "label": "POOR", "score": 1 },
+"partner_champion": { "is_flagged": false }
+},
+"combined_score_percent": 14.3
+},
+{
+"opportunity_context": {
+"name": "CoreStream",
+"website": "www.corestream.io",
+"opportunity_size": { "label": "VERY LARGE", "score": 5 },
+"relationship_status": { "label": "Existing", "score": 5 },
+"engagement_score": { "label": "HIGH", "score": 5 },
+"opportunity_stage": { "label": "CLOSE TO WIN", "score": 4 },
+"winnability": { "label": "HIGH", "score": 5 },
+"logo_potential": false
+},
+"partner_context": {
+"name": "TechPeak",
+"website": "www.techpeak.io",
+"country": "USA",
+"industry": "Software",
+"employees": 1000,
+"stickiness_score": 4.7,
+"relationship_strength_score": { "label": "STRATEGIC", "score": 5 },
+"recent_deal_support": { "label": "GOOD", "score": 5 },
+"partner_champion": { "is_flagged": true }
+},
+"combined_score_percent": 94.5
+},
+{
+"opportunity_context": {
+"name": "OptimaTech",
+"website": "www.optimatech.com",
+"opportunity_size": { "label": "MEDIUM", "score": 3 },
+"relationship_status": { "label": "Past", "score": 3 },
+"engagement_score": { "label": "MEDIUM", "score": 3 },
+"opportunity_stage": { "label": "EARLY CRM STAGE", "score": 5 },
+"winnability": { "label": "NEUTRAL", "score": 3 },
+"logo_potential": false
+},
+"partner_context": {
+"name": "DataCore",
+"website": "www.datacore.io",
+"country": "Germany",
+"industry": "Data Analytics",
+"employees": 700,
+"stickiness_score": 3.4,
+"relationship_strength_score": { "label": "TRANSACTIONAL", "score": 3 },
+"recent_deal_support": { "label": "ADEQUATE", "score": 3 },
+"partner_champion": { "is_flagged": false }
+},
+"combined_score_percent": 51.0
+},
+{
+"opportunity_context": {
+"name": "NextGen",
+"website": "www.nextgen.io",
+"opportunity_size": { "label": "LARGE", "score": 4 },
+"relationship_status": { "label": "New", "score": 1 },
+"engagement_score": { "label": "HIGH", "score": 5 },
+"opportunity_stage": { "label": "LATE STAGE", "score": 1 },
+"winnability": { "label": "HIGH", "score": 5 },
+"logo_potential": false
+},
+"partner_context": {
+"name": "CloudWave",
+"website": "www.cloudwave.io",
+"country": "UK",
+"industry": "Cloud Services",
+"employees": 600,
+"stickiness_score": 4.3,
+"relationship_strength_score": { "label": "STRATEGIC", "score": 5 },
+"recent_deal_support": { "label": "GOOD", "score": 5 },
+"partner_champion": { "is_flagged": true }
+},
+"combined_score_percent": 78.2
+},
+{
+"opportunity_context": {
+"name": "BrightStar",
+"website": "www.brightstar.co",
+"opportunity_size": { "label": "SMALL", "score": 1 },
+"relationship_status": { "label": "Past", "score": 3 },
+"engagement_score": { "label": "LOW", "score": 1 },
+"opportunity_stage": { "label": "LATE STAGE", "score": 1 },
+"winnability": { "label": "LOW", "score": 1 },
+"logo_potential": false
+},
+"partner_context": {
+"name": "TechTrend",
+"website": "www.techtrend.io",
+"country": "Canada",
+"industry": "Software",
+"employees": 400,
+"stickiness_score": 1.9,
+"relationship_strength_score": { "label": "COLD", "score": 1 },
+"recent_deal_support": { "label": "POOR", "score": 1 },
+"partner_champion": { "is_flagged": false }
+},
+"combined_score_percent": 14.2
+},
+{
+"opportunity_context": {
+"name": "CoreInnovate",
+"website": "www.coreinnovate.com",
+"opportunity_size": { "label": "VERY LARGE", "score": 5 },
+"relationship_status": { "label": "Existing", "score": 5 },
+"engagement_score": { "label": "HIGH", "score": 5 },
+"opportunity_stage": { "label": "CLOSE TO WIN", "score": 4 },
+"winnability": { "label": "HIGH", "score": 5 },
+"logo_potential": false
+},
+"partner_context": {
+"name": "CloudPeak",
+"website": "www.cloudpeak.io",
+"country": "USA",
+"industry": "Cloud Services",
+"employees": 1100,
+"stickiness_score": 4.8,
+"relationship_strength_score": { "label": "STRATEGIC", "score": 5 },
+"recent_deal_support": { "label": "GOOD", "score": 5 },
+"partner_champion": { "is_flagged": true }
+},
+"combined_score_percent": 94.7
+},
+{
+"opportunity_context": {
+"name": "SkyHigh",
+"website": "www.skyhigh.io",
+"opportunity_size": { "label": "MEDIUM", "score": 3 },
+"relationship_status": { "label": "Past", "score": 3 },
+"engagement_score": { "label": "MEDIUM", "score": 3 },
+"opportunity_stage": { "label": "EARLY CRM STAGE", "score": 5 },
+"winnability": { "label": "NEUTRAL", "score": 3 },
+"logo_potential": false
+},
+"partner_context": {
+"name": "DataNova",
+"website": "www.datanova.io",
+"country": "Germany",
+"industry": "Data Analytics",
+"employees": 700,
+"stickiness_score": 3.3,
+"relationship_strength_score": { "label": "TRANSACTIONAL", "score": 3 },
+"recent_deal_support": { "label": "ADEQUATE", "score": 3 },
+"partner_champion": { "is_flagged": false }
+},
+"combined_score_percent": 50.8
+},
+{
+"opportunity_context": {
+"name": "InnoTech",
+"website": "www.innotech.com",
+"opportunity_size": { "label": "LARGE", "score": 4 },
+"relationship_status": { "label": "New", "score": 1 },
+"engagement_score": { "label": "HIGH", "score": 5 },
+"opportunity_stage": { "label": "LATE STAGE", "score": 1 },
+"winnability": { "label": "HIGH", "score": 5 },
+"logo_potential": false
+},
+"partner_context": {
+"name": "TechCore",
+"website": "www.techcore.io",
+"country": "UK",
+"industry": "Software",
+"employees": 600,
+"stickiness_score": 4.4,
+"relationship_strength_score": { "label": "STRATEGIC", "score": 5 },
+"recent_deal_support": { "label": "GOOD", "score": 5 },
+"partner_champion": { "is_flagged": true }
+},
+"combined_score_percent": 78.7
+},
+{
+"opportunity_context": {
+"name": "BrightFuture",
+"website": "www.brightfuture.co",
+"opportunity_size": { "label": "SMALL", "score": 1 },
+"relationship_status": { "label": "Past", "score": 3 },
+"engagement_score": { "label": "LOW", "score": 1 },
+"opportunity_stage": { "label": "LATE STAGE", "score": 1 },
+"winnability": { "label": "LOW", "score": 1 },
+"logo_potential": false
+},
+"partner_context": {
+"name": "CloudWave",
+"website": "www.cloudwave.io",
+"country": "Canada",
+"industry": "Cloud Services",
+"employees": 400,
+"stickiness_score": 1.7,
+"relationship_strength_score": { "label": "COLD", "score": 1 },
+"recent_deal_support": { "label": "POOR", "score": 1 },
+"partner_champion": { "is_flagged": false }
+},
+"combined_score_percent": 14.0
+},
+{
+"opportunity_context": {
+"name": "CoreWave",
+"website": "www.corewave.io",
+"opportunity_size": { "label": "VERY LARGE", "score": 5 },
+"relationship_status": { "label": "Existing", "score": 5 },
+"engagement_score": { "label": "HIGH", "score": 5 },
+"opportunity_stage": { "label": "CLOSE TO WIN", "score": 4 },
+"winnability": { "label": "HIGH", "score": 5 },
+"logo_potential": false
+},
+"partner_context": {
+"name": "TechPeak",
+"website": "www.techpeak.io",
+"country": "USA",
+"industry": "Software",
+"employees": 1100,
+"stickiness_score": 4.9,
+"relationship_strength_score": { "label": "STRATEGIC", "score": 5 },
+"recent_deal_support": { "label": "GOOD", "score": 5 },
+"partner_champion": { "is_flagged": true }
+},
+"combined_score_percent": 95.0
+},
+{
+"opportunity_context": {
+"name": "OptiGrow",
+"website": "www.optigrow.com",
+"opportunity_size": { "label": "MEDIUM", "score": 3 },
+"relationship_status": { "label": "Past", "score": 3 },
+"engagement_score": { "label": "MEDIUM", "score": 3 },
+"opportunity_stage": { "label": "EARLY CRM STAGE", "score": 5 },
+"winnability": { "label": "NEUTRAL", "score": 3 },
+"logo_potential": false
+},
+"partner_context": {
+"name": "DataCore",
+"website": "www.datacore.io",
+"country": "Germany",
+"industry": "Data Analytics",
+"employees": 700,
+"stickiness_score": 3.4,
+"relationship_strength_score": { "label": "TRANSACTIONAL", "score": 3 },
+"recent_deal_support": { "label": "ADEQUATE", "score": 3 },
+"partner_champion": { "is_flagged": false }
+},
+"combined_score_percent": 51.1
+},
+{
+"opportunity_context": {
+"name": "NextWave",
+"website": "www.nextwave.io",
+"opportunity_size": { "label": "LARGE", "score": 4 },
+"relationship_status": { "label": "New", "score": 1 },
+"engagement_score": { "label": "HIGH", "score": 5 },
+"opportunity_stage": { "label": "LATE STAGE", "score": 1 },
+"winnability": { "label": "HIGH", "score": 5 },
+"logo_potential": false
+},
+"partner_context": {
+"name": "CloudNova",
+"website": "www.cloudnova.io",
+"country": "UK",
+"industry": "Cloud Services",
+"employees": 600,
+"stickiness_score": 4.5,
+"relationship_strength_score": { "label": "STRATEGIC", "score": 5 },
+"recent_deal_support": { "label": "GOOD", "score": 5 },
+"partner_champion": { "is_flagged": true }
+},
+"combined_score_percent": 78.9
+},
+{
+"opportunity_context": {
+"name": "BrightCore",
+"website": "www.brightcore.co",
+"opportunity_size": { "label": "SMALL", "score": 1 },
+"relationship_status": { "label": "Past", "score": 3 },
+"engagement_score": { "label": "LOW", "score": 1 },
+"opportunity_stage": { "label": "LATE STAGE", "score": 1 },
+"winnability": { "label": "LOW", "score": 1 },
+"logo_potential": false
+},
+"partner_context": {
+"name": "TechTrend",
+"website": "www.techtrend.io",
+"country": "Canada",
+"industry": "Software",
+"employees": 400,
+"stickiness_score": 1.7,
+"relationship_strength_score": { "label": "COLD", "score": 1 },
+"recent_deal_support": { "label": "POOR", "score": 1 },
+"partner_champion": { "is_flagged": false }
+},
+"combined_score_percent": 14.0
+},
+{
+"opportunity_context": {
+"name": "CoreNova",
+"website": "www.corenova.io",
+"opportunity_size": { "label": "VERY LARGE", "score": 5 },
+"relationship_status": { "label": "Existing", "score": 5 },
+"engagement_score": { "label": "HIGH", "score": 5 },
+"opportunity_stage": { "label": "CLOSE TO WIN", "score": 4 },
+"winnability": { "label": "HIGH", "score": 5 },
+"logo_potential": false
+},
+"partner_context": {
+"name": "CloudPeak",
+"website": "www.cloudpeak.io",
+"country": "USA",
+"industry": "Cloud Services",
+"employees": 1100,
+"stickiness_score": 4.8,
+"relationship_strength_score": { "label": "STRATEGIC", "score": 5 },
+"recent_deal_support": { "label": "GOOD", "score": 5 },
+"partner_champion": { "is_flagged": true }
+},
+"combined_score_percent": 94.7
+},
+{
+"opportunity_context": {
+"name": "OptiWave",
+"website": "www.optiwave.com",
+"opportunity_size": { "label": "MEDIUM", "score": 3 },
+"relationship_status": { "label": "Past", "score": 3 },
+"engagement_score": { "label": "MEDIUM", "score": 3 },
+"opportunity_stage": { "label": "EARLY CRM STAGE", "score": 5 },
+"winnability": { "label": "NEUTRAL", "score": 3 },
+"logo_potential": false
+},
+"partner_context": {
+"name": "TechNova",
+"website": "www.technova.io",
+"country": "Germany",
+"industry": "Software",
+"employees": 700,
+"stickiness_score": 3.3,
+"relationship_strength_score": { "label": "TRANSACTIONAL", "score": 3 },
+"recent_deal_support": { "label": "ADEQUATE", "score": 3 },
+"partner_champion": { "is_flagged": false }
+},
+"combined_score_percent": 50.8
+},
+{
+"opportunity_context": {
+"name": "NextCore",
+"website": "www.nextcore.io",
+"opportunity_size": { "label": "LARGE", "score": 4 },
+"relationship_status": { "label": "New", "score": 1 },
+"engagement_score": { "label": "HIGH", "score": 5 },
+"opportunity_stage": { "label": "LATE STAGE", "score": 1 },
+"winnability": { "label": "HIGH", "score": 5 },
+"logo_potential": false
+},
+"partner_context": {
+"name": "DataTrend",
+"website": "www.datatrend.io",
+"country": "UK",
+"industry": "Data Analytics",
+"employees": 600,
+"stickiness_score": 4.4,
+"relationship_strength_score": { "label": "STRATEGIC", "score": 5 },
+"recent_deal_support": { "label": "GOOD", "score": 5 },
+"partner_champion": { "is_flagged": true }
+},
+"combined_score_percent": 78.7
+},
+{
+"opportunity_context": {
+"name": "BrightNova",
+"website": "www.brightnova.co",
+"opportunity_size": { "label": "SMALL", "score": 1 },
+"relationship_status": { "label": "Past", "score": 3 },
+"engagement_score": { "label": "LOW", "score": 1 },
+"opportunity_stage": { "label": "LATE STAGE", "score": 1 },
+"winnability": { "label": "LOW", "score": 1 },
+"logo_potential": false
+},
+"partner_context": {
+"name": "TechCore",
+"website": "www.techcore.io",
+"country": "Canada",
+"industry": "Software",
+"employees": 400,
+"stickiness_score": 1.7,
+"relationship_strength_score": { "label": "COLD", "score": 1 },
+"recent_deal_support": { "label": "POOR", "score": 1 },
+"partner_champion": { "is_flagged": false }
+},
+"combined_score_percent": 14.0
+},
+{
+"opportunity_context": {
+"name": "CorePeak",
+"website": "www.corepeak.io",
+"opportunity_size": { "label": "VERY LARGE", "score": 5 },
+"relationship_status": { "label": "Existing", "score": 5 },
+"engagement_score": { "label": "HIGH", "score": 5 },
+"opportunity_stage": { "label": "CLOSE TO WIN", "score": 4 },
+"winnability": { "label": "HIGH", "score": 5 },
+"logo_potential": false
+},
+"partner_context": {
+"name": "CloudWave",
+"website": "www.cloudwave.io",
+"country": "USA",
+"industry": "Cloud Services",
+"employees": 1100,
+"stickiness_score": 4.7,
+"relationship_strength_score": { "label": "STRATEGIC", "score": 5 },
+"recent_deal_support": { "label": "GOOD", "score": 5 },
+"partner_champion": { "is_flagged": true }
+},
+"combined_score_percent": 94.4
+},
+{
+"opportunity_context": {
+"name": "OptiCore",
+"website": "www.opticore.com",
+"opportunity_size": { "label": "MEDIUM", "score": 3 },
+"relationship_status": { "label": "Past", "score": 3 },
+"engagement_score": { "label": "MEDIUM", "score": 3 },
+"opportunity_stage": { "label": "EARLY CRM STAGE", "score": 5 },
+"winnability": { "label": "NEUTRAL", "score": 3 },
+"logo_potential": false
+},
+"partner_context": {
+"name": "TechNova",
+"website": "www.technova.io",
+"country": "Germany",
+"industry": "Software",
+"employees": 700,
+"stickiness_score": 3.2,
+"relationship_strength_score": { "label": "TRANSACTIONAL", "score": 3 },
+"recent_deal_support": { "label": "ADEQUATE", "score": 3 },
+"partner_champion": { "is_flagged": false }
+},
+"combined_score_percent": 50.9
+},
+{
+"opportunity_context": {
+"name": "NextPeak",
+"website": "www.nextpeak.io",
+"opportunity_size": { "label": "LARGE", "score": 4 },
+"relationship_status": { "label": "New", "score": 1 },
+"engagement_score": { "label": "HIGH", "score": 5 },
+"opportunity_stage": { "label": "LATE STAGE", "score": 1 },
+"winnability": { "label": "HIGH", "score": 5 },
+"logo_potential": false
+},
+"partner_context": {
+"name": "DataCore",
+"website": "www.datacore.io",
+"country": "UK",
+"industry": "Data Analytics",
+"employees": 600,
+"stickiness_score": 4.4,
+"relationship_strength_score": { "label": "STRATEGIC", "score": 5 },
+"recent_deal_support": { "label": "GOOD", "score": 5 },
+"partner_champion": { "is_flagged": true }
+},
+"combined_score_percent": 78.7
+},
+{
+"opportunity_context": {
+"name": "BrightWave",
+"website": "www.brightwave.co",
+"opportunity_size": { "label": "SMALL", "score": 1 },
+"relationship_status": { "label": "Past", "score": 3 },
+"engagement_score": { "label": "LOW", "score": 1 },
+"opportunity_stage": { "label": "LATE STAGE", "score": 1 },
+"winnability": { "label": "LOW", "score": 1 },
+"logo_potential": false
+},
+"partner_context": {
+"name": "TechTrend",
+"website": "www.techtrend.io",
+"country": "Canada",
+"industry": "Software",
+"employees": 400,
+"stickiness_score": 1.9,
+"relationship_strength_score": { "label": "COLD", "score": 1 },
+"recent_deal_support": { "label": "POOR", "score": 1 },
+"partner_champion": { "is_flagged": false }
+},
+"combined_score_percent": 14.2
+},
+{
+"opportunity_context": {
+"name": "CoreTrend",
+"website": "www.coretrend.io",
+"opportunity_size": { "label": "VERY LARGE", "score": 5 },
+"relationship_status": { "label": "Existing", "score": 5 },
+"engagement_score": { "label": "HIGH", "score": 5 },
+"opportunity_stage": { "label": "CLOSE TO WIN", "score": 4 },
+"winnability": { "label": "HIGH", "score": 5 },
+"logo_potential": false
+},
+"partner_context": {
+"name": "CloudNova",
+"website": "www.cloudnova.io",
+"country": "USA",
+"industry": "Cloud Services",
+"employees": 1100,
+"stickiness_score": 4.6,
+"relationship_strength_score": { "label": "STRATEGIC", "score": 5 },
+"recent_deal_support": { "label": "GOOD", "score": 5 },
+"partner_champion": { "is_flagged": true }
+},
+"combined_score_percent": 94.1
+},
+{
+"opportunity_context": {
+"name": "OptiNova",
+"website": "www.optinova.com",
+"opportunity_size": { "label": "MEDIUM", "score": 3 },
+"relationship_status": { "label": "Past", "score": 3 },
+"engagement_score": { "label": "MEDIUM", "score": 3 },
+"opportunity_stage": { "label": "EARLY CRM STAGE", "score": 5 },
+"winnability": { "label": "NEUTRAL", "score": 3 },
+"logo_potential": false
+},
+"partner_context": {
+"name": "TechCore",
+"website": "www.techcore.io",
+"country": "Germany",
+"industry": "Software",
+"employees": 700,
+"stickiness_score": 3.3,
+"relationship_strength_score": { "label": "TRANSACTIONAL", "score": 3 },
+"recent_deal_support": { "label": "ADEQUATE", "score": 3 },
+"partner_champion": { "is_flagged": false }
+},
+"combined_score_percent": 50.8
+},
+{
+"opportunity_context": {
+"name": "NextTrend",
+"website": "www.nexttrend.io",
+"opportunity_size": { "label": "LARGE", "score": 4 },
+"relationship_status": { "label": "New", "score": 1 },
+"engagement_score": { "label": "HIGH", "score": 5 },
+"opportunity_stage": { "label": "LATE STAGE", "score": 1 },
+"winnability": { "label": "HIGH", "score": 5 },
+"logo_potential": false
+},
+"partner_context": {
+"name": "DataPeak",
+"website": "www.datapeak.io",
+"country": "UK",
+"industry": "Data Analytics",
+"employees": 600,
+"stickiness_score": 4.5,
+"relationship_strength_score": { "label": "STRATEGIC", "score": 5 },
+"recent_deal_support": { "label": "GOOD", "score": 5 },
+"partner_champion": { "is_flagged": true }
+},
+"combined_score_percent": 78.9
+},
+{
+"opportunity_context": {
+"name": "BrightPeak",
+"website": "www.brightpeak.co",
+"opportunity_size": { "label": "SMALL", "score": 1 },
+"relationship_status": { "label": "Past", "score": 3 },
+"engagement_score": { "label": "LOW", "score": 1 },
+"opportunity_stage": { "label": "LATE STAGE", "score": 1 },
+"winnability": { "label": "LOW", "score": 1 },
+"logo_potential": false
+},
+"partner_context": {
+"name": "TechWave",
+"website": "www.techwave.io",
+"country": "Canada",
+"industry": "Software",
+"employees": 400,
+"stickiness_score": 1.7,
+"relationship_strength_score": { "label": "COLD", "score": 1 },
+"recent_deal_support": { "label": "POOR", "score": 1 },
+"partner_champion": { "is_flagged": false }
+},
+"combined_score_percent": 14.1
+},
+{
+"opportunity_context": {
+"name": "CoreNova",
+"website": "www.corenova.io",
+"opportunity_size": { "label": "VERY LARGE", "score": 5 },
+"relationship_status": { "label": "Existing", "score": 5 },
+"engagement_score": { "label": "HIGH", "score": 5 },
+"opportunity_stage": { "label": "CLOSE TO WIN", "score": 4 },
+"winnability": { "label": "HIGH", "score": 5 },
+"logo_potential": false
+},
+"partner_context": {
+"name": "CloudPeak",
+"website": "www.cloudpeak.io",
+"country": "USA",
+"industry": "Cloud Services",
+"employees": 1100,
+"stickiness_score": 4.8,
+"relationship_strength_score": { "label": "STRATEGIC", "score": 5 },
+"recent_deal_support": { "label": "GOOD", "score": 5 },
+"partner_champion": { "is_flagged": true }
+},
+"combined_score_percent": 94.7
+},
+{
+"opportunity_context": {
+"name": "OptiTrend",
+"website": "www.optitrend.com",
+"opportunity_size": { "label": "MEDIUM", "score": 3 },
+"relationship_status": { "label": "Past", "score": 3 },
+"engagement_score": { "label": "MEDIUM", "score": 3 },
+"opportunity_stage": { "label": "EARLY CRM STAGE", "score": 5 },
+"winnability": { "label": "NEUTRAL", "score": 3 },
+"logo_potential": false
+},
+"partner_context": {
+"name": "TechCore",
+"website": "www.techcore.io",
+"country": "Germany",
+"industry": "Software",
+"employees": 700,
+"stickiness_score": 3.3,
+"relationship_strength_score": { "label": "TRANSACTIONAL", "score": 3 },
+"recent_deal_support": { "label": "ADEQUATE", "score": 3 },
+"partner_champion": { "is_flagged": false }
+},
+"combined_score_percent": 50.8
+},
+{
+"opportunity_context": {
+"name": "NextNova",
+"website": "www.nextnova.io",
+"opportunity_size": { "label": "LARGE", "score": 4 },
+"relationship_status": { "label": "New", "score": 1 },
+"engagement_score": { "label": "HIGH", "score": 5 },
+"opportunity_stage": { "label": "LATE STAGE", "score": 1 },
+"winnability": { "label": "HIGH", "score": 5 },
+"logo_potential": false
+},
+"partner_context": {
+"name": "DataPeak",
+"website": "www.datapeak.io",
+"country": "UK",
+"industry": "Data Analytics",
+"employees": 600,
+"stickiness_score": 4.5,
+"relationship_strength_score": { "label": "STRATEGIC", "score": 5 },
+"recent_deal_support": { "label": "GOOD", "score": 5 },
+"partner_champion": { "is_flagged": true }
+},
+"combined_score_percent": 78.9
+},
+{
+"opportunity_context": {
+"name": "BrightTrend",
+"website": "www.brighttrend.co",
+"opportunity_size": { "label": "SMALL", "score": 1 },
+"relationship_status": { "label": "Past", "score": 3 },
+"engagement_score": { "label": "LOW", "score": 1 },
+"opportunity_stage": { "label": "LATE STAGE", "score": 1 },
+"winnability": { "label": "LOW", "score": 1 },
+"logo_potential": false
+},
+"partner_context": {
+"name": "TechNova",
+"website": "www.technova.io",
+"country": "Canada",
+"industry": "Software",
+"employees": 400,
+"stickiness_score": 1.7,
+"relationship_strength_score": { "label": "COLD", "score": 1 },
+"recent_deal_support": { "label": "POOR", "score": 1 },
+"partner_champion": { "is_flagged": false }
+},
+"combined_score_percent": 14.0
+},
+{
+"opportunity_context": {
+"name": "CoreWave",
+"website": "www.corewave.io",
+"opportunity_size": { "label": "VERY LARGE", "score": 5 },
+"relationship_status": { "label": "Existing", "score": 5 },
+"engagement_score": { "label": "HIGH", "score": 5 },
+"opportunity_stage": { "label": "CLOSE TO WIN", "score": 4 },
+"winnability": { "label": "HIGH", "score": 5 },
+"logo_potential": false
+},
+"partner_context": {
+"name": "CloudPeak",
+"website": "www.cloudpeak.io",
+"country": "USA",
+"industry": "Cloud Services",
+"employees": 1100,
+"stickiness_score": 4.9,
+"relationship_strength_score": { "label": "STRATEGIC", "score": 5 },
+"recent_deal_support": { "label": "GOOD", "score": 5 },
+"partner_champion": { "is_flagged": true }
+},
+"combined_score_percent": 95.0
+},
+{
+"opportunity_context": {
+"name": "OptiPeak",
+"website": "www.optipeak.com",
+"opportunity_size": { "label": "MEDIUM", "score": 3 },
+"relationship_status": { "label": "Past", "score": 3 },
+"engagement_score": { "label": "MEDIUM", "score": 3 },
+"opportunity_stage": { "label": "EARLY CRM STAGE", "score": 5 },
+"winnability": { "label": "NEUTRAL", "score": 3 },
+"logo_potential": false
+},
+"partner_context": {
+"name": "TechTrend",
+"website": "www.techtrend.io",
+"country": "Germany",
+"industry": "Software",
+"employees": 700,
+"stickiness_score": 3.5,
+"relationship_strength_score": { "label": "TRANSACTIONAL", "score": 3 },
+"recent_deal_support": { "label": "ADEQUATE", "score": 3 },
+"partner_champion": { "is_flagged": false }
+},
+"combined_score_percent": 51.4
+},
+{
+"opportunity_context": {
+"name": "NextWave",
+"website": "www.nextwave.io",
+"opportunity_size": { "label": "LARGE", "score": 4 },
+"relationship_status": { "label": "New", "score": 1 },
+"engagement_score": { "label": "HIGH", "score": 5 },
+"opportunity_stage": { "label": "LATE STAGE", "score": 1 },
+"winnability": { "label": "HIGH", "score": 5 },
+"logo_potential": false
+},
+"partner_context": {
+"name": "DataCore",
+"website": "www.datacore.io",
+"country": "UK",
+"industry": "Data Analytics",
+"employees": 600,
+"stickiness_score": 4.7,
+"relationship_strength_score": { "label": "STRATEGIC", "score": 5 },
+"recent_deal_support": { "label": "GOOD", "score": 5 },
+"partner_champion": { "is_flagged": true }
+},
+"combined_score_percent": 79.3
+},
+{
+"opportunity_context": {
+"name": "BrightCore",
+"website": "www.brightcore.co",
+"opportunity_size": { "label": "SMALL", "score": 1 },
+"relationship_status": { "label": "Past", "score": 3 },
+"engagement_score": { "label": "LOW", "score": 1 },
+"opportunity_stage": { "label": "LATE STAGE", "score": 1 },
+"winnability": { "label": "LOW", "score": 1 },
+"logo_potential": false
+},
+"partner_context": {
+"name": "TechWave",
+"website": "www.techwave.io",
+"country": "Canada",
+"industry": "Software",
+"employees": 400,
+"stickiness_score": 1.6,
+"relationship_strength_score": { "label": "COLD", "score": 1 },
+"recent_deal_support": { "label": "POOR", "score": 1 },
+"partner_champion": { "is_flagged": false }
+},
+"combined_score_percent": 13.8
+},
+{
+    "opportunity_context": {
+      "name": "TechBit",
+      "website": "www.techbit.com",
+      "opportunity_size": { "label": "SMALL", "score": 1 },
+      "relationship_status": { "label": "New", "score": 1 },
+      "engagement_score": { "label": "LOW", "score": 1 },
+      "opportunity_stage": { "label": "LATE STAGE", "score": 1 },
+      "winnability": { "label": "LOW", "score": 1 },
+      "logo_potential": false
+    },
+    "partner_context": {
+      "name": "DataSpark",
+      "website": "www.dataspark.io",
+      "country": "India",
+      "industry": "Software",
+      "employees": 200,
+      "stickiness_score": 1.0,
+      "relationship_strength_score": { "label": "COLD", "score": 1 },
+      "recent_deal_support": { "label": "POOR", "score": 1 },
+      "partner_champion": { "is_flagged": false }
+    },
+    "combined_score_percent": 10.0
+  },
+  {
+    "opportunity_context": {
+      "name": "GrowLite",
+      "website": "www.growlite.co",
+      "opportunity_size": { "label": "SMALL", "score": 1 },
+      "relationship_status": { "label": "New", "score": 1 },
+      "engagement_score": { "label": "LOW", "score": 1 },
+      "opportunity_stage": { "label": "LATE STAGE", "score": 1 },
+      "winnability": { "label": "LOW", "score": 1 },
+      "logo_potential": false
+    },
+    "partner_context": {
+      "name": "CloudBit",
+      "website": "www.cloudbit.io",
+      "country": "Brazil",
+      "industry": "Cloud Services",
+      "employees": 150,
+      "stickiness_score": 1.0,
+      "relationship_strength_score": { "label": "COLD", "score": 1 },
+      "recent_deal_support": { "label": "POOR", "score": 1 },
+      "partner_champion": { "is_flagged": false }
+    },
+    "combined_score_percent": 10.0
+  },
+  {
+    "opportunity_context": {
+      "name": "InnoZap",
+      "website": "www.innozap.com",
+      "opportunity_size": { "label": "SMALL", "score": 1 },
+      "relationship_status": { "label": "New", "score": 1 },
+      "engagement_score": { "label": "LOW", "score": 1 },
+      "opportunity_stage": { "label": "LATE STAGE", "score": 1 },
+      "winnability": { "label": "LOW", "score": 1 },
+      "logo_potential": false
+    },
+    "partner_context": {
+      "name": "TechGlow",
+      "website": "www.techglow.io",
+      "country": "South Africa",
+      "industry": "Software",
+      "employees": 300,
+      "stickiness_score": 1.0,
+      "relationship_strength_score": { "label": "COLD", "score": 1 },
+      "recent_deal_support": { "label": "POOR", "score": 1 },
+      "partner_champion": { "is_flagged": false }
+    },
+    "combined_score_percent": 10.0
+  },
+  {
+    "opportunity_context": {
+      "name": "BrightNode",
+      "website": "www.brightnode.co",
+      "opportunity_size": { "label": "SMALL", "score": 1 },
+      "relationship_status": { "label": "New", "score": 1 },
+      "engagement_score": { "label": "LOW", "score": 1 },
+      "opportunity_stage": { "label": "LATE STAGE", "score": 1 },
+      "winnability": { "label": "LOW", "score": 1 },
+      "logo_potential": false
+    },
+    "partner_context": {
+      "name": "DataPulse",
+      "website": "www.datapulse.io",
+      "country": "Australia",
+      "industry": "Data Analytics",
+      "employees": 250,
+      "stickiness_score": 1.0,
+      "relationship_strength_score": { "label": "COLD", "score": 1 },
+      "recent_deal_support": { "label": "POOR", "score": 1 },
+      "partner_champion": { "is_flagged": false }
+    },
+    "combined_score_percent": 10.0
+  },
+  {
+    "opportunity_context": {
+      "name": "CoreShift",
+      "website": "www.coreshift.io",
+      "opportunity_size": { "label": "SMALL", "score": 1 },
+      "relationship_status": { "label": "New", "score": 1 },
+      "engagement_score": { "label": "LOW", "score": 1 },
+      "opportunity_stage": { "label": "LATE STAGE", "score": 1 },
+      "winnability": { "label": "LOW", "score": 1 },
+      "logo_potential": false
+    },
+    "partner_context": {
+      "name": "CloudZap",
+      "website": "www.cloudzap.io",
+      "country": "Canada",
+      "industry": "Cloud Services",
+      "employees": 200,
+      "stickiness_score": 1.0,
+      "relationship_strength_score": { "label": "COLD", "score": 1 },
+      "recent_deal_support": { "label": "POOR", "score": 1 },
+      "partner_champion": { "is_flagged": false }
+    },
+    "combined_score_percent": 10.0
+  },
+  {
+    "opportunity_context": {
+      "name": "TechTrend",
+      "website": "www.techtrend.co",
+      "opportunity_size": { "label": "SMALL", "score": 1 },
+      "relationship_status": { "label": "New", "score": 1 },
+      "engagement_score": { "label": "LOW", "score": 1 },
+      "opportunity_stage": { "label": "LATE STAGE", "score": 1 },
+      "winnability": { "label": "LOW", "score": 1 },
+      "logo_potential": false
+    },
+    "partner_context": {
+      "name": "InnoCore",
+      "website": "www.innocore.io",
+      "country": "Germany",
+      "industry": "Software",
+      "employees": 350,
+      "stickiness_score": 1.0,
+      "relationship_strength_score": { "label": "COLD", "score": 1 },
+      "recent_deal_support": { "label": "POOR", "score": 1 },
+      "partner_champion": { "is_flagged": false }
+    },
+    "combined_score_percent": 10.0
+  },
+  {
+    "opportunity_context": {
+      "name": "GrowEasy",
+      "website": "www.groweasy.com",
+      "opportunity_size": { "label": "SMALL", "score": 1 },
+      "relationship_status": { "label": "New", "score": 1 },
+      "engagement_score": { "label": "LOW", "score": 1 },
+      "opportunity_stage": { "label": "LATE STAGE", "score": 1 },
+      "winnability": { "label": "LOW", "score": 1 },
+      "logo_potential": false
+    },
+    "partner_context": {
+      "name": "DataGlow",
+      "website": "www.dataglow.io",
+      "country": "UK",
+      "industry": "Data Analytics",
+      "employees": 300,
+      "stickiness_score": 1.0,
+      "relationship_strength_score": { "label": "COLD", "score": 1 },
+      "recent_deal_support": { "label": "POOR", "score": 1 },
+      "partner_champion": { "is_flagged": false }
+    },
+    "combined_score_percent": 10.0
+  },
+  {
+    "opportunity_context": {
+      "name": "BrightPeak",
+      "website": "www.brightpeak.co",
+      "opportunity_size": { "label": "SMALL", "score": 1 },
+      "relationship_status": { "label": "New", "score": 1 },
+      "engagement_score": { "label": "LOW", "score": 1 },
+      "opportunity_stage": { "label": "LATE STAGE", "score": 1 },
+      "winnability": { "label": "LOW", "score": 1 },
+      "logo_potential": false
+    },
+    "partner_context": {
+      "name": "CloudTrend",
+      "website": "www.cloudtrend.io",
+      "country": "USA",
+      "industry": "Cloud Services",
+      "employees": 400,
+      "stickiness_score": 1.0,
+      "relationship_strength_score": { "label": "COLD", "score": 1 },
+      "recent_deal_support": { "label": "POOR", "score": 1 },
+      "partner_champion": { "is_flagged": false }
+    },
+    "combined_score_percent": 10.0
+  },
+  {
+    "opportunity_context": {
+      "name": "CoreNova",
+      "website": "www.corenova.io",
+      "opportunity_size": { "label": "SMALL", "score": 1 },
+      "relationship_status": { "label": "New", "score": 1 },
+      "engagement_score": { "label": "LOW", "score": 1 },
+      "opportunity_stage": { "label": "LATE STAGE", "score": 1 },
+      "winnability": { "label": "LOW", "score": 1 },
+      "logo_potential": false
+    },
+    "partner_context": {
+      "name": "TechPulse",
+      "website": "www.techpulse.io",
+      "country": "Japan",
+      "industry": "Software",
+      "employees": 250,
+      "stickiness_score": 1.0,
+      "relationship_strength_score": { "label": "COLD", "score": 1 },
+      "recent_deal_support": { "label": "POOR", "score": 1 },
+      "partner_champion": { "is_flagged": false }
+    },
+    "combined_score_percent": 10.0
+  },
+  {
+    "opportunity_context": {
+      "name": "OptiWave",
+      "website": "www.optiwave.com",
+      "opportunity_size": { "label": "SMALL", "score": 1 },
+      "relationship_status": { "label": "New", "score": 1 },
+      "engagement_score": { "label": "LOW", "score": 1 },
+      "opportunity_stage": { "label": "LATE STAGE", "score": 1 },
+      "winnability": { "label": "LOW", "score": 1 },
+      "logo_potential": false
+    },
+    "partner_context": {
+      "name": "DataNova",
+      "website": "www.datanova.io",
+      "country": "Netherlands",
+      "industry": "Data Analytics",
+      "employees": 200,
+      "stickiness_score": 1.0,
+      "relationship_strength_score": { "label": "COLD", "score": 1 },
+      "recent_deal_support": { "label": "POOR", "score": 1 },
+      "partner_champion": { "is_flagged": false }
+    },
+    "combined_score_percent": 10.0
+  },
+  {
+    "opportunity_context": {
+      "name": "NextCore",
+      "website": "www.nextcore.io",
+      "opportunity_size": { "label": "SMALL", "score": 1 },
+      "relationship_status": { "label": "New", "score": 1 },
+      "engagement_score": { "label": "LOW", "score": 1 },
+      "opportunity_stage": { "label": "LATE STAGE", "score": 1 },
+      "winnability": { "label": "LOW", "score": 1 },
+      "logo_potential": false
+    },
+    "partner_context": {
+      "name": "CloudPeak",
+      "website": "www.cloudpeak.io",
+      "country": "France",
+      "industry": "Cloud Services",
+      "employees": 300,
+      "stickiness_score": 1.0,
+      "relationship_strength_score": { "label": "COLD", "score": 1 },
+      "recent_deal_support": { "label": "POOR", "score": 1 },
+      "partner_champion": { "is_flagged": false }
+    },
+    "combined_score_percent": 10.0
+  },
+  {
+    "opportunity_context": {
+      "name": "BrightNova",
+      "website": "www.brightnova.co",
+      "opportunity_size": { "label": "SMALL", "score": 1 },
+      "relationship_status": { "label": "New", "score": 1 },
+      "engagement_score": { "label": "LOW", "score": 1 },
+      "opportunity_stage": { "label": "LATE STAGE", "score": 1 },
+      "winnability": { "label": "LOW", "score": 1 },
+      "logo_potential": false
+    },
+    "partner_context": {
+      "name": "TechTrend",
+      "website": "www.techtrend.io",
+      "country": "Singapore",
+      "industry": "Software",
+      "employees": 250,
+      "stickiness_score": 1.0,
+      "relationship_strength_score": { "label": "COLD", "score": 1 },
+      "recent_deal_support": { "label": "POOR", "score": 1 },
+      "partner_champion": { "is_flagged": false }
+    },
+    "combined_score_percent": 10.0
+  },
+  {
+    "opportunity_context": {
+      "name": "CorePeak",
+      "website": "www.corepeak.io",
+      "opportunity_size": { "label": "SMALL", "score": 1 },
+      "relationship_status": { "label": "New", "score": 1 },
+      "engagement_score": { "label": "LOW", "score": 1 },
+      "opportunity_stage": { "label": "LATE STAGE", "score": 1 },
+      "winnability": { "label": "LOW", "score": 1 },
+      "logo_potential": false
+    },
+    "partner_context": {
+      "name": "DataWave",
+      "website": "www.datawave.io",
+      "country": "USA",
+      "industry": "Data Analytics",
+      "employees": 400,
+      "stickiness_score": 1.0,
+      "relationship_strength_score": { "label": "COLD", "score": 1 },
+      "recent_deal_support": { "label": "POOR", "score": 1 },
+      "partner_champion": { "is_flagged": false }
+    },
+    "combined_score_percent": 10.0
+  },
+  {
+    "opportunity_context": {
+      "name": "OptiCore",
+      "website": "www.opticore.com",
+      "opportunity_size": { "label": "SMALL", "score": 1 },
+      "relationship_status": { "label": "New", "score": 1 },
+      "engagement_score": { "label": "LOW", "score": 1 },
+      "opportunity_stage": { "label": "LATE STAGE", "score": 1 },
+      "winnability": { "label": "LOW", "score": 1 },
+      "logo_potential": false
+    },
+    "partner_context": {
+      "name": "CloudNova",
+      "website": "www.cloudnova.io",
+      "country": "Germany",
+      "industry": "Cloud Services",
+      "employees": 300,
+      "stickiness_score": 1.0,
+      "relationship_strength_score": { "label": "COLD", "score": 1 },
+      "recent_deal_support": { "label": "POOR", "score": 1 },
+      "partner_champion": { "is_flagged": false }
+    },
+    "combined_score_percent": 10.0
+  },
+  {
+    "opportunity_context": {
+      "name": "NextPeak",
+      "website": "www.nextpeak.io",
+      "opportunity_size": { "label": "SMALL", "score": 1 },
+      "relationship_status": { "label": "New", "score": 1 },
+      "engagement_score": { "label": "LOW", "score": 1 },
+      "opportunity_stage": { "label": "LATE STAGE", "score": 1 },
+      "winnability": { "label": "LOW", "score": 1 },
+      "logo_potential": false
+    },
+    "partner_context": {
+      "name": "TechCore",
+      "website": "www.techcore.io",
+      "country": "UK",
+      "industry": "Software",
+      "employees": 350,
+      "stickiness_score": 1.0,
+      "relationship_strength_score": { "label": "COLD", "score": 1 },
+      "recent_deal_support": { "label": "POOR", "score": 1 },
+      "partner_champion": { "is_flagged": false }
+    },
+    "combined_score_percent": 10.0
+  },
+  {
+    "opportunity_context": {
+      "name": "BrightWave",
+      "website": "www.brightwave.co",
+      "opportunity_size": { "label": "SMALL", "score": 1 },
+      "relationship_status": { "label": "New", "score": 1 },
+      "engagement_score": { "label": "LOW", "score": 1 },
+      "opportunity_stage": { "label": "LATE STAGE", "score": 1 },
+      "winnability": { "label": "LOW", "score": 1 },
+      "logo_potential": false
+    },
+    "partner_context": {
+      "name": "DataTrend",
+      "website": "www.datatrend.io",
+      "country": "Canada",
+      "industry": "Data Analytics",
+      "employees": 200,
+      "stickiness_score": 1.0,
+      "relationship_strength_score": { "label": "COLD", "score": 1 },
+      "recent_deal_support": { "label": "POOR", "score": 1 },
+      "partner_champion": { "is_flagged": false }
+    },
+    "combined_score_percent": 10.0
+  },
+  {
+    "opportunity_context": {
+      "name": "CoreTrend",
+      "website": "www.coretrend.io",
+      "opportunity_size": { "label": "SMALL", "score": 1 },
+      "relationship_status": { "label": "New", "score": 1 },
+      "engagement_score": { "label": "LOW", "score": 1 },
+      "opportunity_stage": { "label": "LATE STAGE", "score": 1 },
+      "winnability": { "label": "LOW", "score": 1 },
+      "logo_potential": false
+    },
+    "partner_context": {
+      "name": "CloudWave",
+      "website": "www.cloudwave.io",
+      "country": "USA",
+      "industry": "Cloud Services",
+      "employees": 400,
+      "stickiness_score": 1.0,
+      "relationship_strength_score": { "label": "COLD", "score": 1 },
+      "recent_deal_support": { "label": "POOR", "score": 1 },
+      "partner_champion": { "is_flagged": false }
+    },
+    "combined_score_percent": 10.0
+  },
+  {
+    "opportunity_context": {
+      "name": "OptiNova",
+      "website": "www.optinova.com",
+      "opportunity_size": { "label": "SMALL", "score": 1 },
+      "relationship_status": { "label": "New", "score": 1 },
+      "engagement_score": { "label": "LOW", "score": 1 },
+      "opportunity_stage": { "label": "LATE STAGE", "score": 1 },
+      "winnability": { "label": "LOW", "score": 1 },
+      "logo_potential": false
+    },
+    "partner_context": {
+      "name": "TechNova",
+      "website": "www.technova.io",
+      "country": "Germany",
+      "industry": "Software",
+      "employees": 300,
+      "stickiness_score": 1.0,
+      "relationship_strength_score": { "label": "COLD", "score": 1 },
+      "recent_deal_support": { "label": "POOR", "score": 1 },
+      "partner_champion": { "is_flagged": false }
+    },
+    "combined_score_percent": 10.0
+  },
+  {
+    "opportunity_context": {
+      "name": "NextTrend",
+      "website": "www.nexttrend.io",
+      "opportunity_size": { "label": "SMALL", "score": 1 },
+      "relationship_status": { "label": "New", "score": 1 },
+      "engagement_score": { "label": "LOW", "score": 1 },
+      "opportunity_stage": { "label": "LATE STAGE", "score": 1 },
+      "winnability": { "label": "LOW", "score": 1 },
+      "logo_potential": false
+    },
+    "partner_context": {
+      "name": "DataPeak",
+      "website": "www.datapeak.io",
+      "country": "UK",
+      "industry": "Data Analytics",
+      "employees": 250,
+      "stickiness_score": 1.0,
+      "relationship_strength_score": { "label": "COLD", "score": 1 },
+      "recent_deal_support": { "label": "POOR", "score": 1 },
+      "partner_champion": { "is_flagged": false }
+    },
+    "combined_score_percent": 10.0
+  },
+  {
+    "opportunity_context": {
+      "name": "BrightTrend",
+      "website": "www.brighttrend.co",
+      "opportunity_size": { "label": "SMALL", "score": 1 },
+      "relationship_status": { "label": "New", "score": 1 },
+      "engagement_score": { "label": "LOW", "score": 1 },
+      "opportunity_stage": { "label": "LATE STAGE", "score": 1 },
+      "winnability": { "label": "LOW", "score": 1 },
+      "logo_potential": false
+    },
+    "partner_context": {
+      "name": "CloudCore",
+      "website": "www.cloudcore.io",
+      "country": "Canada",
+      "industry": "Cloud Services",
+      "employees": 200,
+      "stickiness_score": 1.0,
+      "relationship_strength_score": { "label": "COLD", "score": 1 },
+      "recent_deal_support": { "label": "POOR", "score": 1 },
+      "partner_champion": { "is_flagged": false }
+    },
+    "combined_score_percent": 10.0
   }
 ]
