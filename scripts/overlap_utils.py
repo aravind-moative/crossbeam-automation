@@ -83,6 +83,7 @@ def load_crossbeam_data() -> List[Dict]:
 def opportunity_score(record: Dict) -> float:
     """Calculate opportunity score based on weighted criteria."""
     weights = get_weights('opportunity')
+    
     total = (
         record.get('opportunity_size_score', 0) * weights.get('opportunity_size', 0) +
         record.get('relationship_status_score', 0) * weights.get('relationship_status', 0) +
@@ -95,6 +96,7 @@ def opportunity_score(record: Dict) -> float:
 def partner_score(record: Dict) -> float:
     """Calculate partner score based on weighted criteria."""
     weights = get_weights('partner')
+    
     total = (
         record.get('relationship_strength_score', 0) * weights.get('relationship_strength_score', 0) +
         record.get('recent_deal_support_score', 0) * weights.get('recent_deal_support', 0) +
@@ -137,7 +139,7 @@ class OverlapQualifier:
             "partner": {
                 "name": record.get("partner_name", "Unknown"),
                 "website": record.get("partner_website", ""),
-                "industry": record.get("partner_size_label", "Unknown")  # Fallback for industry
+                "industry": record.get("partner_size_label", "Unknown")
             },
             "has_champion": has_champion,
             "priority_score": final_score,

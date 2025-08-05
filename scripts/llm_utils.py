@@ -1,8 +1,12 @@
 import os
+import logging
 from dotenv import load_dotenv
 import google.generativeai as genai
 from scripts.overlap_utils import get_weights
 from scripts.context_prompt import context_prompt
+
+# Configure logging
+logger = logging.getLogger(__name__)
 
 load_dotenv()
 
@@ -10,7 +14,7 @@ genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 
 class GeminiMessageGenerator:
     def __init__(self):
-        self.model = genai.GenerativeModel("gemini-2.5-pro")
+        self.model = genai.GenerativeModel("gemini-2.5-flash")
 
     def generate_overlap_message(
         self,
@@ -202,9 +206,23 @@ class GeminiMessageGenerator:
                         f"Write a clean one-line reminding {internal_name} to check in with {ae_name} and align on next steps with the partner. It is a followup message. Make it sound friendly, quick, and Slack-like. Be casual."
                     )
 
-        response = self.model.generate_content(prompt)
-        slack_message = response.text.strip()
-        return slack_message
+        max_retries = 3
+        for attempt in range(max_retries):
+            try:
+                response = self.model.generate_content(prompt)
+                slack_message = response.text.strip()
+                return slack_message
+            except Exception as e:
+                logger.error(f"Error generating overlap message (attempt {attempt + 1}/{max_retries}): {e}")
+                if attempt == max_retries - 1:
+                    # Final attempt failed, use fallback
+                    return self.generate_fallback_message(
+                        record_name, partner_record_name, partner_company_type, 
+                        hierarchy_level, overlap_context, ae_name
+                    )
+                # Wait before retrying
+                import time
+                time.sleep(1)
 
     def generate_priority_summary(self, overlap_context: dict) -> str:
         if not overlap_context:
@@ -232,3 +250,246 @@ class GeminiMessageGenerator:
         if overlap_context.get('has_champion'):
             summary += " | 🏆 Champion"
         return summary
+
+    def generate_fallback_message(self, record_name: str, partner_record_name: str, partner_company_type: str, 
+                                hierarchy_level: int, overlap_context: dict, ae_name: str) -> str:
+        """Generate a fallback message when Gemini API fails."""
+        if hierarchy_level == 3:
+            return f"Executive Alert: High-priority opportunity {record_name} with partner {partner_record_name} ({partner_company_type}) requires executive attention. Please review and provide strategic guidance."
+        elif hierarchy_level == 2:
+            return f"Manager Alert: Opportunity {record_name} with partner {partner_record_name} needs escalation. Please connect with {ae_name} to drive this forward."
+        else:
+            return f"Partner Opportunity: {record_name} with {partner_record_name} ({partner_company_type}) needs attention. Please review and take action."
+
+    def generate_sql_query(self, user_question: str, table_schema: str) -> str:
+        """Generate SQL query from natural language question using Gemini AI."""
+        prompt = f"""
+You are a SQL expert. Given a user question and database schema, generate a valid SQLite query.
+
+Database Schema:
+{table_schema}
+
+User Question: {user_question}
+
+Instructions:
+1. Generate ONLY the SQL query, no explanations, questions, or markdown
+2. Use proper SQLite syntax
+3. Make the query efficient and readable
+4. If the question is unclear, generate a simple SELECT query that returns some data
+5. Focus on the crossbeam_records table which contains partner-opportunity data
+6. NEVER ask for clarification in the response - always generate a valid SQL query
+7. Use the exact column names from the schema provided
+8. For opportunity/partner queries, ALWAYS include opportunity_name and partner_name fields
+9. AVOID using the 'id' field unless specifically requested
+10. For priority/score queries, include relevant score fields and sort by score descending
+
+Available columns for queries:
+- opportunity_name, opportunity_website, opportunity_size_label, opportunity_size_score
+- relationship_status_label, relationship_status_score, engagement_score_label, engagement_score_score
+- opportunity_stage_label, opportunity_stage_score, winnability_label, winnability_score
+- logo_potential, partner_name, partner_website, partner_size_label, partner_size_score
+- stickiness_label, stickiness_score, relationship_strength_label, relationship_strength_score
+- recent_deal_support_label, recent_deal_support_score, partner_champion_flagged
+
+Example valid responses:
+- SELECT opportunity_name, partner_name, opportunity_size_score FROM crossbeam_records WHERE opportunity_size_score > 3
+- SELECT partner_name, COUNT(*) as count FROM crossbeam_records GROUP BY partner_name
+- SELECT opportunity_name, partner_name, opportunity_size_score, opportunity_stage_label FROM crossbeam_records ORDER BY opportunity_size_score DESC LIMIT 10
+- SELECT opportunity_name, partner_name, logo_potential, opportunity_stage_label FROM crossbeam_records WHERE logo_potential = 1
+
+Generate the SQL query:
+"""
+        
+        try:
+            response = self.model.generate_content(prompt)
+            sql_query = response.text.strip()
+            
+            # Clean up the response to ensure it's just SQL
+            if sql_query.startswith('```sql'):
+                sql_query = sql_query[6:]
+            if sql_query.endswith('```'):
+                sql_query = sql_query[:-3]
+            
+            sql_query = sql_query.strip()
+            
+            # Validate that it looks like SQL
+            if not sql_query.upper().startswith('SELECT'):
+                logger.warning(f"Generated query doesn't start with SELECT: {sql_query}")
+                return "SELECT * FROM crossbeam_records LIMIT 10"
+            
+            # Check for common error patterns
+            if any(error_word in sql_query.lower() for error_word in ['could', 'please', 'clarify', 'question', 'what do you mean']):
+                logger.warning(f"Generated query contains clarification text: {sql_query}")
+                return "SELECT * FROM crossbeam_records LIMIT 10"
+            
+            return sql_query
+        except Exception as e:
+            logger.error(f"Error generating SQL: {e}")
+            return "SELECT * FROM crossbeam_records LIMIT 10"
+
+    def generate_natural_response(self, user_question: str, query_results: list, result_count: int, sql_query: str) -> str:
+        """Generate natural language response based on query results using Gemini AI."""
+        prompt = f"""
+You are a helpful business intelligence assistant for Nexus, a partner opportunity management system. Generate a natural, conversational response based on the user's question and the query results.
+
+User Question: {user_question}
+SQL Query Executed: {sql_query}
+Number of Results: {result_count}
+
+Query Results (first 5 rows):
+{str(query_results[:5]) if query_results else "No results found"}
+
+Instructions:
+1. Analyze the actual data in the query results and provide specific insights
+2. Mention specific opportunity names, partner names, scores, or stages from the data
+3. Provide actionable business insights based on the data
+4. Don't mention SQL or technical details
+5. Be specific about what you found - don't just say "I found X results"
+6. Keep responses concise but informative
+7. Use business-friendly language
+8. DO NOT use any markdown formatting (no **bold**, *italic*, or other formatting)
+9. Use plain text only - no special characters for emphasis
+10. If the data shows opportunities, mention specific ones by name
+11. If the data shows scores, mention the score ranges or averages
+12. If the data shows stages, mention which stages are most common
+13. If the query asks about "lacking" or "weak" partner support, focus on opportunities with low partner scores
+14. When analyzing partner support, look at relationship_strength_score, recent_deal_support_score, and stickiness_score
+15. If partner scores are low (< 3), emphasize the need for improved partner engagement
+
+Example responses based on actual data:
+- "I found 15 high-priority opportunities including TechCorp (score: 85.2%), DataFlow (score: 82.1%), and CloudPeak (score: 78.9%). These are all in the 'Close to Win' stage and have strong partner relationships."
+- "The top opportunities ready to close are InnovateTech with a score of 92.3% and NexGen Solutions at 88.7%. Both are in the 'Close to Win' stage and have logo potential."
+- "I identified 8 opportunities in the 'Early CRM Stage' that haven't been touched yet, including StartUp Inc (score: 45.2%) and GrowthCorp (score: 42.8%). These need immediate attention."
+- "The opportunities with the highest scores are TechNova (94.1%), DataCore (91.3%), and CloudTech (89.7%). All three are in advanced stages and have strong partner engagement."
+- "I found 5 opportunities close to winning that lack strong partner support: TechCorp (relationship strength: 2.0), DataFlow (recent support: 1.5), and CloudPeak (stickiness: 2.5). These need immediate partner engagement to close successfully."
+
+Natural Response:"""
+        
+        try:
+            response = self.model.generate_content(prompt)
+            return response.text.strip()
+        except Exception as e:
+            logger.error(f"Error generating natural response: {e}")
+            return f"I found {result_count} results for your query. The data is displayed in the visualization panel."
+
+    def generate_visualization_config(self, user_question: str, query_results: list, sql_query: str) -> dict:
+        """Generate visualization configuration based on query results using Gemini AI."""
+        prompt = f"""
+You are a data visualization expert. Analyze the user question and query results to determine the best visualization type and configuration.
+
+User Question: {user_question}
+SQL Query: {sql_query}
+Query Results (first 10 rows):
+{str(query_results[:10]) if query_results else "No results found"}
+
+Available visualization types:
+1. "bar_chart" - For comparing categories or showing distributions
+2. "pie_chart" - For showing proportions of a whole
+3. "line_chart" - For trends over time or continuous data
+4. "scatter_plot" - For showing relationships between two variables
+5. "metric_cards" - For key performance indicators
+6. "heatmap" - For showing patterns in matrix data
+7. "donut_chart" - For proportions with center space
+8. "table" - For displaying detailed records with multiple columns
+
+Instructions:
+1. Analyze the query type and data structure
+2. ALWAYS choose a visualization type - never use text_only
+3. Determine what data to display on x-axis, y-axis, or other dimensions
+4. Consider the user's intent and what insights they're seeking
+5. For simple counts or statistics, use metric_cards
+6. For lists or comparisons, use bar_chart
+7. For distributions, use pie_chart or donut_chart
+8. For detailed opportunity/partner records with many fields, consider table visualization
+9. For aggregated data or summaries, use bar_chart, pie_chart, or metric_cards
+10. Choose table ONLY when you absolutely need to show detailed individual records with multiple fields
+11. Choose charts when you want to show patterns, comparisons, or distributions
+12. Prefer bar_chart for partner comparisons and rankings
+13. Prefer pie_chart for distributions and proportions
+14. Prefer metric_cards for simple counts and KPIs
+15. For "quick deal close" queries, prefer bar_chart showing partners by opportunity count or opportunities by winnability score
+16. AVOID table visualization for "quick deal close" scenarios - use charts instead
+17. For "partner-opportunity matrix" or "matrix" queries, ALWAYS use heatmap visualization
+18. For queries about "lacking" or "weak" partner support, prefer bar_chart showing opportunities with their partner support scores
+12. Return a JSON configuration with the following structure:
+   {{
+     "type": "visualization_type",
+     "title": "Descriptive title",
+     "subtitle": "Brief description",
+     "data": {{
+       "x_axis": "column_name or category",
+       "y_axis": "column_name or value",
+       "series": "column_name for grouping (optional)",
+       "labels": "column_name for labels (optional)",
+       "columns": ["column1", "column2", "column3"] (for table visualization)
+     }},
+     "options": {{
+       "show_legend": true/false,
+       "show_values": true/false,
+       "sort_by": "column_name or 'value'",
+       "limit": number_of_items_to_show
+     }}
+   }}
+
+Examples:
+- For "How many opportunities per partner?" → bar_chart with partner_name on x-axis, opportunity_count on y-axis
+- For "What's the score distribution?" → pie_chart with score ranges on labels, counts on values
+- For "How many total opportunities do we have?" → metric_cards with total count
+- For "What's the average score?" → metric_cards with average score
+- For "Show me top 10 partners by score" → bar_chart with partner_name on x-axis, avg_score on y-axis
+- For "Which partners have logo potential?" → bar_chart with partner_name on x-axis, logo_potential_count on y-axis
+- For "What's the breakdown by stage?" → pie_chart with opportunity_stage_label on labels, stage_count on values
+- For "What's the distribution of opportunity sizes?" → pie_chart with opportunity_size_label on labels, size_count on values
+- For "How are opportunities distributed across relationship statuses?" → pie_chart with relationship_status_label on labels, status_count on values
+- For "Show me partner performance comparison" → bar_chart with partner_name on x-axis, avg_score on y-axis
+- For "Which deals should we prioritize?" → bar_chart with partner_name on x-axis, avg_score on y-axis (showing partner performance)
+- For "Show me high priority opportunities" → metric_cards showing total count, average score, high-priority count
+- For "Big wins" or "prioritize" → pie_chart with opportunity_stage_label on labels, stage_count on values (showing pipeline distribution)
+- For "Show me opportunities with high scores" → bar_chart with opportunity_name on x-axis, combined_score on y-axis (top opportunities)
+- For "opportunities ready to close" → pie_chart with opportunity_stage_label on labels, stage_count on values (focusing on close-to-win)
+- For "opportunities in good position" → bar_chart with partner_name on x-axis, opportunity_count on y-axis (partner opportunity counts)
+- For "quick deal close" or "opportunities to consider for quick close" → bar_chart with partner_name on x-axis, opportunity_count on y-axis (showing which partners have most quick-close opportunities)
+- For "which opportunities to consider for quick deal close" → bar_chart with opportunity_name on x-axis, winnability_score on y-axis (showing top opportunities by winnability)
+- For "partner-opportunity matrix" or "matrix" → heatmap with partner_name on y-axis, opportunity_name on x-axis, combined_score_percent on values (showing score intensity grid)
+- For "lacking partner support" or "weak partner support" → bar_chart with opportunity_name on x-axis, partner support scores on y-axis (showing relationship strength, recent support, stickiness scores)
+
+Visualization Decision Guidelines:
+- Use TABLE when: Showing detailed individual records with multiple fields (like specific opportunities with names, scores, stages)
+- Use BAR_CHART when: Comparing categories, showing rankings, or displaying aggregated data
+- Use PIE_CHART when: Showing proportions or distributions of a whole
+- Use METRIC_CARDS when: Displaying simple counts, averages, or key performance indicators
+- Use DONUT_CHART when: Showing proportions with additional context in the center
+
+Visualization Configuration (JSON only):"""
+        
+        try:
+            response = self.model.generate_content(prompt)
+            config_text = response.text.strip()
+            
+            # Clean up the response to extract JSON
+            if config_text.startswith('```json'):
+                config_text = config_text[7:]
+            if config_text.endswith('```'):
+                config_text = config_text[:-3]
+            
+            import json
+            config = json.loads(config_text.strip())
+            return config
+        except Exception as e:
+            logger.error(f"Error generating visualization config: {e}")
+            # Fallback to metric cards visualization
+            return {
+                "type": "metric_cards",
+                "title": "Query Results",
+                "subtitle": f"Showing {len(query_results)} results",
+                "data": {
+                    "metrics": [
+                        {"label": "Total Results", "value": len(query_results)},
+                        {"label": "Query Status", "value": "Completed"}
+                    ]
+                },
+                "options": {
+                    "show_legend": False,
+                    "show_values": True
+                }
+            }

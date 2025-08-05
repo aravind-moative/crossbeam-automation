@@ -49,6 +49,11 @@ current_overlap_id: Optional[str] = None
 overlap_qualifier = OverlapQualifier()
 gemini_generator = GeminiMessageGenerator()
 
+# Cache for common queries
+query_cache: Dict[str, Dict] = {}
+cache_timestamps: Dict[str, float] = {}
+CACHE_DURATION = 300  # 5 minutes cache duration
+
 class InternalTeamMember(BaseModel):
     name: str
     designation: str
@@ -70,6 +75,27 @@ def load_internal_team_from_db() -> Dict[str, dict]:
         return {}
 
 INTERNAL_TEAM = load_internal_team_from_db()
+
+def get_cache_key(question: str) -> str:
+    """Generate a cache key for a question."""
+    return question.lower().strip()
+
+def is_cache_valid(cache_key: str) -> bool:
+    """Check if cache is still valid."""
+    if cache_key not in cache_timestamps:
+        return False
+    return time.time() - cache_timestamps[cache_key] < CACHE_DURATION
+
+def get_cached_result(cache_key: str) -> Optional[Dict]:
+    """Get cached result if valid."""
+    if is_cache_valid(cache_key):
+        return query_cache.get(cache_key)
+    return None
+
+def set_cached_result(cache_key: str, result: Dict):
+    """Set cached result with timestamp."""
+    query_cache[cache_key] = result
+    cache_timestamps[cache_key] = time.time()
 
 def send_slack_message(webhook_url: str, channel_id: str, text: str) -> bool:
     """Send a Slack message to the specified channel."""
@@ -320,9 +346,50 @@ async def get_crossbeam_records():
 
         raise HTTPException(status_code=500, detail=f"Error retrieving crossbeam records: {e}")
 
+def initialize_default_weights():
+    """Initialize default weights if they don't exist."""
+    try:
+        with sqlite3.connect(DATABASE_URL.replace("sqlite:///", "")) as conn:
+            cursor = conn.cursor()
+            cursor.execute("SELECT COUNT(*) FROM scoring_weights")
+            count = cursor.fetchone()[0]
+            
+            if count == 0:
+                print("Initializing default weights...")
+                # Default weights - equal distribution
+                opportunity_weights = [
+                    ('opportunity_size', 'opportunity', 20.0),
+                    ('relationship_status', 'opportunity', 20.0),
+                    ('engagement_score', 'opportunity', 20.0),
+                    ('opportunity_stage', 'opportunity', 20.0),
+                    ('winnability', 'opportunity', 20.0)
+                ]
+                
+                partner_weights = [
+                    ('relationship_strength_score', 'partner', 33.33),
+                    ('recent_deal_support', 'partner', 33.33),
+                    ('stickiness_score', 'partner', 33.34)
+                ]
+                
+                all_weights = opportunity_weights + partner_weights
+                
+                for param, section, weight in all_weights:
+                    cursor.execute(
+                        "INSERT OR REPLACE INTO scoring_weights (parameter, section, weight) VALUES (?, ?, ?)",
+                        (param, section, weight)
+                    )
+                
+                conn.commit()
+                print("Default weights initialized successfully!")
+    except Exception as e:
+        print(f"Error initializing weights: {e}")
+
 @app.get("/api/pipeline-scores")
 async def get_pipeline_scores():
     """Retrieve crossbeam records with computed opportunity and partner scores."""
+
+    # Initialize weights if they don't exist
+    initialize_default_weights()
 
     engine = create_engine(DATABASE_URL)
     try:
@@ -337,11 +404,16 @@ async def get_pipeline_scores():
         o_score = opportunity_score(rec)
         p_score = partner_score(rec)
         combined = (o_score + p_score) / 2
+        final_score = combined * 20
         rec.update({
             "opportunity_score": o_score,
             "partner_score": p_score,
-            "combined_score_percent": (combined / 5) * 100
+            "combined_score_percent": final_score
         })
+        
+
+        
+
 
     return records
 
@@ -504,6 +576,321 @@ def flatten_weights(weights: Dict) -> Dict[str, float]:
         else:
             result[key] = float(value)
     return result
+
+def get_table_schema() -> str:
+    """Get the database table schema for SQL generation."""
+    return """
+    Table: crossbeam_records
+    Columns:
+    - id (TEXT, PRIMARY KEY)
+    - opportunity_name (TEXT)
+    - opportunity_website (TEXT)
+    - opportunity_size_label (TEXT)
+    - opportunity_size_score (FLOAT)
+    - relationship_status_label (TEXT)
+    - relationship_status_score (FLOAT)
+    - engagement_score_label (TEXT)
+    - engagement_score_score (FLOAT)
+    - opportunity_stage_label (TEXT)
+    - opportunity_stage_score (FLOAT)
+    - winnability_label (TEXT)
+    - winnability_score (FLOAT)
+    - logo_potential (BOOLEAN)
+    - partner_name (TEXT)
+    - partner_website (TEXT)
+    - partner_size_label (TEXT)
+    - partner_size_score (FLOAT)
+    - stickiness_label (TEXT)
+    - stickiness_score (FLOAT)
+    - relationship_strength_label (TEXT)
+    - relationship_strength_score (FLOAT)
+    - recent_deal_support_label (TEXT)
+    - recent_deal_support_score (FLOAT)
+    - partner_champion_flagged (BOOLEAN)
+    
+    Note: The following columns are calculated on-the-fly and not stored in the database:
+    - combined_score_percent: Calculated as (opportunity_score + partner_score) / 2 * 20
+    - opportunity_score: Calculated using weighted opportunity criteria
+    - partner_score: Calculated using weighted partner criteria
+    """
+
+@app.post("/api/chatbot-query")
+async def chatbot_query(request: Request):
+    """Handle chatbot queries and convert to SQL for execution."""
+    try:
+        data = await request.json()
+        user_question = data.get("question", "")
+        if not user_question:
+            raise HTTPException(status_code=400, detail="Question is required")
+        
+        # Check cache for common queries
+        cache_key = get_cache_key(user_question)
+        cached_result = get_cached_result(cache_key)
+        if cached_result:
+            logger.info(f"Returning cached result for: {user_question}")
+            # Add 2-second delay for cached results to simulate processing
+            import asyncio
+            await asyncio.sleep(2)
+            return cached_result
+        
+        # Initialize weights if they don't exist
+        initialize_default_weights()
+        
+        # Always get all records with calculated scores and let the LLM handle the logic
+        engine = create_engine(DATABASE_URL)
+        try:
+            with engine.connect() as conn:
+                result = conn.execute(text("SELECT * FROM crossbeam_records"))
+                records = [dict(row) for row in result.mappings()]
+        except Exception as e:
+            raise HTTPException(status_code=500, detail=f"Error retrieving records: {e}")
+        
+        # Calculate scores for all records
+        for rec in records:
+            o_score = opportunity_score(rec)
+            p_score = partner_score(rec)
+            combined = (o_score + p_score) / 2
+            rec.update({
+                "opportunity_score": o_score,
+                "partner_score": p_score,
+                "combined_score_percent": combined * 20
+            })
+        
+                # For priority/opportunity queries, use a specific query that excludes ID field
+        question_lower = user_question.lower()
+        if any(keyword in question_lower for keyword in ['prioritize', 'big wins', 'high priority', 'deals', 'opportunities', 'close', 'touched', 'position', 'quick']):
+            # Check if it's asking for counts per partner or most deals
+            if ('per partner' in question_lower or 'opportunities per' in question_lower or 
+                'multiple opportunities' in question_lower or 'market presence' in question_lower or
+                'partners with' in question_lower and 'opportunities' in question_lower or
+                'most deals' in question_lower or 'have the most' in question_lower):
+                sql_query = """
+                    SELECT 
+                        partner_name, 
+                        COUNT(*) as opportunity_count
+                    FROM crossbeam_records 
+                    WHERE partner_name IS NOT NULL
+                    GROUP BY partner_name 
+                    ORDER BY opportunity_count DESC 
+                    LIMIT 20
+                """
+            # Check if it's asking for distribution by relationship status
+            elif 'relationship status' in question_lower or 'relationship statuses' in question_lower:
+                sql_query = """
+                    SELECT 
+                        relationship_status_label, 
+                        COUNT(*) as status_count
+                    FROM crossbeam_records 
+                    WHERE relationship_status_label IS NOT NULL
+                    GROUP BY relationship_status_label 
+                    ORDER BY status_count DESC 
+                    LIMIT 20
+                """
+            # Check if it's asking for distribution by stage
+            elif 'stage' in question_lower and ('distribution' in question_lower or 'breakdown' in question_lower):
+                sql_query = """
+                    SELECT 
+                        opportunity_stage_label, 
+                        COUNT(*) as stage_count
+                    FROM crossbeam_records 
+                    WHERE opportunity_stage_label IS NOT NULL
+                    GROUP BY opportunity_stage_label 
+                    ORDER BY stage_count DESC 
+                    LIMIT 20
+                """
+            # Check if it's asking for distribution by size
+            elif 'size' in question_lower and ('distribution' in question_lower or 'breakdown' in question_lower):
+                sql_query = """
+                    SELECT 
+                        opportunity_size_label, 
+                        COUNT(*) as size_count
+                    FROM crossbeam_records 
+                    WHERE opportunity_size_label IS NOT NULL
+                    GROUP BY opportunity_size_label 
+                    ORDER BY size_count DESC 
+                    LIMIT 20
+                """
+            # Check if it's asking for partner-opportunity matrix
+            elif 'matrix' in question_lower or ('partner' in question_lower and 'opportunity' in question_lower and 'matrix' in question_lower):
+                sql_query = """
+                    SELECT 
+                        partner_name,
+                        opportunity_name,
+                        opportunity_size_score,
+                        relationship_status_score,
+                        engagement_score_score,
+                        opportunity_stage_score,
+                        winnability_score,
+                        relationship_strength_score,
+                        recent_deal_support_score,
+                        stickiness_score,
+                        logo_potential,
+                        opportunity_stage_label,
+                        opportunity_size_label
+                    FROM crossbeam_records 
+                    WHERE partner_name IS NOT NULL AND opportunity_name IS NOT NULL
+                    ORDER BY (opportunity_size_score + relationship_status_score + engagement_score_score + opportunity_stage_score + winnability_score + relationship_strength_score + recent_deal_support_score + stickiness_score) DESC 
+                    LIMIT 50
+                """
+            # Check if it's asking for opportunities close to winning but lacking partner support
+            elif ('close to winning' in question_lower or 'close to win' in question_lower) and ('lack' in question_lower or 'weak' in question_lower or 'poor' in question_lower) and ('partner' in question_lower or 'support' in question_lower):
+                sql_query = """
+                    SELECT 
+                        opportunity_name, 
+                        partner_name, 
+                        opportunity_stage_label, 
+                        opportunity_size_label, 
+                        logo_potential,
+                        opportunity_size_score,
+                        relationship_status_score,
+                        engagement_score_score,
+                        opportunity_stage_score,
+                        winnability_score,
+                        relationship_strength_score,
+                        recent_deal_support_score,
+                        stickiness_score
+                    FROM crossbeam_records 
+                    WHERE opportunity_stage_label IN ('CLOSE TO WIN', 'PROPOSAL', 'NEGOTIATION')
+                    AND (relationship_strength_score < 3 OR recent_deal_support_score < 3 OR stickiness_score < 3)
+                    ORDER BY opportunity_stage_score DESC, winnability_score DESC
+                    LIMIT 15
+                """
+            # Check if it's asking for quick deal close opportunities
+            elif 'quick' in question_lower and ('close' in question_lower or 'deal' in question_lower):
+                sql_query = """
+                    SELECT 
+                        opportunity_name, 
+                        partner_name, 
+                        opportunity_stage_label, 
+                        opportunity_size_label, 
+                        logo_potential,
+                        opportunity_size_score,
+                        relationship_status_score,
+                        engagement_score_score,
+                        opportunity_stage_score,
+                        winnability_score,
+                        relationship_strength_score,
+                        recent_deal_support_score,
+                        stickiness_score
+                    FROM crossbeam_records 
+                    WHERE opportunity_stage_label IN ('CLOSE TO WIN', 'PROPOSAL', 'NEGOTIATION')
+                    ORDER BY (winnability_score + opportunity_stage_score + opportunity_size_score + relationship_strength_score) DESC 
+                    LIMIT 15
+                """
+            else:
+                sql_query = """
+                    SELECT 
+                        opportunity_name, 
+                        partner_name, 
+                        opportunity_stage_label, 
+                        opportunity_size_label, 
+                        logo_potential,
+                        opportunity_size_score,
+                        relationship_status_score,
+                        engagement_score_score,
+                        opportunity_stage_score,
+                        winnability_score,
+                        relationship_strength_score,
+                        recent_deal_support_score,
+                        stickiness_score
+                    FROM crossbeam_records 
+                    ORDER BY (opportunity_size_score + relationship_status_score + engagement_score_score + opportunity_stage_score + winnability_score) DESC 
+                    LIMIT 20
+                """
+        else:
+            # Let the LLM generate SQL for other queries
+            table_schema = get_table_schema()
+            sql_query = gemini_generator.generate_sql_query(user_question, table_schema)
+        
+        try:
+            with engine.connect() as conn:
+                result = conn.execute(text(sql_query))
+                rows = [dict(row) for row in result.mappings()]
+        except Exception as e:
+            logger.error(f"SQL execution error: {e}")
+            # If SQL fails, use a simple fallback query
+            try:
+                with engine.connect() as conn:
+                    fallback_query = """
+                        SELECT 
+                            opportunity_name, 
+                            partner_name, 
+                            opportunity_stage_label, 
+                            opportunity_size_label, 
+                            logo_potential,
+                            opportunity_size_score,
+                            relationship_status_score
+                        FROM crossbeam_records 
+                        LIMIT 10
+                    """
+                    result = conn.execute(text(fallback_query))
+                    rows = [dict(row) for row in result.mappings()]
+                sql_query = f"Fallback query (original failed): {fallback_query}"
+            except Exception as fallback_error:
+                logger.error(f"Fallback query also failed: {fallback_error}")
+                rows = []
+                sql_query = "Query failed - no results available"
+        
+        # Add calculated scores to the rows for visualization
+        for row in rows:
+            o_score = opportunity_score(row)
+            p_score = partner_score(row)
+            combined = (o_score + p_score) / 2
+            row.update({
+                "opportunity_score": o_score,
+                "partner_score": p_score,
+                "combined_score_percent": combined * 20
+            })
+        
+        natural_response = gemini_generator.generate_natural_response(
+            user_question, rows, len(rows), sql_query
+        )
+        visualization_config = gemini_generator.generate_visualization_config(
+            user_question, rows, sql_query
+        )
+        
+        result = {
+            "sql_query": sql_query,
+            "results": rows,
+            "count": len(rows),
+            "natural_response": natural_response,
+            "visualization_config": visualization_config
+        }
+        
+        # Cache the result for common queries
+        set_cached_result(cache_key, result)
+        logger.info(f"Cached result for: {user_question}")
+        
+        return result        
+    except Exception as e:
+        logger.error(f"Error in chatbot query: {e}")
+        raise HTTPException(status_code=500, detail=f"Error processing query: {str(e)}")
+
+def process_question_with_calculated_scores(question: str, records: List[Dict]) -> List[Dict]:
+    """Process questions that need calculated scores using Python logic."""
+    # Let the LLM handle all the logic - just return the records with calculated scores
+    # The LLM will generate appropriate SQL or processing logic based on the question
+    return records
+
+@app.post("/api/clear-cache")
+async def clear_cache():
+    """Clear the query cache."""
+    global query_cache, cache_timestamps
+    query_cache.clear()
+    cache_timestamps.clear()
+    logger.info("Query cache cleared")
+    return {"message": "Cache cleared successfully"}
+
+@app.get("/api/cache-status")
+async def get_cache_status():
+    """Get cache status and statistics."""
+    cache_info = {
+        "total_cached_queries": len(query_cache),
+        "cache_duration_seconds": CACHE_DURATION,
+        "cached_queries": list(query_cache.keys()),
+        "cache_timestamps": {k: time.time() - v for k, v in cache_timestamps.items()}
+    }
+    return cache_info
 
 if __name__ == "__main__":
     import uvicorn
