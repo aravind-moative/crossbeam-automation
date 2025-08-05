@@ -21,11 +21,7 @@ from scripts.overlap_utils import (
     OverlapQualifier
 )
 from dotenv import load_dotenv
-import logging
-
-# Configure logging
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-logger = logging.getLogger(__name__)
+# Logging removed
 
 # Load environment variables
 load_dotenv()
@@ -34,7 +30,7 @@ load_dotenv()
 DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///scoring_weights.db")
 SLACK_BOT_TOKEN = os.getenv("SLACK_BOT_TOKEN")
 FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:5173")
-RESOLVE_ACTION_URL = os.getenv("RESOLVE_ACTION_URL", "http://localhost:8000/api/resolve-overlap")
+RESOLVE_ACTION_URL = os.getenv("RESOLVE_ACTION_URL", "http://localhost:8001/api/resolve-overlap")
 MESSAGE_DELAY_SECONDS = int(os.getenv("MESSAGE_DELAY_SECONDS", 2))
 DEFAULT_COMPANY_NAME = os.getenv("DEFAULT_COMPANY_NAME", "Moative")
 SLACK_USERNAME = os.getenv("SLACK_USERNAME", "Moat")
@@ -227,7 +223,8 @@ async def lifespan(app: FastAPI):
             current_overlap_id = record_id
         threading.Thread(target=send_messages_with_gap, args=(record_id, context), daemon=True).start()
     else:
-        logger.info("No overlaps found to process at startup.")
+        # No overlaps found to process at startup
+        pass
     yield
     with state_lock:
         current_overlap_id = None
@@ -252,7 +249,7 @@ def send_messages_with_gap(record_id: str, context: Dict):
     )
     ae_name = internal_members[0]["name"] if internal_members else "Unknown"
 
-    # Log message plan
+    # Message plan (logging removed)
     for hierarchy_level in range(1, int(max_hierarchy) + 1):
         members = [m for m in INTERNAL_TEAM.values() if m.get("hierarchy") == hierarchy_level]
         for member in members:
@@ -299,7 +296,8 @@ def send_messages_with_gap(record_id: str, context: Dict):
                     )
                     success = send_slack_message_with_button(webhook_url, channel_id, message, RESOLVE_ACTION_URL, record_id)
                     if not success:
-                        logger.error(f"Failed to send message to {member_name} in channel {channel_id}")
+                        # Failed to send message (logging removed)
+                        pass
                     time.sleep(MESSAGE_DELAY_SECONDS)
 
 
@@ -627,7 +625,7 @@ async def chatbot_query(request: Request):
         cache_key = get_cache_key(user_question)
         cached_result = get_cached_result(cache_key)
         if cached_result:
-            logger.info(f"Returning cached result for: {user_question}")
+            # Returning cached result (logging removed)
             # Add 2-second delay for cached results to simulate processing
             import asyncio
             await asyncio.sleep(2)
@@ -807,7 +805,7 @@ async def chatbot_query(request: Request):
                 result = conn.execute(text(sql_query))
                 rows = [dict(row) for row in result.mappings()]
         except Exception as e:
-            logger.error(f"SQL execution error: {e}")
+            # SQL execution error (logging removed)
             # If SQL fails, use a simple fallback query
             try:
                 with engine.connect() as conn:
@@ -827,7 +825,7 @@ async def chatbot_query(request: Request):
                     rows = [dict(row) for row in result.mappings()]
                 sql_query = f"Fallback query (original failed): {fallback_query}"
             except Exception as fallback_error:
-                logger.error(f"Fallback query also failed: {fallback_error}")
+                # Fallback query also failed (logging removed)
                 rows = []
                 sql_query = "Query failed - no results available"
         
@@ -859,7 +857,7 @@ async def chatbot_query(request: Request):
         
         # Cache the result for common queries
         set_cached_result(cache_key, result)
-        logger.info(f"Cached result for: {user_question}")
+        # Cached result (logging removed)
         
         return result        
     except Exception as e:
@@ -897,6 +895,6 @@ if __name__ == "__main__":
     uvicorn.run(
         "main:app",
         host=os.getenv("HOST", "0.0.0.0"),
-        port=int(os.getenv("PORT", 8000)),
+        port=int(os.getenv("PORT", 8001)),
         reload=os.getenv("ENV", "development") == "development"
     )
