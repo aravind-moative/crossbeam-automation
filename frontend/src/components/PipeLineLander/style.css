@@ -1,0 +1,184 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Funnel+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Funnel+Sans:ital,wght@0,300..800;1,300..800&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+body {
+    background-color: rgb(238, 255, 238);
+}
+.intro-card {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    margin-right: 15vw;
+    margin-left: 15vw;
+    margin-bottom: 3vh;
+}
+
+.intro-card h1 {
+    font-family: "Funnel Sans", sans-serif;
+    font-size: 3vw;
+    margin-bottom: 0.2vw;
+}
+
+.intro-card span {
+    font-family: "Funnel Sans", sans-serif;
+    font-size: 1.4vw;
+}
+
+.pipeline-lanes {
+    display: flex;
+    flex-direction: row-reverse;
+    font-family: "Funnel Sans", sans-serif;    
+    color: #222;
+}
+  
+.pipeline-lane {
+    width: 20%;
+    margin: 0.5vw;
+    padding: 0.9vw;
+    border: 1px solid rgba(44, 47, 44, 0.3);
+    border-right: 0.4vw solid green;
+    border-bottom: 0.4vw solid green;
+    border-radius: 0.5vw;
+    font-size: 1.3vw;
+    background-color: whitesmoke;
+}
+  
+.pipeline-lane-title {
+    font-weight: bold;
+    font-size: 1.5vw;
+    margin: 0;
+    margin-bottom: 0.2rem;
+    text-align: center;
+}
+  
+.pipeline-no-records {
+    font-style: italic;
+    color: #555;
+}
+  
+.pipeline-card-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+  
+.pipeline-card {
+    border-radius: 6px;
+    padding: 0.75rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    color: #222;
+    background-color: #f0fff0;
+}
+  
+.pipeline-lane:nth-child(5) .pipeline-card {
+    background-color: #3bc23b;
+    color: white;
+}
+  .pipeline-lane:nth-child(4) .pipeline-card {
+    background-color: #66dd66;
+  }
+  .pipeline-lane:nth-child(3) .pipeline-card {
+    background-color: #99ee99;
+  }
+  .pipeline-lane:nth-child(2) .pipeline-card {
+    background-color: #ccfacc;
+  }
+  .pipeline-lane:nth-child(1) .pipeline-card {
+    background-color: #e6ffe6;
+}
+  
+.pipeline-card-title {
+    font-weight: bold;
+    margin-bottom: 0.25rem;
+}
+  
+.pipeline-card-meta {
+    display: flex;
+    justify-content: space-between;
+}
+
+.pipeline-card-meta span {
+    font-size: 1vw;
+}
+
+.pipeline-lane-description {
+    font-size: 0.8vw;
+    text-align: center;
+}
+
+@media screen and (max-width: 768px) {
+    .intro-card {
+        margin: 0;
+        margin-bottom: 1vw;
+    }
+    .intro-card h1 {
+        font-size: 8vw;
+    }
+    .intro-card span {
+        font-size: 3vw;
+    }
+}
+
+.pipeline-error {
+    text-align: center;
+    padding: 2rem;
+    margin: 2rem auto;
+    max-width: 600px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border: 2px solid #ff6b6b;
+}
+
+.pipeline-error h3 {
+    color: #ff6b6b;
+    margin-bottom: 1rem;
+    font-family: "Funnel Sans", sans-serif;
+}
+
+.pipeline-error p {
+    color: #555;
+    margin-bottom: 1.5rem;
+    font-family: "Funnel Sans", sans-serif;
+}
+
+.error-troubleshooting {
+    text-align: left;
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-top: 1rem;
+}
+
+.error-troubleshooting p {
+    margin-bottom: 0.5rem;
+    font-family: "Funnel Sans", sans-serif;
+}
+
+.error-troubleshooting ul {
+    margin: 0.5rem 0 1rem 0;
+    padding-left: 1.5rem;
+}
+
+.error-troubleshooting li {
+    margin-bottom: 0.25rem;
+    color: #666;
+    font-family: "Funnel Sans", sans-serif;
+}
+
+.retry-button {
+    background: #3bc23b;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    font-family: "Funnel Sans", sans-serif;
+}
+
+.retry-button:hover {
+    background: #2da02d;
+}

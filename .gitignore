@@ -11,5 +11,5 @@ wheels/
 # Virtual environments
 .venv
 
-frontend
+frontend/node_modules
 /data/

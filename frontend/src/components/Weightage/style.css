@@ -1,0 +1,207 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Funnel+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Funnel+Sans:ital,wght@0,300..800;1,300..800&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+* {
+    font-family: "Funnel Sans", sans-serif;
+}
+
+.heading {
+    font-size: 3vw;
+    margin: 0;
+    margin-bottom: 0.5vw;
+}
+span {
+    margin-bottom: 3vh;
+    text-align: center;
+}
+
+.weightage-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 60%;
+  margin: 2vw auto;
+}
+
+.container {
+  display: flex;
+  gap: 2vw;
+  width: 100%;
+  justify-content: center;
+}
+
+.section-box {
+    width: 100vw;
+    height: 45vh;
+    padding: 1vw;
+    border: 1px solid green;
+    border-bottom: 0.51vw solid green;
+    border-right: 0.51vw solid green;
+    border-radius: 1vw;
+    position: relative;
+    padding-bottom: 4vh;
+    background-color: white;
+}
+
+
+.field-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 1.3vw;
+}
+
+.field-row input {
+  padding: 0.3vw 0.3vw;
+  border-radius: 0.81rem;
+  border: 1px solid #ccc;
+  background: #fff;
+  color: #222;
+}
+
+.total {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(70%);
+  display: flex;
+  justify-content: center;
+  font-size: 1.5vw;
+  font-weight: bold;
+}
+.total.valid {
+  color: green;
+}
+
+.total.invalid {
+  color: #e74c3c;
+}
+
+.error-text {
+  color: #e74c3c;
+  text-align: right;
+  margin-top: 4px;
+}
+
+.success-text {
+  color: #22c55e;
+  margin-top: 16px;
+}
+
+.save-button {
+  background: green;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 1.9vw;
+  margin-top: 3%;
+  padding: 0.8vw;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  border-radius: 1rem;
+  width: 15%;
+}
+.section-box h2 {
+  all: unset;
+  font-size: 3vh;
+  font-weight: bold;
+}
+
+.save-button:disabled {
+  background: #bdbdbd;
+  color: #888;
+  cursor: not-allowed;
+}
+
+.input-wrapper input {
+    width: 4vw;
+    margin-right: 0.5vw;
+}
+
+span {
+    font-family: "Funnel Sans", sans-serif;
+    font-size: 1.4vw;
+}
+
+
+.input-wrapper {
+    margin: 0.2vw;
+}
+
+.inputs-div {
+    margin-top: 1rem;
+}
+
+.note {
+    font-size: 1vw;
+    }
+
+
+
+
+@media (max-width: 768px) {
+  .heading {
+    font-size: 6vw;
+    text-align: center;
+  }
+
+  .weightage-form {
+    width: 90%;
+    margin: 4vw auto;
+  }
+
+  .container {
+    flex-direction: column;
+    gap: 4vw;
+  }
+
+  .section-box {
+    width: 100%;
+    height: auto;
+    padding: 4vw;
+    border-radius: 4vw;
+  }
+
+  .field-row {
+    flex-direction: column;
+    align-items: flex-start;
+    font-size: 4.5vw;
+    gap: 2vw;
+    margin-bottom: 3vw;
+  }
+
+  .field-row input {
+    font-size: 4vw;
+    padding: 2vw;
+    width: 90%;
+  }
+
+  .save-button {
+    font-size: 4vw;
+    padding: 2vw 4vw;
+    width: 80%;
+  }
+
+  .input-wrapper input {
+    width: 30vw;
+    font-size: 4vw;
+  }
+
+  .total {
+    position: static;
+    transform: none;
+    text-align: center;
+    font-size: 5vw;
+    margin-top: 4vw;
+  }
+
+  .note {
+    font-size: 3vw;
+    text-align: center;
+  }
+
+  span {
+    font-size: 4vw;
+  }
+}

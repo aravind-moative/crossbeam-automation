@@ -1,0 +1,130 @@
+body {
+  font-family: "Segoe UI", Tahoma, Verdana, sans-serif;
+  background-color: #e9fbe9;
+  margin: 0;
+  padding: 0;
+}
+
+.team-table-container {
+  margin: 4vh auto;
+  padding: 2vw;
+  background-color: #f8fff8;
+  border-radius: 16px;
+  border: 3px solid #008000;
+  box-shadow: 0 4px 10px rgba(0, 128, 0, 0.2);
+  width: 80%;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.table-header {
+  text-align: center;
+}
+
+.team-header {
+  font-size: 3vw;
+  font-weight: bold;
+  margin-bottom: 0.5vh;
+  color: #002f00;
+}
+
+.team-subtext {
+font-size: 1.4vw;
+  margin-bottom: 2vh;
+  color: #444;
+}
+
+.team-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1vw;
+  border-radius: 1vw;
+}
+
+.team-table th,
+.team-table td {
+  padding: 1vh 1vw;
+  text-align: left;
+  font-size: 1.1vw;
+  border-bottom: 1px solid #ccc;
+}
+
+.team-table th {
+  background-color: #d2f5d2;
+  font-weight: bold;
+}
+
+input, select {
+  width: 100%;
+  padding: 0.5vh 0.8vw;
+  font-size: 0.9vw;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box;
+}
+
+.edit-button,
+.save-button,
+.add-button {
+  background-color: #008000;
+  color: white;
+  border: none;
+  padding: 0.6vh 1vw;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9vw;
+  transition: background-color 0.2s ease;
+  min-width: 70px;
+  text-align: center;
+}
+
+.edit-button:hover,
+.save-button:hover,
+.add-button:hover {
+  background-color: #005f00;
+}
+
+.delete-button {
+  background-color: #cc0000;
+  color: white;
+  border: none;
+  padding: 0.6vh 1vw;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9vw;
+  margin-left: 0.6vw;
+  transition: background-color 0.2s ease;
+}
+
+.delete-button:hover {
+  background-color: #990000;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 0.6vw;
+}
+
+code {
+  background-color: #f4f4f4;
+  padding: 2px 4px;
+  border-radius: 4px;
+  font-size: 0.85vw;
+  word-break: break-word;
+}
+
+.truncate {
+  max-width: 15vw;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.form-error {
+  color: red;
+  margin-bottom: 1vw;
+}
