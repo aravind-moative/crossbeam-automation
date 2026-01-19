@@ -21,11 +21,7 @@ from scripts.overlap_utils import (
     OverlapQualifier
 )
 from dotenv import load_dotenv
-import logging
-
-# Configure logging
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-logger = logging.getLogger(__name__)
+# Logging removed
 
 # Load environment variables
 load_dotenv()
@@ -34,7 +30,7 @@ load_dotenv()
 DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///scoring_weights.db")
 SLACK_BOT_TOKEN = os.getenv("SLACK_BOT_TOKEN")
 FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:5173")
-RESOLVE_ACTION_URL = os.getenv("RESOLVE_ACTION_URL", "http://localhost:8000/api/resolve-overlap")
+RESOLVE_ACTION_URL = os.getenv("RESOLVE_ACTION_URL", "http://localhost:8001/api/resolve-overlap")
 MESSAGE_DELAY_SECONDS = int(os.getenv("MESSAGE_DELAY_SECONDS", 2))
 DEFAULT_COMPANY_NAME = os.getenv("DEFAULT_COMPANY_NAME", "Moative")
 SLACK_USERNAME = os.getenv("SLACK_USERNAME", "Moat")
@@ -48,6 +44,11 @@ messaging_lock = threading.Lock()
 current_overlap_id: Optional[str] = None
 overlap_qualifier = OverlapQualifier()
 gemini_generator = GeminiMessageGenerator()
+
+# Cache for common queries
+query_cache: Dict[str, Dict] = {}
+cache_timestamps: Dict[str, float] = {}
+CACHE_DURATION = 300  # 5 minutes cache duration
 
 class InternalTeamMember(BaseModel):
     name: str
@@ -65,13 +66,32 @@ def load_internal_team_from_db() -> Dict[str, dict]:
             cursor = conn.cursor()
             cursor.execute("SELECT id, name, designation, hierarchy, channel_id, webhook_url, max_message FROM internal_team")
             team = {row["name"]: dict(row) for row in cursor.fetchall()}
-        logger.info("Successfully loaded internal team from DB")
         return team
     except sqlite3.Error as e:
-        logger.error(f"Error loading internal team from DB: {e}")
         return {}
 
 INTERNAL_TEAM = load_internal_team_from_db()
+
+def get_cache_key(question: str) -> str:
+    """Generate a cache key for a question."""
+    return question.lower().strip()
+
+def is_cache_valid(cache_key: str) -> bool:
+    """Check if cache is still valid."""
+    if cache_key not in cache_timestamps:
+        return False
+    return time.time() - cache_timestamps[cache_key] < CACHE_DURATION
+
+def get_cached_result(cache_key: str) -> Optional[Dict]:
+    """Get cached result if valid."""
+    if is_cache_valid(cache_key):
+        return query_cache.get(cache_key)
+    return None
+
+def set_cached_result(cache_key: str, result: Dict):
+    """Set cached result with timestamp."""
+    query_cache[cache_key] = result
+    cache_timestamps[cache_key] = time.time()
 
 def send_slack_message(webhook_url: str, channel_id: str, text: str) -> bool:
     """Send a Slack message to the specified channel."""
@@ -84,10 +104,9 @@ def send_slack_message(webhook_url: str, channel_id: str, text: str) -> bool:
     try:
         response = requests.post(webhook_url, json=payload, timeout=5)
         response.raise_for_status()
-        logger.info(f"Message sent successfully to {channel_id}")
+
         return True
     except requests.RequestException as e:
-        logger.error(f"Failed to send Slack message to {channel_id}: {e}")
         return False
 
 def send_slack_message_with_button(webhook_url: str, channel_id: str, text: str, action_url: str, record_id: str) -> bool:
@@ -114,10 +133,9 @@ def send_slack_message_with_button(webhook_url: str, channel_id: str, text: str,
     try:
         response = requests.post(webhook_url, json=payload, timeout=5)
         response.raise_for_status()
-        logger.info(f"Message with button sent successfully to {channel_id} for record {record_id}")
+
         return True
     except requests.RequestException as e:
-        logger.error(f"Failed to send Slack message with button to {channel_id}: {e}")
         return False
 
 def get_hierarchy_designations(internal_team: Dict[str, dict]) -> Dict[str, str]:
@@ -148,7 +166,7 @@ def get_best_overlap(exclude_id: Optional[str] = None) -> Optional[Dict]:
         and not processed_overlaps.get(record.get("id"), False)
     ]
     if not all_overlaps:
-        logger.debug("No qualifying unprocessed overlaps found")
+
         return None
     # Sort overlaps: prioritize logo_potential, then priority_score (descending), then record_name (lexicographically)
     sorted_overlaps = sorted(
@@ -157,7 +175,7 @@ def get_best_overlap(exclude_id: Optional[str] = None) -> Optional[Dict]:
         reverse=True
     )
     best = sorted_overlaps[0]
-    logger.debug(f"Selected best overlap: {best['record_id']}, score={best['priority_score']}, logo_potential={best['logo_potential']}")
+
     return best
 
 def trigger_overlap_processing(exclude_id: Optional[str] = None):
@@ -165,12 +183,11 @@ def trigger_overlap_processing(exclude_id: Optional[str] = None):
     global current_overlap_id
     with state_lock:
         if current_overlap_id:
-            logger.info(f"Skipping overlap processing; {current_overlap_id} is being processed")
             return
         best_overlap = get_best_overlap(exclude_id)
         if best_overlap:
             best_id = best_overlap["record_id"]
-            logger.info(f"New best overlap detected: {best_id}")
+
             resolved_state[best_id] = False
             processed_overlaps[best_id] = True
             current_overlap_id = best_id
@@ -179,21 +196,17 @@ def trigger_overlap_processing(exclude_id: Optional[str] = None):
                 args=(best_id, best_overlap["context"]),
                 daemon=True
             ).start()
-            logger.info(f"Started processing for overlap: {best_id} (in background thread)")
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """FastAPI lifespan event handler for startup analysis."""
     global current_overlap_id
-    logger.info("Starting overlap analysis and selection...")
     engine = create_engine(DATABASE_URL)
     try:
         with engine.connect() as conn:
             result = conn.execute(text("SELECT * FROM scoring_weights"))
             weights = [dict(row) for row in result.mappings()]
-        logger.debug(f"All scoring_weights from DB: {weights}")
     except Exception as e:
-        logger.error(f"Error loading scoring weights: {e}")
         yield
         return
 
@@ -204,17 +217,14 @@ async def lifespan(app: FastAPI):
         partner_record_name = best_overlap["partner_record_name"]
         context = best_overlap["context"]
         priority_score = context.get("priority_score", 0)
-        logger.info(f"SELECTED BEST OVERLAP: {record_name} ↔ {partner_record_name} (ID: {record_id}), "
-                    f"Priority Score: {priority_score}, LOGO Potential: {context.get('logo_potential', False)}, "
-                    f"Partner Champion: {context.get('has_champion', False)}")
         with state_lock:
             resolved_state[record_id] = False
             processed_overlaps[record_id] = True
             current_overlap_id = record_id
         threading.Thread(target=send_messages_with_gap, args=(record_id, context), daemon=True).start()
-        logger.info(f"Started processing for the best overlap: {record_id} (in background thread)")
     else:
-        logger.info("No qualifying overlaps found at startup")
+        # No overlaps found to process at startup
+        pass
     yield
     with state_lock:
         current_overlap_id = None
@@ -223,7 +233,6 @@ def send_messages_with_gap(record_id: str, context: Dict):
     """Send Slack messages to team members one at a time, escalating through hierarchy levels."""
     global current_overlap_id
     designations = get_hierarchy_designations(INTERNAL_TEAM)
-    print(designations, "DESIGNATIONS")
     max_hierarchy = max(
         (member.get("hierarchy") for member in INTERNAL_TEAM.values() if isinstance(member.get("hierarchy"), (int, float))),
         default=0
@@ -232,15 +241,19 @@ def send_messages_with_gap(record_id: str, context: Dict):
     record_name = record.get("opportunity_name", "Unknown") if record else "Unknown"
     partner_record_name = record.get("partner_name", "Unknown") if record else "Unknown"
     partner_company_type = record.get("partner_size_label", "Unknown") if record else "Unknown"
-    ae_name = record.get("ae_name", "Unknown") if record else "Unknown"
+    
+    # Retrieve ae_name based on hierarchy (e.g., lowest hierarchy level)
+    internal_members = sorted(
+        [member for member in INTERNAL_TEAM.values() if isinstance(member.get("hierarchy"), (int, float))],
+        key=lambda x: x["hierarchy"]
+    )
+    ae_name = internal_members[0]["name"] if internal_members else "Unknown"
 
-    # Log message plan
-    logger.info(f"Message plan for overlap {record_id}:")
+    # Message plan (logging removed)
     for hierarchy_level in range(1, int(max_hierarchy) + 1):
         members = [m for m in INTERNAL_TEAM.values() if m.get("hierarchy") == hierarchy_level]
         for member in members:
             max_msgs = member.get("max_message", 0)
-            logger.info(f"  Hierarchy {hierarchy_level}, {member['name']}: {max_msgs} message(s)")
 
     with messaging_lock:
         for hierarchy_level in range(1, int(max_hierarchy) + 1):
@@ -249,49 +262,45 @@ def send_messages_with_gap(record_id: str, context: Dict):
                 if isinstance(member, dict) and member.get("hierarchy") == hierarchy_level
             ]
             if not internal_members:
-                logger.warning(f"No Hierarchy {hierarchy_level} member found in internal team")
                 continue
 
             for member in internal_members:
                 max_message = member.get("max_message", 0)
                 if max_message < 1:
-                    logger.warning(f"No messages allowed for {member['name']} at Hierarchy {hierarchy_level}, skipping")
                     continue
                 message_types = ["main"] + [f"followup{i}" for i in range(1, max_message)]
                 webhook_url = member.get("webhook_url")
                 channel_id = member.get("channel_id")
                 member_name = member.get("name")
                 if not webhook_url or not channel_id:
-                    logger.warning(f"No webhook_url or channel_id for {member_name}, skipping")
                     continue
 
                 for idx, message_type in enumerate(message_types):
                     with state_lock:
                         if resolved_state.get(record_id, False):
-                            logger.info(f"Overlap resolved for {record_id} at Hierarchy {hierarchy_level}")
+
                             current_overlap_id = None
                             return
-
+                    #message = f"ACCOUNT: {record_name} | PARTNER: {partner_record_name} | AE: {ae_name} | Hierarchy {hierarchy_level} | {message_type.capitalize()}"
                     message = gemini_generator.generate_overlap_message(
-                                            record_name=record_name,
-                                            overlap_type="overlap",
-                                            internal_name=member_name,
-                                            partner_record_name=partner_record_name,
-                                            partner_company_type=partner_company_type,
-                                            count=idx + 1,
-                                            hierarchy_level=hierarchy_level,
-                                            overlap_context=context,
-                                            hierarchy_designations=designations,
-                                            ae_name=ae_name
-                                        )
-                                            
-                    #message = f"ACCOUNT: {record_name} | PARTNER: {partner_record_name} | Hierarchy {hierarchy_level} | {message_type.capitalize()}"
+                        record_name=record_name,
+                        overlap_type="overlap",
+                        internal_name=member_name,
+                        partner_record_name=partner_record_name,
+                        partner_company_type=partner_company_type,
+                        count=idx + 1,
+                        hierarchy_level=hierarchy_level,
+                        overlap_context=context,
+                        hierarchy_designations=designations,
+                        ae_name=ae_name  # Pass ae_name to the message generator if needed
+                    )
                     success = send_slack_message_with_button(webhook_url, channel_id, message, RESOLVE_ACTION_URL, record_id)
                     if not success:
-                        logger.error(f"Failed to send message to {member_name} at hierarchy {hierarchy_level}")
+                        # Failed to send message (logging removed)
+                        pass
                     time.sleep(MESSAGE_DELAY_SECONDS)
 
-        logger.info(f"Completed all messages for {record_id}")
+
         with state_lock:
             current_overlap_id = None
 
@@ -307,15 +316,15 @@ app.add_middleware(
 @app.post("/api/resolve-overlap")
 async def resolve_overlap(request: Request):
     """Handle overlap resolution via Slack button."""
-    logger.info(f"Received request to resolve overlap: {await request.json()}")
+
     data = await request.json()
     record_id = data.get("record_id")
     if not record_id:
-        logger.error("Missing record_id in resolve-overlap request")
+
         raise HTTPException(status_code=400, detail="Missing record_id")
     with state_lock:
         resolved_state[record_id] = True
-        logger.info(f"Overlap {record_id} marked as resolved")
+
         if current_overlap_id == record_id:
             current_overlap_id = None
     return {"message": f"Overlap {record_id} resolved"}
@@ -323,63 +332,109 @@ async def resolve_overlap(request: Request):
 @app.get("/api/crossbeam-records")
 async def get_crossbeam_records():
     """Retrieve all crossbeam records from the database."""
-    logger.info("Received GET request for /api/crossbeam-records")
+
     engine = create_engine(DATABASE_URL)
     try:
         with engine.connect() as conn:
             result = conn.execute(text("SELECT * FROM crossbeam_records"))
             records = [dict(row) for row in result.mappings()]
-        logger.info(f"Successfully retrieved {len(records)} crossbeam records")
+
         return records
     except Exception as e:
-        logger.error(f"Error retrieving crossbeam records: {e}")
+
         raise HTTPException(status_code=500, detail=f"Error retrieving crossbeam records: {e}")
+
+def initialize_default_weights():
+    """Initialize default weights if they don't exist."""
+    try:
+        with sqlite3.connect(DATABASE_URL.replace("sqlite:///", "")) as conn:
+            cursor = conn.cursor()
+            cursor.execute("SELECT COUNT(*) FROM scoring_weights")
+            count = cursor.fetchone()[0]
+            
+            if count == 0:
+                print("Initializing default weights...")
+                # Default weights - equal distribution
+                opportunity_weights = [
+                    ('opportunity_size', 'opportunity', 20.0),
+                    ('relationship_status', 'opportunity', 20.0),
+                    ('engagement_score', 'opportunity', 20.0),
+                    ('opportunity_stage', 'opportunity', 20.0),
+                    ('winnability', 'opportunity', 20.0)
+                ]
+                
+                partner_weights = [
+                    ('relationship_strength_score', 'partner', 33.33),
+                    ('recent_deal_support', 'partner', 33.33),
+                    ('stickiness_score', 'partner', 33.34)
+                ]
+                
+                all_weights = opportunity_weights + partner_weights
+                
+                for param, section, weight in all_weights:
+                    cursor.execute(
+                        "INSERT OR REPLACE INTO scoring_weights (parameter, section, weight) VALUES (?, ?, ?)",
+                        (param, section, weight)
+                    )
+                
+                conn.commit()
+                print("Default weights initialized successfully!")
+    except Exception as e:
+        print(f"Error initializing weights: {e}")
 
 @app.get("/api/pipeline-scores")
 async def get_pipeline_scores():
     """Retrieve crossbeam records with computed opportunity and partner scores."""
-    logger.info("Received GET request for /api/pipeline-scores")
+
+    # Initialize weights if they don't exist
+    initialize_default_weights()
+
     engine = create_engine(DATABASE_URL)
     try:
         with engine.connect() as conn:
             result = conn.execute(text("SELECT * FROM crossbeam_records"))
             records = [dict(row) for row in result.mappings()]
     except Exception as e:
-        logger.error(f"Error retrieving pipeline scores: {e}")
+
         raise HTTPException(status_code=500, detail=f"Error retrieving pipeline scores: {e}")
 
     for rec in records:
         o_score = opportunity_score(rec)
         p_score = partner_score(rec)
         combined = (o_score + p_score) / 2
+        final_score = combined * 20
         rec.update({
             "opportunity_score": o_score,
             "partner_score": p_score,
-            "combined_score_percent": (combined / 5) * 100
+            "combined_score_percent": final_score
         })
-    logger.info(f"Successfully computed scores for {len(records)} records")
+        
+
+        
+
+
     return records
 
 @app.get("/api/internal-team")
 async def get_internal_team():
     """Retrieve all internal team members from the database."""
-    logger.info("Received GET request for /api/internal-team")
+
     try:
         with sqlite3.connect(DATABASE_URL.replace("sqlite:///", "")) as conn:
             conn.row_factory = sqlite3.Row
             cursor = conn.cursor()
             cursor.execute("SELECT id, name, designation, hierarchy, channel_id, webhook_url, max_message FROM internal_team")
             team_members = [dict(row) for row in cursor.fetchall()]
-        logger.info(f"Successfully retrieved {len(team_members)} internal team members")
+
         return JSONResponse(content=team_members)
     except sqlite3.Error as e:
-        logger.error(f"Error retrieving internal team: {e}")
+
         raise HTTPException(status_code=500, detail=f"Error retrieving internal team: {e}")
 
 @app.post("/api/internal-team")
 async def add_internal_team_member(member: InternalTeamMember):
     """Add a new internal team member to the database and check for new best overlap."""
-    logger.info(f"Received POST request for /api/internal-team: {member.dict()}")
+
     try:
         with sqlite3.connect(DATABASE_URL.replace("sqlite:///", "")) as conn:
             cursor = conn.cursor()
@@ -394,11 +449,11 @@ async def add_internal_team_member(member: InternalTeamMember):
             new_id = cursor.lastrowid
         global INTERNAL_TEAM
         INTERNAL_TEAM = load_internal_team_from_db()  # Reload internal team
-        logger.info(f"Team member added successfully, ID: {new_id}")
+
         trigger_overlap_processing()  # Check for new best overlap
         return {"message": "Team member added successfully", "id": new_id}
     except sqlite3.Error as e:
-        logger.error(f"Error adding team member: {e}")
+
         raise HTTPException(status_code=500, detail=f"Error adding team member: {e}")
 
 from fastapi import Path
@@ -409,7 +464,7 @@ async def update_internal_team_member(
     member: InternalTeamMember = ...
 ):
     """Update an existing internal team member in the database and reload team data."""
-    logger.info(f"Received PUT request for /api/internal-team/{member_id}: {member.dict()}")
+
     try:
         with sqlite3.connect(DATABASE_URL.replace("sqlite:///", "")) as conn:
             cursor = conn.cursor()
@@ -422,61 +477,61 @@ async def update_internal_team_member(
                 (member.name, member.designation, member.hierarchy, member.channel_id, member.webhook_url, member.max_message, member_id)
             )
             if cursor.rowcount == 0:
-                logger.warning(f"No team member found with ID: {member_id}")
+
                 raise HTTPException(status_code=404, detail="Team member not found")
             conn.commit()
 
         global INTERNAL_TEAM
         INTERNAL_TEAM = load_internal_team_from_db()  # Reload internal team
-        logger.info(f"Team member updated successfully, ID: {member_id}")
+
         return {"message": "Team member updated successfully", "id": member_id}
 
     except sqlite3.Error as e:
-        logger.error(f"Error updating team member: {e}")
+
         raise HTTPException(status_code=500, detail=f"Error updating team member: {e}")
 
 @app.delete("/api/internal-team/{member_id}")
 async def delete_internal_team_member(member_id: int):
     """Delete an internal team member by ID and check for new best overlap."""
-    logger.info(f"Received DELETE request for /api/internal-team/{member_id}")
+
     try:
         with sqlite3.connect(DATABASE_URL.replace("sqlite:///", "")) as conn:
             cursor = conn.cursor()
             cursor.execute("SELECT * FROM internal_team WHERE id = ?", (member_id,))
             if not cursor.fetchone():
-                logger.error(f"Team member with ID {member_id} not found")
+
                 raise HTTPException(status_code=404, detail="Team member not found")
             cursor.execute("DELETE FROM internal_team WHERE id = ?", (member_id,))
             conn.commit()
         global INTERNAL_TEAM
         INTERNAL_TEAM = load_internal_team_from_db()  # Reload internal team
-        logger.info(f"Team member with ID {member_id} deleted successfully")
+
         trigger_overlap_processing()  # Check for new best overlap
         return {"message": f"Team member with ID {member_id} deleted successfully"}
     except sqlite3.Error as e:
-        logger.error(f"Error deleting team member: {e}")
+
         raise HTTPException(status_code=500, detail=f"Error deleting team member: {e}")
 
 @app.get("/api/weights")
 async def get_weights():
     """Retrieve all scoring weights from the database."""
-    logger.info("Received GET request for /api/weights")
+
     try:
         with sqlite3.connect(DATABASE_URL.replace("sqlite:///", "")) as conn:
             conn.row_factory = sqlite3.Row
             cursor = conn.cursor()
             cursor.execute("SELECT * FROM scoring_weights")
             weights = [{"name": row["parameter"], "type": row["section"], "weight": row["weight"]} for row in cursor.fetchall()]
-        logger.info(f"Successfully retrieved {len(weights)} scoring weights")
+
         return JSONResponse(content=weights)
     except sqlite3.Error as e:
-        logger.error(f"Error retrieving weights: {e}")
+
         raise HTTPException(status_code=500, detail=f"Error retrieving weights: {e}")
 
 @app.post("/api/weights")
 async def save_weights(request: Request):
     """Update scoring weights in the database and check for new best overlap."""
-    logger.info(f"Received POST request for /api/weights: {await request.json()}")
+
     data = await request.json()
     opportunity_weights = flatten_weights(data.get("opportunity", {}))
     partner_weights = flatten_weights(data.get("partner", {}))
@@ -485,7 +540,7 @@ async def save_weights(request: Request):
         with sqlite3.connect(DATABASE_URL.replace("sqlite:///", "")) as conn:
             cursor = conn.cursor()
             for key, weight in opportunity_weights.items():
-                logger.info(f"Updating opportunity weight → {key}: {weight}")
+
                 cursor.execute(
                     """
                     INSERT OR REPLACE INTO scoring_weights (parameter, section, weight)
@@ -494,7 +549,7 @@ async def save_weights(request: Request):
                     (key, "opportunity", weight)
                 )
             for key, weight in partner_weights.items():
-                logger.info(f"Updating partner weight → {key}: {weight}")
+
                 cursor.execute(
                     """
                     INSERT OR REPLACE INTO scoring_weights (parameter, section, weight)
@@ -503,11 +558,11 @@ async def save_weights(request: Request):
                     (key, "partner", weight)
                 )
             conn.commit()
-        logger.info("Weights updated successfully, triggering overlap processing")
+
         trigger_overlap_processing()  # Check for new best overlap
         return JSONResponse(content={"message": "Weights updated successfully"})
     except sqlite3.Error as e:
-        logger.error(f"Error updating weights: {e}")
+
         raise HTTPException(status_code=500, detail=f"Error updating weights: {e}")
 
 def flatten_weights(weights: Dict) -> Dict[str, float]:
@@ -520,11 +575,326 @@ def flatten_weights(weights: Dict) -> Dict[str, float]:
             result[key] = float(value)
     return result
 
+def get_table_schema() -> str:
+    """Get the database table schema for SQL generation."""
+    return """
+    Table: crossbeam_records
+    Columns:
+    - id (TEXT, PRIMARY KEY)
+    - opportunity_name (TEXT)
+    - opportunity_website (TEXT)
+    - opportunity_size_label (TEXT)
+    - opportunity_size_score (FLOAT)
+    - relationship_status_label (TEXT)
+    - relationship_status_score (FLOAT)
+    - engagement_score_label (TEXT)
+    - engagement_score_score (FLOAT)
+    - opportunity_stage_label (TEXT)
+    - opportunity_stage_score (FLOAT)
+    - winnability_label (TEXT)
+    - winnability_score (FLOAT)
+    - logo_potential (BOOLEAN)
+    - partner_name (TEXT)
+    - partner_website (TEXT)
+    - partner_size_label (TEXT)
+    - partner_size_score (FLOAT)
+    - stickiness_label (TEXT)
+    - stickiness_score (FLOAT)
+    - relationship_strength_label (TEXT)
+    - relationship_strength_score (FLOAT)
+    - recent_deal_support_label (TEXT)
+    - recent_deal_support_score (FLOAT)
+    - partner_champion_flagged (BOOLEAN)
+    
+    Note: The following columns are calculated on-the-fly and not stored in the database:
+    - combined_score_percent: Calculated as (opportunity_score + partner_score) / 2 * 20
+    - opportunity_score: Calculated using weighted opportunity criteria
+    - partner_score: Calculated using weighted partner criteria
+    """
+
+@app.post("/api/chatbot-query")
+async def chatbot_query(request: Request):
+    """Handle chatbot queries and convert to SQL for execution."""
+    try:
+        data = await request.json()
+        user_question = data.get("question", "")
+        if not user_question:
+            raise HTTPException(status_code=400, detail="Question is required")
+        
+        # Check cache for common queries
+        cache_key = get_cache_key(user_question)
+        cached_result = get_cached_result(cache_key)
+        if cached_result:
+            # Returning cached result (logging removed)
+            # Add 2-second delay for cached results to simulate processing
+            import asyncio
+            await asyncio.sleep(2)
+            return cached_result
+        
+        # Initialize weights if they don't exist
+        initialize_default_weights()
+        
+        # Always get all records with calculated scores and let the LLM handle the logic
+        engine = create_engine(DATABASE_URL)
+        try:
+            with engine.connect() as conn:
+                result = conn.execute(text("SELECT * FROM crossbeam_records"))
+                records = [dict(row) for row in result.mappings()]
+        except Exception as e:
+            raise HTTPException(status_code=500, detail=f"Error retrieving records: {e}")
+        
+        # Calculate scores for all records
+        for rec in records:
+            o_score = opportunity_score(rec)
+            p_score = partner_score(rec)
+            combined = (o_score + p_score) / 2
+            rec.update({
+                "opportunity_score": o_score,
+                "partner_score": p_score,
+                "combined_score_percent": combined * 20
+            })
+        
+                # For priority/opportunity queries, use a specific query that excludes ID field
+        question_lower = user_question.lower()
+        if any(keyword in question_lower for keyword in ['prioritize', 'big wins', 'high priority', 'deals', 'opportunities', 'close', 'touched', 'position', 'quick']):
+            # Check if it's asking for counts per partner or most deals
+            if ('per partner' in question_lower or 'opportunities per' in question_lower or 
+                'multiple opportunities' in question_lower or 'market presence' in question_lower or
+                'partners with' in question_lower and 'opportunities' in question_lower or
+                'most deals' in question_lower or 'have the most' in question_lower):
+                sql_query = """
+                    SELECT 
+                        partner_name, 
+                        COUNT(*) as opportunity_count
+                    FROM crossbeam_records 
+                    WHERE partner_name IS NOT NULL
+                    GROUP BY partner_name 
+                    ORDER BY opportunity_count DESC 
+                    LIMIT 20
+                """
+            # Check if it's asking for distribution by relationship status
+            elif 'relationship status' in question_lower or 'relationship statuses' in question_lower:
+                sql_query = """
+                    SELECT 
+                        relationship_status_label, 
+                        COUNT(*) as status_count
+                    FROM crossbeam_records 
+                    WHERE relationship_status_label IS NOT NULL
+                    GROUP BY relationship_status_label 
+                    ORDER BY status_count DESC 
+                    LIMIT 20
+                """
+            # Check if it's asking for distribution by stage
+            elif 'stage' in question_lower and ('distribution' in question_lower or 'breakdown' in question_lower):
+                sql_query = """
+                    SELECT 
+                        opportunity_stage_label, 
+                        COUNT(*) as stage_count
+                    FROM crossbeam_records 
+                    WHERE opportunity_stage_label IS NOT NULL
+                    GROUP BY opportunity_stage_label 
+                    ORDER BY stage_count DESC 
+                    LIMIT 20
+                """
+            # Check if it's asking for distribution by size
+            elif 'size' in question_lower and ('distribution' in question_lower or 'breakdown' in question_lower):
+                sql_query = """
+                    SELECT 
+                        opportunity_size_label, 
+                        COUNT(*) as size_count
+                    FROM crossbeam_records 
+                    WHERE opportunity_size_label IS NOT NULL
+                    GROUP BY opportunity_size_label 
+                    ORDER BY size_count DESC 
+                    LIMIT 20
+                """
+            # Check if it's asking for partner-opportunity matrix
+            elif 'matrix' in question_lower or ('partner' in question_lower and 'opportunity' in question_lower and 'matrix' in question_lower):
+                sql_query = """
+                    SELECT 
+                        partner_name,
+                        opportunity_name,
+                        opportunity_size_score,
+                        relationship_status_score,
+                        engagement_score_score,
+                        opportunity_stage_score,
+                        winnability_score,
+                        relationship_strength_score,
+                        recent_deal_support_score,
+                        stickiness_score,
+                        logo_potential,
+                        opportunity_stage_label,
+                        opportunity_size_label
+                    FROM crossbeam_records 
+                    WHERE partner_name IS NOT NULL AND opportunity_name IS NOT NULL
+                    ORDER BY (opportunity_size_score + relationship_status_score + engagement_score_score + opportunity_stage_score + winnability_score + relationship_strength_score + recent_deal_support_score + stickiness_score) DESC 
+                    LIMIT 50
+                """
+            # Check if it's asking for opportunities close to winning but lacking partner support
+            elif ('close to winning' in question_lower or 'close to win' in question_lower) and ('lack' in question_lower or 'weak' in question_lower or 'poor' in question_lower) and ('partner' in question_lower or 'support' in question_lower):
+                sql_query = """
+                    SELECT 
+                        opportunity_name, 
+                        partner_name, 
+                        opportunity_stage_label, 
+                        opportunity_size_label, 
+                        logo_potential,
+                        opportunity_size_score,
+                        relationship_status_score,
+                        engagement_score_score,
+                        opportunity_stage_score,
+                        winnability_score,
+                        relationship_strength_score,
+                        recent_deal_support_score,
+                        stickiness_score
+                    FROM crossbeam_records 
+                    WHERE opportunity_stage_label IN ('CLOSE TO WIN', 'PROPOSAL', 'NEGOTIATION')
+                    AND (relationship_strength_score < 3 OR recent_deal_support_score < 3 OR stickiness_score < 3)
+                    ORDER BY opportunity_stage_score DESC, winnability_score DESC
+                    LIMIT 15
+                """
+            # Check if it's asking for quick deal close opportunities
+            elif 'quick' in question_lower and ('close' in question_lower or 'deal' in question_lower):
+                sql_query = """
+                    SELECT 
+                        opportunity_name, 
+                        partner_name, 
+                        opportunity_stage_label, 
+                        opportunity_size_label, 
+                        logo_potential,
+                        opportunity_size_score,
+                        relationship_status_score,
+                        engagement_score_score,
+                        opportunity_stage_score,
+                        winnability_score,
+                        relationship_strength_score,
+                        recent_deal_support_score,
+                        stickiness_score
+                    FROM crossbeam_records 
+                    WHERE opportunity_stage_label IN ('CLOSE TO WIN', 'PROPOSAL', 'NEGOTIATION')
+                    ORDER BY (winnability_score + opportunity_stage_score + opportunity_size_score + relationship_strength_score) DESC 
+                    LIMIT 15
+                """
+            else:
+                sql_query = """
+                    SELECT 
+                        opportunity_name, 
+                        partner_name, 
+                        opportunity_stage_label, 
+                        opportunity_size_label, 
+                        logo_potential,
+                        opportunity_size_score,
+                        relationship_status_score,
+                        engagement_score_score,
+                        opportunity_stage_score,
+                        winnability_score,
+                        relationship_strength_score,
+                        recent_deal_support_score,
+                        stickiness_score
+                    FROM crossbeam_records 
+                    ORDER BY (opportunity_size_score + relationship_status_score + engagement_score_score + opportunity_stage_score + winnability_score) DESC 
+                    LIMIT 20
+                """
+        else:
+            # Let the LLM generate SQL for other queries
+            table_schema = get_table_schema()
+            sql_query = gemini_generator.generate_sql_query(user_question, table_schema)
+        
+        try:
+            with engine.connect() as conn:
+                result = conn.execute(text(sql_query))
+                rows = [dict(row) for row in result.mappings()]
+        except Exception as e:
+            # SQL execution error (logging removed)
+            # If SQL fails, use a simple fallback query
+            try:
+                with engine.connect() as conn:
+                    fallback_query = """
+                        SELECT 
+                            opportunity_name, 
+                            partner_name, 
+                            opportunity_stage_label, 
+                            opportunity_size_label, 
+                            logo_potential,
+                            opportunity_size_score,
+                            relationship_status_score
+                        FROM crossbeam_records 
+                        LIMIT 10
+                    """
+                    result = conn.execute(text(fallback_query))
+                    rows = [dict(row) for row in result.mappings()]
+                sql_query = f"Fallback query (original failed): {fallback_query}"
+            except Exception as fallback_error:
+                # Fallback query also failed (logging removed)
+                rows = []
+                sql_query = "Query failed - no results available"
+        
+        # Add calculated scores to the rows for visualization
+        for row in rows:
+            o_score = opportunity_score(row)
+            p_score = partner_score(row)
+            combined = (o_score + p_score) / 2
+            row.update({
+                "opportunity_score": o_score,
+                "partner_score": p_score,
+                "combined_score_percent": combined * 20
+            })
+        
+        natural_response = gemini_generator.generate_natural_response(
+            user_question, rows, len(rows), sql_query
+        )
+        visualization_config = gemini_generator.generate_visualization_config(
+            user_question, rows, sql_query
+        )
+        
+        result = {
+            "sql_query": sql_query,
+            "results": rows,
+            "count": len(rows),
+            "natural_response": natural_response,
+            "visualization_config": visualization_config
+        }
+        
+        # Cache the result for common queries
+        set_cached_result(cache_key, result)
+        # Cached result (logging removed)
+        
+        return result        
+    except Exception as e:
+        logger.error(f"Error in chatbot query: {e}")
+        raise HTTPException(status_code=500, detail=f"Error processing query: {str(e)}")
+
+def process_question_with_calculated_scores(question: str, records: List[Dict]) -> List[Dict]:
+    """Process questions that need calculated scores using Python logic."""
+    # Let the LLM handle all the logic - just return the records with calculated scores
+    # The LLM will generate appropriate SQL or processing logic based on the question
+    return records
+
+@app.post("/api/clear-cache")
+async def clear_cache():
+    """Clear the query cache."""
+    global query_cache, cache_timestamps
+    query_cache.clear()
+    cache_timestamps.clear()
+    logger.info("Query cache cleared")
+    return {"message": "Cache cleared successfully"}
+
+@app.get("/api/cache-status")
+async def get_cache_status():
+    """Get cache status and statistics."""
+    cache_info = {
+        "total_cached_queries": len(query_cache),
+        "cache_duration_seconds": CACHE_DURATION,
+        "cached_queries": list(query_cache.keys()),
+        "cache_timestamps": {k: time.time() - v for k, v in cache_timestamps.items()}
+    }
+    return cache_info
+
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(
         "main:app",
         host=os.getenv("HOST", "0.0.0.0"),
-        port=int(os.getenv("PORT", 8000)),
+        port=int(os.getenv("PORT", 8001)),
         reload=os.getenv("ENV", "development") == "development"
     )
